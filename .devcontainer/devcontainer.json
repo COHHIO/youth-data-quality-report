@@ -44,7 +44,7 @@
 				"r.lsp.promptToInstall": false,
 				"r.plot.useHttpgd": true,
 				"r.session.viewers.viewColumn": {"browser": "Disable"},
-				"[r][rmd]": {
+				"[r][quarto]": {
 					"editor.formatOnSave": true,
 					"editor.formatOnPaste": true,
 					"editor.formatOnType": true,
