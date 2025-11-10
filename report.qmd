@@ -110,6 +110,19 @@ distinct_n_hoh_per_h_string <- ifelse(
 
 cat(distinct_n_hoh_per_h_string)
 ```
+
+```{r check-relationship-to-head-of-household-responses}
+data_enrollment |>
+    create_data_quality_table(
+        response_column = "relationship_to_ho_h",
+        no_response_values = c(
+            "Data not collected",
+            "Missing"
+        ),
+        table_title = "Relationship to Head of Household"
+    )
+```
+
 ### Prior Living Situation
 ```{r check-prior-living-situation-responses}
 data_enrollment |>
