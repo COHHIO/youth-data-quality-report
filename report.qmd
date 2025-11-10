@@ -127,7 +127,6 @@ data_enrollment |>
     )
 ```
 
-
 #### Formerly a Ward of Juvenile Justice System
 
 ```{r check-formerly-ward-of-juvenile-justice-system}
