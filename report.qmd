@@ -88,6 +88,28 @@ data_enrollment |>
 
 ### Relationship to Head of Household
 
+The `r nrow(enrollments_in_period)` enrollments in this period came from `r dplyr::n_distinct(data_enrollment$household_id)` distinct households.
+
+```{r check-one-head-of-household-per-household}
+#| results: asis
+distinct_n_hoh_per_h <- data_enrollment |>
+    dplyr::summarise(
+        n_hoh = sum(relationship_to_ho_h == "Self (head of household)"),
+        .by = "household_id"
+    ) |>
+    dplyr::count(n_hoh) |>
+    dplyr::pull(n_hoh)
+
+distinct_n_hoh_per_h_filtered <- distinct_n_hoh_per_h[distinct_n_hoh_per_h != 1]
+
+distinct_n_hoh_per_h_string <- ifelse(
+    length(distinct_n_hoh_per_h) == 1 && distinct_n_hoh_per_h == 1,
+    "✅ All households have exactly one head of household.",
+    paste0("❌ Some households have an incorrect number of heads of household. Found households with ", paste0(distinct_n_hoh_per_h_filtered, collapse = ", "), " heads of household.")
+)
+
+cat(distinct_n_hoh_per_h_string)
+```
 ### Prior Living Situation
 ```{r check-prior-living-situation-responses}
 data_enrollment |>
