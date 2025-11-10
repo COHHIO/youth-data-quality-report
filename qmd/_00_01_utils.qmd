@@ -8,8 +8,8 @@ create_data_quality_table <- function(data,
                                           "Missing"
                                       ),
                                       combine_responses = TRUE,
-                                      group_column,
-                                      group_column_label,
+                                      group_column = NULL,
+                                      group_column_label = NULL,
                                       table_title) {
     if (combine_responses == TRUE) {
         table_data <- data |>
@@ -32,13 +32,18 @@ create_data_quality_table <- function(data,
             )
     }
 
-    table_data <- table_data |>
-        dplyr::count(data_quality_status, .data[[group_column]], .drop = FALSE) |>
-        tidyr::pivot_wider(names_from = dplyr::all_of(group_column), values_from = n)
+    if (is.null(group_column)) {
+        table_data <- table_data |>
+            dplyr::count(data_quality_status, name = "Count", .drop = FALSE)
+    } else {
+        table_data <- table_data |>
+            dplyr::count(data_quality_status, .data[[group_column]], .drop = FALSE) |>
+            tidyr::pivot_wider(names_from = dplyr::all_of(group_column), values_from = n)
 
-    spanner_columns <- names(table_data)[names(table_data) != "data_quality_status"]
+        spanner_columns <- names(table_data)[names(table_data) != "data_quality_status"]
+    }
 
-    table_data |>
+    gt <- table_data |>
         gt::gt() |>
         gt::tab_header(title = table_title) |>
         gt::cols_label(
@@ -51,19 +56,25 @@ create_data_quality_table <- function(data,
         gt::cols_align(
             align = "left",
             columns = data_quality_status
-        ) |>
-        gt::cols_align(
-            align = "right",
-            columns = dplyr::all_of(spanner_columns)
-        ) |>
-        gt::tab_spanner(
-            label = group_column_label,
-            columns = dplyr::all_of(spanner_columns)
-        ) |>
-        gt::tab_style(
-            style = gt::cell_text(v_align = "middle"),
-            locations = gt::cells_column_labels(columns = data_quality_status)
-        ) |>
+        )
+
+    if (!is.null(group_column)) {
+        gt <- gt |>
+            gt::cols_align(
+                align = "right",
+                columns = dplyr::all_of(spanner_columns)
+            ) |>
+            gt::tab_spanner(
+                label = group_column_label,
+                columns = dplyr::all_of(spanner_columns)
+            ) |>
+            gt::tab_style(
+                style = gt::cell_text(v_align = "middle"),
+                locations = gt::cells_column_labels(columns = data_quality_status)
+            )
+    }
+
+    gt |>
         gt::tab_options(
             table.font.names = "Roboto"
         )
