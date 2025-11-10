@@ -88,6 +88,17 @@ data_enrollment |>
 
 ### Relationship to Head of Household
 
+### Prior Living Situation
+```{r check-prior-living-situation-responses}
+data_enrollment |>
+    create_data_quality_table(
+        response_column = "living_situation",
+        group_column = "is_hoh_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Prior Living Situation"
+    )
+```
+
 ## Federal Partner Program Specific Data Elements
 
 ### RHY
