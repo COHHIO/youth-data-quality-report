@@ -1,0 +1,79 @@
+```{r read-data}
+dm <- readRDS("data/dm_20251013.rds")
+```
+
+```{r get-enrollments-in-period}
+enrollments_in_period <- dm$enrollment |>
+    dplyr::select(enrollment_id, personal_id, organization_id, entry_date) |>
+    dplyr::filter(entry_date >= period_start_date & entry_date <= period_end_date)
+```
+
+```{r process-enrollment-data}
+data_enrollment <- dm$enrollment |>
+    dplyr::semi_join(
+        enrollments_in_period,
+        by = c("enrollment_id", "personal_id", "organization_id")
+    ) |>
+    dplyr::left_join(
+        y = dm$client,
+        by = c("personal_id", "organization_id")
+    ) |>
+    dplyr::mutate(
+        age = lubridate::time_length(
+            difftime(entry_date, dob),
+            "years"
+        ) |> floor(),
+        age_grouped = dplyr::case_when(
+            age >= 25 ~ "25+",
+            age >= 18 & age <= 24 ~ "18-24",
+            age >= 14 & age <= 17 ~ "14-17",
+            age >= 6 & age <= 13 ~ "6-13",
+            age >= 0 & age <= 5 ~ "0-5",
+            TRUE ~ "Missing"
+        ),
+        age_grouped = factor(
+            age_grouped,
+            levels = c("Missing", "0-5", "6-13", "14-17", "18-24", "25+")
+        ),
+        is_adult = dplyr::case_when(
+            age >= 18 ~ "Yes",
+            age < 18 ~ "No",
+            TRUE ~ "Unknown"
+        ) |>
+            factor(levels = c("Yes", "No", "Unknown")),
+        is_hoh = dplyr::case_when(
+            relationship_to_ho_h == "Self (head of household)" ~ "Yes",
+            relationship_to_ho_h %in% c("Data not collected", "Missing") ~ "Unknown",
+            TRUE ~ "No"
+        ) |>
+            factor(levels = c("Yes", "No", "Unknown")),
+        is_hoh_or_adult = dplyr::case_when(
+            is_adult == "Yes" | is_hoh == "Yes" ~ "Yes",
+            is_adult == "No" & is_hoh == "No" ~ "No",
+            TRUE ~ "Unknown"
+        ) |>
+            factor(levels = c("Yes", "No", "Unknown")),
+        ssn_data_quality = factor(
+            ssn_data_quality,
+            levels = c(
+                "Full SSN reported",
+                "Approximate or partial SSN reported",
+                "Client doesn't know",
+                "Client prefers not to answer",
+                "Data not collected"
+            )
+        ),
+        ssn_length = dplyr::case_when(
+            ssn == "Missing" ~ "No Digits",
+            (stringr::str_length(ssn) / 4) == 9 ~ "9 Digits",
+            TRUE ~ "1 to 8 Digits"
+        ) |>
+            factor(
+                levels = c(
+                    "9 Digits",
+                    "1 to 8 Digits",
+                    "No Digits"
+                )
+            )
+    )
+```
