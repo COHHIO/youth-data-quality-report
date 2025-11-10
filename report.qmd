@@ -55,7 +55,7 @@ SSN data is recorded in two fields:
 - Social Security Number
 - SSN Data Quality
 
-```{r check-ssn-data}
+```{r check-ssn-responses}
 data_enrollment |>
     create_data_quality_table(
         response_column = "ssn_data_quality",
