@@ -99,7 +99,7 @@ data_enrollment |>
     create_data_quality_table(
         response_column = "referral_source",
         group_column = "is_hoh_or_adult",
-        group_column_label = "Head of Household or Adult",
+        group_column_label = "Head of Household and/or Adult",
         table_title = "Referral Source"
     )
 ```
@@ -111,7 +111,7 @@ data_enrollment |>
     create_data_quality_table(
         response_column = "former_ward_child_welfare",
         group_column = "is_hoh_or_adult",
-        group_column_label = "Head of Household or Adult",
+        group_column_label = "Head of Household and/or Adult",
         table_title = "Formerly a Ward of Child Welfare/Foster Care Agency"
     )
 ```
@@ -124,7 +124,7 @@ data_enrollment |>
     create_data_quality_table(
         response_column = "former_ward_juvenile_justice",
         group_column = "is_hoh_or_adult",
-        group_column_label = "Head of Household or Adult",
+        group_column_label = "Head of Household and/or Adult",
         table_title = "Formerly a Ward of Juvenile Justice System"
     )
 ```
