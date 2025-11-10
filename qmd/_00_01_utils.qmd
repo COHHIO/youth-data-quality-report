@@ -1,0 +1,72 @@
+```{r}
+create_data_quality_table <- function(data,
+                                      response_column,
+                                      no_response_values = c(
+                                          "Client doesn't know",
+                                          "Client prefers not to answer",
+                                          "Data not collected",
+                                          "Missing"
+                                      ),
+                                      combine_responses = TRUE,
+                                      group_column,
+                                      group_column_label,
+                                      table_title) {
+    if (combine_responses == TRUE) {
+        table_data <- data |>
+            dplyr::mutate(
+                data_quality_status = dplyr::case_when(
+                    .data[[response_column]] %in% no_response_values ~ .data[[response_column]],
+                    TRUE ~ "Client provided a response"
+                ) |>
+                    factor(
+                        levels = c(
+                            "Client provided a response",
+                            no_response_values
+                        )
+                    )
+            )
+    } else {
+        table_data <- data |>
+            dplyr::mutate(
+                data_quality_status = .data[[response_column]]
+            )
+    }
+
+    table_data <- table_data |>
+        dplyr::count(data_quality_status, .data[[group_column]], .drop = FALSE) |>
+        tidyr::pivot_wider(names_from = dplyr::all_of(group_column), values_from = n)
+
+    spanner_columns <- names(table_data)[names(table_data) != "data_quality_status"]
+
+    table_data |>
+        gt::gt() |>
+        gt::tab_header(title = table_title) |>
+        gt::cols_label(
+            data_quality_status = "Data Quality Status"
+        ) |>
+        gt::cols_width(
+            data_quality_status ~ gt::pct(55),
+            gt::everything() ~ gt::pct(15)
+        ) |>
+        gt::cols_align(
+            align = "left",
+            columns = data_quality_status
+        ) |>
+        gt::cols_align(
+            align = "right",
+            columns = dplyr::all_of(spanner_columns)
+        ) |>
+        gt::tab_spanner(
+            label = group_column_label,
+            columns = dplyr::all_of(spanner_columns)
+        ) |>
+        gt::tab_style(
+            style = gt::cell_text(v_align = "middle"),
+            locations = gt::cells_column_labels(columns = data_quality_status)
+        ) |>
+        gt::tab_options(
+            table.font.names = "Roboto"
+        )
+}
+
+```
