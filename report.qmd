@@ -72,6 +72,56 @@ data_enrollment |>
 
 ### Date of Birth
 
+```{r check-age-range}
+#| results: asis
+min_age <- min(data_enrollment$age, na.rm = TRUE)
+max_age <- max(data_enrollment$age, na.rm = TRUE)
+
+cat(paste0("Participants reported ages ranging from ", min_age, " to ", max_age, " years."))
+```
+
+```{r check-missing-age}
+#| results: asis
+n_missing_age <- data_enrollment |>
+    dplyr::filter(age_grouped == "Missing") |>
+    nrow()
+
+n_missing_age_string <- ifelse(
+    n_missing_age == 0,
+    "✅ All participants reported an age value.",
+    paste0("⚠️ ", n_missing_age, " participant", ifelse(n_missing_age > 1, "s", ""), " reported no age value.")
+)
+
+cat(n_missing_age_string)
+```
+
+```{r check-age-distribution}
+data_enrollment |>
+    ggplot2::ggplot() +
+    ggplot2::geom_histogram(
+        mapping = ggplot2::aes(x = age),
+        binwidth = 3,
+        boundary = 0,
+        closed = "left",
+        fill = "#D8E5F5",
+        color = "#07274A"
+    ) +
+    ggplot2::scale_x_continuous(
+        breaks = seq(
+            floor(min(min_age, 0) / 3) * 3,
+            ceiling(max_age / 3) * 3,
+            3
+        )
+    ) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.15))) +
+    ggplot2::labs(
+        title = "Participants by Age",
+        x = "Age (Years)",
+        y = "Count"
+    ) +
+    ggplot2::theme_bw()
+```
+
 ### Race and Ethnicity
 
 ### Veteran Status
