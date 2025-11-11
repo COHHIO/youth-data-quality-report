@@ -126,6 +126,57 @@ data_enrollment |>
 
 ### Race and Ethnicity
 
+```{r process-ethnicity-data}
+ethnicity_summary <- dm$ethnicity |>
+    dplyr::semi_join(
+        y = enrollments_in_period,
+        by = c("personal_id", "organization_id")
+    ) |>
+    dplyr::summarise(
+        n_ethnicities = sum(ethnicity != "Missing"),
+        n_missing = sum(ethnicity == "Missing"),
+        .by = c("personal_id", "organization_id")
+    )
+
+data_ethnicity <- enrollments_in_period |>
+    dplyr::left_join(
+        y = ethnicity_summary,
+        by = c("personal_id", "organization_id")
+    )
+```
+
+```{r check-etchnicity-count}
+data_ethnicity |>
+    dplyr::count(n_ethnicities) |>
+    gt::gt() |>
+    gt::tab_header(title = "Client Self-Identified Race/Ethnicity Selections") |>
+    gt::cols_label(
+        n_ethnicities = "Number of Identities Selected",
+        n = "Count"
+    ) |>
+    gt::cols_align(
+        align = "left",
+        columns = n_ethnicities
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
+```{r check-correct-missing}
+#| results: asis
+problematic_records <- data_ethnicity |>
+    dplyr::filter(n_missing == 1, n_ethnicities > 0)
+
+n_problematic <- nrow(problematic_records)
+
+if (n_problematic == 0) {
+    cat("✅ No records have missing alongside other valid ethnicity values.")
+} else {
+    cat(paste0("❌ ", n_problematic, " records have missing alongside other valid ethnicity values."))
+}
+```
+
 ### Veteran Status
 
 ```{r check-veteran-status-responses}
