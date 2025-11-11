@@ -79,7 +79,7 @@ data_enrollment |>
 min_age <- min(data_enrollment$age, na.rm = TRUE)
 max_age <- max(data_enrollment$age, na.rm = TRUE)
 
-cat(paste0("Participants reported ages ranging from ", min_age, " to ", max_age, " years."))
+cat(paste0("Clients reported ages ranging from ", min_age, " to ", max_age, " years."))
 ```
 
 ```{r check-missing-age}
@@ -90,8 +90,8 @@ n_missing_age <- data_enrollment |>
 
 n_missing_age_string <- ifelse(
     n_missing_age == 0,
-    "✅ All participants reported an age value.",
-    paste0("⚠️ ", n_missing_age, " participant", ifelse(n_missing_age > 1, "s", ""), " reported no age value.")
+    "✅ All clients reported an age value.",
+    paste0("⚠️ ", n_missing_age, " client", ifelse(n_missing_age > 1, "s", ""), " reported no age value.")
 )
 
 cat(n_missing_age_string)
@@ -117,7 +117,7 @@ data_enrollment |>
     ) +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.15))) +
     ggplot2::labs(
-        title = "Participants by Age",
+        title = "Clients by Age",
         x = "Age (Years)",
         y = "Count"
     ) +
@@ -134,7 +134,7 @@ data_enrollment |>
         response_column = "veteran_status",
         group_column = "is_adult",
         group_column_label = "Adult",
-        table_title = "Veteran Status Data Quality"
+        table_title = "Veteran Status"
     )
 ```
 
@@ -199,7 +199,11 @@ data_enrollment |>
     ) +
     ggplot2::coord_flip() +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.15))) +
-    ggplot2::labs(x = "Age (Years)", y = "Head of Household Count") +
+    ggplot2::labs(
+        title = "Heads of Household by Age",
+        x = "Age (Years)",
+        y = "Head of Household Count"
+    ) +
     ggplot2::theme_bw()
 
 ```
