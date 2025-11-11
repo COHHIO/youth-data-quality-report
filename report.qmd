@@ -24,6 +24,8 @@ period_start_date <- params$period_start_date
 period_end_date <- params$period_end_date
 ```
 
+{{< include /qmd/_00_00_constants.qmd >}}
+
 {{< include /qmd/_00_01_utils.qmd >}}
 
 {{< include /qmd/_00_02_process_data.qmd >}}
@@ -103,8 +105,8 @@ data_enrollment |>
         binwidth = 3,
         boundary = 0,
         closed = "left",
-        fill = "#D8E5F5",
-        color = "#07274A"
+        fill = palette$light_blue,
+        color = palette$navy_blue
     ) +
     ggplot2::scale_x_continuous(
         breaks = seq(
@@ -184,7 +186,8 @@ data_enrollment |>
             y = n
         ),
         stat = "identity",
-        fill = "#07274A"
+        fill = palette$light_blue,
+        color = palette$navy_blue
     ) +
     ggplot2::geom_text(
         mapping = ggplot2::aes(
