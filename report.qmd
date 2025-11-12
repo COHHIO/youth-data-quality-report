@@ -58,7 +58,7 @@ SSN data is recorded in two fields:
 - SSN Data Quality
 
 ```{r check-ssn-responses}
-data_enrollment |>
+data_enrollment_client |>
     create_data_quality_table(
         response_column = "ssn_data_quality",
         combine_responses = FALSE,
@@ -76,15 +76,15 @@ data_enrollment |>
 
 ```{r check-age-range}
 #| results: asis
-min_age <- min(data_enrollment$age, na.rm = TRUE)
-max_age <- max(data_enrollment$age, na.rm = TRUE)
+min_age <- min(data_enrollment_client$age, na.rm = TRUE)
+max_age <- max(data_enrollment_client$age, na.rm = TRUE)
 
 cat(paste0("Clients reported ages ranging from ", min_age, " to ", max_age, " years."))
 ```
 
 ```{r check-missing-age}
 #| results: asis
-n_missing_age <- data_enrollment |>
+n_missing_age <- data_enrollment_client |>
     dplyr::filter(age_grouped == "Missing") |>
     nrow()
 
@@ -98,7 +98,7 @@ cat(n_missing_age_string)
 ```
 
 ```{r check-age-distribution}
-data_enrollment |>
+data_enrollment_client |>
     ggplot2::ggplot() +
     ggplot2::geom_histogram(
         mapping = ggplot2::aes(x = age),
@@ -180,7 +180,7 @@ if (n_problematic == 0) {
 ### Veteran Status
 
 ```{r check-veteran-status-responses}
-data_enrollment |>
+data_enrollment_client |>
     create_data_quality_table(
         response_column = "veteran_status",
         group_column = "is_adult",
@@ -191,11 +191,11 @@ data_enrollment |>
 
 ### Relationship to Head of Household
 
-The `r nrow(enrollments_in_period)` enrollments in this period came from `r dplyr::n_distinct(data_enrollment$household_id)` distinct households.
+The `r nrow(entries_in_period)` enrollments in this period came from `r dplyr::n_distinct(data_enrollment_client$household_id)` distinct households.
 
 ```{r check-one-head-of-household-per-household}
 #| results: asis
-distinct_n_hoh_per_h <- data_enrollment |>
+distinct_n_hoh_per_h <- data_enrollment_client |>
     dplyr::summarise(
         n_hoh = sum(relationship_to_ho_h == "Self (head of household)"),
         .by = "household_id"
@@ -215,7 +215,7 @@ cat(distinct_n_hoh_per_h_string)
 ```
 
 ```{r check-relationship-to-head-of-household-responses}
-data_enrollment |>
+data_enrollment_client |>
     create_data_quality_table(
         response_column = "relationship_to_ho_h",
         no_response_values = c(
@@ -227,7 +227,7 @@ data_enrollment |>
 ```
 
 ```{r check-heads-of-household-age}
-data_enrollment |>
+data_enrollment_client |>
     dplyr::filter(relationship_to_ho_h == "Self (head of household)") |>
     dplyr::count(age_grouped, .drop = FALSE) |>
     ggplot2::ggplot() +
@@ -261,7 +261,7 @@ data_enrollment |>
 
 ### Prior Living Situation
 ```{r check-prior-living-situation-responses}
-data_enrollment |>
+data_enrollment_client |>
     create_data_quality_table(
         response_column = "living_situation",
         group_column = "is_hoh_or_adult",
@@ -277,7 +277,7 @@ data_enrollment |>
 #### Referral Source
 
 ```{r check-referral-source-responses}
-data_enrollment |>
+data_enrollment_client |>
     create_data_quality_table(
         response_column = "referral_source",
         group_column = "is_hoh_or_adult",
@@ -289,7 +289,7 @@ data_enrollment |>
 #### Formerly a Ward of Child Welfare/Foster Care Agency
 
 ```{r check-formerly-ward-of-child-welfare-foster-care-agency}
-data_enrollment |>
+data_enrollment_client |>
     create_data_quality_table(
         response_column = "former_ward_child_welfare",
         group_column = "is_hoh_or_adult",
@@ -301,7 +301,7 @@ data_enrollment |>
 #### Formerly a Ward of Juvenile Justice System
 
 ```{r check-formerly-ward-of-juvenile-justice-system}
-data_enrollment |>
+data_enrollment_client |>
     create_data_quality_table(
         response_column = "former_ward_juvenile_justice",
         group_column = "is_hoh_or_adult",

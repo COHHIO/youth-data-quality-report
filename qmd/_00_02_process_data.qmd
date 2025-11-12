@@ -8,12 +8,8 @@ entries_in_period <- dm$enrollment |>
     dplyr::filter(entry_date >= period_start_date & entry_date <= period_end_date)
 ```
 
-```{r process-enrollment-data}
-data_enrollment <- dm$enrollment |>
-    dplyr::semi_join(
-        enrollments_in_period,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
+```{r process-all-enrollment-client-data}
+processed_enrollment_client <- dm$enrollment |>
     dplyr::left_join(
         y = dm$client,
         by = c("personal_id", "organization_id")
@@ -22,7 +18,8 @@ data_enrollment <- dm$enrollment |>
         age = lubridate::time_length(
             difftime(entry_date, dob),
             "years"
-        ) |> floor(),
+        ) |>
+            floor(),
         age_grouped = dplyr::case_when(
             age >= 25 ~ "25+",
             age >= 18 & age <= 24 ~ "18-24",
@@ -30,11 +27,8 @@ data_enrollment <- dm$enrollment |>
             age >= 6 & age <= 13 ~ "6-13",
             age >= 0 & age <= 5 ~ "0-5",
             TRUE ~ "Missing"
-        ),
-        age_grouped = factor(
-            age_grouped,
-            levels = c("Missing", "0-5", "6-13", "14-17", "18-24", "25+")
-        ),
+        ) |>
+            factor(levels = c("Missing", "0-5", "6-13", "14-17", "18-24", "25+")),
         is_adult = dplyr::case_when(
             age >= 18 ~ "Yes",
             age < 18 ~ "No",
@@ -68,12 +62,15 @@ data_enrollment <- dm$enrollment |>
             (stringr::str_length(ssn) / 4) == 9 ~ "9 Digits",
             TRUE ~ "1 to 8 Digits"
         ) |>
-            factor(
-                levels = c(
-                    "9 Digits",
-                    "1 to 8 Digits",
-                    "No Digits"
-                )
-            )
+            factor(levels = c("9 Digits", "1 to 8 Digits", "No Digits"))
+    )
+```
+```{r process-period-enrollment-client-data}
+data_enrollment_client <- processed_enrollment_client |>
+    dplyr::semi_join(
+        entries_in_period,
+        by = c("enrollment_id", "personal_id", "organization_id")
+    )
+```
     )
 ```
