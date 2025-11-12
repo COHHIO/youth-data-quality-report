@@ -270,11 +270,15 @@ data_enrollment_client |>
     )
 ```
 
-## Federal Partner Program Specific Data Elements
+## Program Specific Data Elements
 
-### RHY
+### Common Program Specific Data Elements
 
-#### Referral Source
+### Federal Partner Program Specific Data Elements
+
+#### RHY
+
+##### Referral Source
 
 ```{r check-referral-source-responses}
 data_enrollment_client |>
@@ -286,7 +290,7 @@ data_enrollment_client |>
     )
 ```
 
-#### Last Grade Completed
+##### Last Grade Completed
 
 ```{r check-last-grade-completed-responses}
 data_education_entry |>
@@ -298,7 +302,7 @@ data_education_entry |>
     )
 ```
 
-#### School Status
+##### School Status
 
 ```{r check-school-status-responses}
 data_education_entry |>
@@ -310,7 +314,7 @@ data_education_entry |>
     )
 ```
 
-#### Employment Status
+##### Employment Status
 
 ```{r check-employed-responses}
 data_employment_entry |>
@@ -345,7 +349,7 @@ data_employment_entry |>
     )
 ```
 
-#### General Health Status
+##### General Health Status
 
 ```{r check-general-health-responses}
 data_health_entry |>
@@ -357,7 +361,7 @@ data_health_entry |>
     )
 ```
 
-#### Dental Health Status
+##### Dental Health Status
 
 ```{r check-dental-health-responses}
 data_health_entry |>
@@ -369,7 +373,7 @@ data_health_entry |>
     )
 ```
 
-#### Mental Health Status
+##### Mental Health Status
 
 ```{r check-mental-health-responses}
 data_health_entry |>
@@ -381,7 +385,7 @@ data_health_entry |>
     )
 ```
 
-#### Pregnancy Status
+##### Pregnancy Status
 
 ```{r check-pregnancy-responses}
 data_health_entry |>
@@ -393,7 +397,7 @@ data_health_entry |>
     )
 ```
 
-#### Formerly a Ward of Child Welfare/Foster Care Agency
+##### Formerly a Ward of Child Welfare/Foster Care Agency
 
 ```{r check-formerly-ward-of-child-welfare-foster-care-agency}
 data_enrollment_client |>
@@ -405,7 +409,7 @@ data_enrollment_client |>
     )
 ```
 
-#### Formerly a Ward of Juvenile Justice System
+##### Formerly a Ward of Juvenile Justice System
 
 ```{r check-formerly-ward-of-juvenile-justice-system}
 data_enrollment_client |>
