@@ -2,10 +2,14 @@
 dm <- readRDS("data/dm_20251013.rds")
 ```
 
-```{r get-enrollments-in-period}
+```{r get-entries-and-exits-in-period}
 entries_in_period <- dm$enrollment |>
     dplyr::select(enrollment_id, personal_id, organization_id, entry_date) |>
     dplyr::filter(entry_date >= period_start_date & entry_date <= period_end_date)
+
+exits_in_period <- dm$exit |>
+    dplyr::select(enrollment_id, personal_id, organization_id, exit_date) |>
+    dplyr::filter(exit_date >= period_start_date & exit_date <= period_end_date)
 ```
 
 ```{r process-all-enrollment-client-data}
