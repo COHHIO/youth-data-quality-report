@@ -1,4 +1,4 @@
-```{r}
+```{r create-data-quality-table-function}
 create_data_quality_table <- function(data,
                                       response_column,
                                       no_response_values = c(
