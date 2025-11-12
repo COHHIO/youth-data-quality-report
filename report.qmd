@@ -310,6 +310,41 @@ data_education_entry |>
     )
 ```
 
+#### Employment Status
+
+```{r check-employed-responses}
+data_employment_entry |>
+    create_data_quality_table(
+        response_column = "employed",
+        combine_responses = FALSE,
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Employment Status"
+    )
+```
+
+```{r check-employment-type-responses}
+data_employment_entry |>
+    create_data_quality_table(
+        response_column = "employment_type",
+        no_response_values = "Missing",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Employment Type"
+    )
+```
+
+```{r check-not-employed-reason-responses}
+data_employment_entry |>
+    create_data_quality_table(
+        response_column = "not_employed_reason",
+        no_response_values = "Missing",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Not Employed Reason"
+    )
+```
+
 #### Formerly a Ward of Child Welfare/Foster Care Agency
 
 ```{r check-formerly-ward-of-child-welfare-foster-care-agency}
