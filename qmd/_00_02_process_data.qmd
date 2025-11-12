@@ -116,3 +116,55 @@ data_health_entry <- process_program_specific_data_element(
     data_hoh_and_or_adult = data_hoh_and_or_adult
 )
 ```
+
+```{r process-health-conditions-and-disabilities-data-at-entry}
+data_health_conditions_and_disabilites_entry <- process_program_specific_data_element(
+    data_element = dm$disabilities |> dplyr::distinct(),
+    enrollments = entries_in_period,
+    stage = "Project start"
+) |>
+    # Complete missing responses
+    dplyr::mutate(
+        disability_response = dplyr::case_when(
+            disability_response %in% c(
+                "Yes",
+                "No",
+                "Alcohol use disorder",
+                "Drug use disorder",
+                "Both alcohol and drug use disorders"
+            ) ~ "Client provided a response",
+            TRUE ~ disability_response
+        ) |>
+            factor(
+                levels = c(
+                    "Client provided a response",
+                    "Client doesn't know",
+                    "Client prefers not to answer",
+                    "Data not collected",
+                    "Missing"
+                )
+            )
+    ) |>
+    tidyr::pivot_wider(
+        names_from = disability_type,
+        values_from = disability_response
+    ) |>
+    dplyr::mutate(
+        dplyr::across(
+            dplyr::where(is.factor),
+            ~ tidyr::replace_na(.x, "Missing")
+        )
+    ) |>
+    tidyr::pivot_longer(
+        cols = c(
+            "Physical Disability",
+            "Developmental Disability",
+            "Chronic Health Condition",
+            "HIV/AIDS",
+            "Mental Health Disorder",
+            "Substance Use Disorder"
+        ),
+        names_to = "disability_type",
+        values_to = "disability_response"
+    )
+```

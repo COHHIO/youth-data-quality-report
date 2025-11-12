@@ -84,16 +84,27 @@ create_data_quality_table <- function(
 ```
 
 ```{r process-data-function}
-process_program_specific_data_element <- function(data_element, enrollments, stage, data_hoh_and_or_adult) {
-    data_element |>
+process_program_specific_data_element <- function(
+  data_element,
+  enrollments,
+  stage,
+  data_hoh_and_or_adult = NULL
+) {
+    out <- data_element |>
         dplyr::semi_join(
             enrollments,
             by = c("enrollment_id", "personal_id", "organization_id")
         ) |>
-        dplyr::filter(data_collection_stage == stage) |>
-        dplyr::left_join(
-            y = data_hoh_and_or_adult,
-            by = c("enrollment_id", "personal_id", "organization_id")
-        )
+        dplyr::filter(data_collection_stage == stage)
+
+    if (!is.null(data_hoh_and_or_adult)) {
+        out <- out |>
+            dplyr::left_join(
+                y = data_hoh_and_or_adult,
+                by = c("enrollment_id", "personal_id", "organization_id")
+            )
+    }
+
+    out
 }
 ```

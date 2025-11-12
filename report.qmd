@@ -274,6 +274,76 @@ data_enrollment_client |>
 
 ### Common Program Specific Data Elements
 
+#### Health Conditions and Disabilities
+
+TODO:
+
+##### Physical Disability
+
+```{r check-physical-disability-responses}
+data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Physical Disability") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Physical Disability"
+    )
+```
+
+##### Developmental Disability
+
+```{r check-developmental-disability-responses}
+data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Developmental Disability") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Developmental Disability"
+    )
+```
+
+##### Chronic Health Condition
+
+```{r check-chronic-health-condition-responses}
+data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Chronic Health Condition") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Chronic Health Condition"
+    )
+```
+
+##### HIV/AIDS
+
+```{r check-hiv-aids-responses}
+data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "HIV/AIDS") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "HIV/AIDS"
+    )
+```
+
+##### Mental Health Disorder
+
+```{r check-mental-health-disorder-responses}
+data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Mental Health Disorder") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Mental Health Disorder"
+    )
+```
+
+##### Substance Use Disorder
+
+```{r check-substance-use-disorder-responses}
+data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Substance Use Disorder") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Substance Use Disorder"
+    )
+```
+
 ### Federal Partner Program Specific Data Elements
 
 #### RHY
