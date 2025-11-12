@@ -32,11 +32,11 @@ period_end_date <- params$period_end_date
 
 ## Universal Data Elements
 
-There were `r nrow(enrollments_in_period)` enrollments between `r period_start_date` and `r period_end_date`.
+There were `r nrow(entries_in_period)` enrollments between `r period_start_date` and `r period_end_date`.
 
 ```{r check-duplicated-enrollment-id}
 #| results: asis
-n_duplicated_enrollment_ids <- enrollments_in_period |>
+n_duplicated_enrollment_ids <- entries_in_period |>
     dplyr::count(enrollment_id) |>
     dplyr::filter(n > 1) |>
     nrow()
@@ -129,7 +129,7 @@ data_enrollment |>
 ```{r process-ethnicity-data}
 ethnicity_summary <- dm$ethnicity |>
     dplyr::semi_join(
-        y = enrollments_in_period,
+        y = entries_in_period,
         by = c("personal_id", "organization_id")
     ) |>
     dplyr::summarise(
@@ -138,7 +138,7 @@ ethnicity_summary <- dm$ethnicity |>
         .by = c("personal_id", "organization_id")
     )
 
-data_ethnicity <- enrollments_in_period |>
+data_ethnicity <- entries_in_period |>
     dplyr::left_join(
         y = ethnicity_summary,
         by = c("personal_id", "organization_id")
