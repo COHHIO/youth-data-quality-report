@@ -286,6 +286,30 @@ data_enrollment_client |>
     )
 ```
 
+#### Last Grade Completed
+
+```{r check-last-grade-completed-responses}
+data_education_entry |>
+    create_data_quality_table(
+        response_column = "last_grade_completed",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Last Grade Completed"
+    )
+```
+
+#### School Status
+
+```{r check-school-status-responses}
+data_education_entry |>
+    create_data_quality_table(
+        response_column = "school_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "School Status"
+    )
+```
+
 #### Formerly a Ward of Child Welfare/Foster Care Agency
 
 ```{r check-formerly-ward-of-child-welfare-foster-care-agency}
