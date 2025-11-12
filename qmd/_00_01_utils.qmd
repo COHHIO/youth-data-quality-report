@@ -1,16 +1,18 @@
 ```{r create-data-quality-table-function}
-create_data_quality_table <- function(data,
-                                      response_column,
-                                      no_response_values = c(
-                                          "Client doesn't know",
-                                          "Client prefers not to answer",
-                                          "Data not collected",
-                                          "Missing"
-                                      ),
-                                      combine_responses = TRUE,
-                                      group_column = NULL,
-                                      group_column_label = NULL,
-                                      table_title) {
+create_data_quality_table <- function(
+  data,
+  response_column,
+  no_response_values = c(
+      "Client doesn't know",
+      "Client prefers not to answer",
+      "Data not collected",
+      "Missing"
+  ),
+  combine_responses = TRUE,
+  group_column = NULL,
+  group_column_label = NULL,
+  table_title
+) {
     if (combine_responses == TRUE) {
         table_data <- data |>
             dplyr::mutate(
