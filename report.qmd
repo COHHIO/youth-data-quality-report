@@ -345,6 +345,54 @@ data_employment_entry |>
     )
 ```
 
+#### General Health Status
+
+```{r check-general-health-responses}
+data_health_entry |>
+    create_data_quality_table(
+        response_column = "general_health_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "General Health Status"
+    )
+```
+
+#### Dental Health Status
+
+```{r check-dental-health-responses}
+data_health_entry |>
+    create_data_quality_table(
+        response_column = "dental_health_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Dental Health Status"
+    )
+```
+
+#### Mental Health Status
+
+```{r check-mental-health-responses}
+data_health_entry |>
+    create_data_quality_table(
+        response_column = "mental_health_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Mental Health Status"
+    )
+```
+
+#### Pregnancy Status
+
+```{r check-pregnancy-responses}
+data_health_entry |>
+    create_data_quality_table(
+        response_column = "pregnancy_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Pregnancy Status"
+    )
+```
+
 #### Formerly a Ward of Child Welfare/Foster Care Agency
 
 ```{r check-formerly-ward-of-child-welfare-foster-care-agency}
