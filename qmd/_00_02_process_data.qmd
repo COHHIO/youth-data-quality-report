@@ -41,7 +41,7 @@ processed_enrollment_client <- dm$enrollment |>
             TRUE ~ "No"
         ) |>
             factor(levels = c("Yes", "No", "Unknown")),
-        is_hoh_or_adult = dplyr::case_when(
+        is_hoh_and_or_adult = dplyr::case_when(
             is_adult == "Yes" | is_hoh == "Yes" ~ "Yes",
             is_adult == "No" & is_hoh == "No" ~ "No",
             TRUE ~ "Unknown"
@@ -65,6 +65,19 @@ processed_enrollment_client <- dm$enrollment |>
             factor(levels = c("9 Digits", "1 to 8 Digits", "No Digits"))
     )
 ```
+
+```{r hoh-and-or-adult-identification}
+data_hoh_and_or_adult <- processed_enrollment_client |>
+    dplyr::select(
+        enrollment_id,
+        personal_id,
+        organization_id,
+        is_adult,
+        is_hoh,
+        is_hoh_and_or_adult
+    )
+```
+
 ```{r process-period-enrollment-client-data}
 data_enrollment_client <- processed_enrollment_client |>
     dplyr::semi_join(
