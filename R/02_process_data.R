@@ -1,18 +1,20 @@
-```{r read-data}
+# Read data
 dm <- readRDS("data/dm_20251013.rds")
-```
 
-```{r get-entries-and-exits-in-period}
+# Get entries and exits in period
 entries_in_period <- dm$enrollment |>
     dplyr::select(enrollment_id, personal_id, organization_id, entry_date) |>
-    dplyr::filter(entry_date >= period_start_date & entry_date <= period_end_date)
+    dplyr::filter(
+        entry_date >= period_start_date & entry_date <= period_end_date
+    )
 
 exits_in_period <- dm$exit |>
     dplyr::select(enrollment_id, personal_id, organization_id, exit_date) |>
-    dplyr::filter(exit_date >= period_start_date & exit_date <= period_end_date)
-```
+    dplyr::filter(
+        exit_date >= period_start_date & exit_date <= period_end_date
+    )
 
-```{r process-all-enrollment-client-data}
+# Process all enrollment client data
 processed_enrollment_client <- dm$enrollment |>
     dplyr::left_join(
         y = dm$client,
@@ -32,7 +34,9 @@ processed_enrollment_client <- dm$enrollment |>
             age >= 0 & age <= 5 ~ "0-5",
             TRUE ~ "Missing"
         ) |>
-            factor(levels = c("Missing", "0-5", "6-13", "14-17", "18-24", "25+")),
+            factor(
+                levels = c("Missing", "0-5", "6-13", "14-17", "18-24", "25+")
+            ),
         is_adult = dplyr::case_when(
             age >= 18 ~ "Yes",
             age < 18 ~ "No",
@@ -41,7 +45,8 @@ processed_enrollment_client <- dm$enrollment |>
             factor(levels = c("Yes", "No", "Unknown")),
         is_hoh = dplyr::case_when(
             relationship_to_ho_h == "Self (head of household)" ~ "Yes",
-            relationship_to_ho_h %in% c("Data not collected", "Missing") ~ "Unknown",
+            relationship_to_ho_h %in%
+                c("Data not collected", "Missing") ~ "Unknown",
             TRUE ~ "No"
         ) |>
             factor(levels = c("Yes", "No", "Unknown")),
@@ -68,9 +73,8 @@ processed_enrollment_client <- dm$enrollment |>
         ) |>
             factor(levels = c("9 Digits", "1 to 8 Digits", "No Digits"))
     )
-```
 
-```{r hoh-and-or-adult-identification}
+# Head of Household and Adult identification
 data_hoh_and_or_adult <- processed_enrollment_client |>
     dplyr::select(
         enrollment_id,
@@ -80,56 +84,52 @@ data_hoh_and_or_adult <- processed_enrollment_client |>
         is_hoh,
         is_hoh_and_or_adult
     )
-```
 
-```{r process-period-enrollment-client-data}
+# Process period enrollment client data
 data_enrollment_client <- processed_enrollment_client |>
     dplyr::semi_join(
         entries_in_period,
         by = c("enrollment_id", "personal_id", "organization_id")
     )
-```
 
-```{r process-education-data-at-entry}
+# Process education data
 data_education_entry <- process_program_specific_data_element(
     data_element = dm$education,
     enrollments = entries_in_period,
     stage = "Project start",
     data_hoh_and_or_adult = data_hoh_and_or_adult
 )
-```
 
-```{r process-employment-data-at-entry}
+# Process employment data
 data_employment_entry <- process_program_specific_data_element(
     data_element = dm$employment,
     enrollments = entries_in_period,
     stage = "Project start",
     data_hoh_and_or_adult = data_hoh_and_or_adult
 )
-```
 
-```{r process-health-data-at-entry}
+# Process health data
 data_health_entry <- process_program_specific_data_element(
     data_element = dm$health,
     enrollments = entries_in_period,
     stage = "Project start",
     data_hoh_and_or_adult = data_hoh_and_or_adult
 )
-```
 
-```{r process-health-conditions-and-disabilities-data}
+# Process health conditions and disabilities data
 data_health_conditions_and_disabilites <- dm$disabilities |>
     dplyr::distinct() |>
     # Complete missing responses
     dplyr::mutate(
         disability_response = dplyr::case_when(
-            disability_response %in% c(
-                "Yes",
-                "No",
-                "Alcohol use disorder",
-                "Drug use disorder",
-                "Both alcohol and drug use disorders"
-            ) ~ "Client provided a response",
+            disability_response %in%
+                c(
+                    "Yes",
+                    "No",
+                    "Alcohol use disorder",
+                    "Drug use disorder",
+                    "Both alcohol and drug use disorders"
+                ) ~ "Client provided a response",
             TRUE ~ disability_response
         ) |>
             factor(
@@ -177,4 +177,3 @@ data_health_conditions_and_disabilites_exit <- process_program_specific_data_ele
     enrollments = exits_in_period,
     stage = "Project exit"
 )
-```

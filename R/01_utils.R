@@ -1,23 +1,24 @@
-```{r create-data-quality-table-function}
 create_data_quality_table <- function(
-  data,
-  response_column,
-  no_response_values = c(
-      "Client doesn't know",
-      "Client prefers not to answer",
-      "Data not collected",
-      "Missing"
-  ),
-  combine_responses = TRUE,
-  group_column = NULL,
-  group_column_label = NULL,
-  table_title
+    data,
+    response_column,
+    no_response_values = c(
+        "Client doesn't know",
+        "Client prefers not to answer",
+        "Data not collected",
+        "Missing"
+    ),
+    combine_responses = TRUE,
+    group_column = NULL,
+    group_column_label = NULL,
+    table_title
 ) {
     if (combine_responses == TRUE) {
         table_data <- data |>
             dplyr::mutate(
                 data_quality_status = dplyr::case_when(
-                    .data[[response_column]] %in% no_response_values ~ .data[[response_column]],
+                    .data[[response_column]] %in% no_response_values ~ .data[[
+                        response_column
+                    ]],
                     TRUE ~ "Client provided a response"
                 ) |>
                     factor(
@@ -39,10 +40,19 @@ create_data_quality_table <- function(
             dplyr::count(data_quality_status, name = "Count", .drop = FALSE)
     } else {
         table_data <- table_data |>
-            dplyr::count(data_quality_status, .data[[group_column]], .drop = FALSE) |>
-            tidyr::pivot_wider(names_from = dplyr::all_of(group_column), values_from = n)
+            dplyr::count(
+                data_quality_status,
+                .data[[group_column]],
+                .drop = FALSE
+            ) |>
+            tidyr::pivot_wider(
+                names_from = dplyr::all_of(group_column),
+                values_from = n
+            )
 
-        spanner_columns <- names(table_data)[names(table_data) != "data_quality_status"]
+        spanner_columns <- names(table_data)[
+            names(table_data) != "data_quality_status"
+        ]
     }
 
     gt <- table_data |>
@@ -72,7 +82,9 @@ create_data_quality_table <- function(
             ) |>
             gt::tab_style(
                 style = gt::cell_text(v_align = "middle"),
-                locations = gt::cells_column_labels(columns = data_quality_status)
+                locations = gt::cells_column_labels(
+                    columns = data_quality_status
+                )
             )
     }
 
@@ -81,14 +93,12 @@ create_data_quality_table <- function(
             table.font.names = "Roboto"
         )
 }
-```
 
-```{r process-data-function}
 process_program_specific_data_element <- function(
-  data_element,
-  enrollments,
-  stage,
-  data_hoh_and_or_adult = NULL
+    data_element,
+    enrollments,
+    stage,
+    data_hoh_and_or_adult = NULL
 ) {
     out <- data_element |>
         dplyr::semi_join(
@@ -107,4 +117,3 @@ process_program_specific_data_element <- function(
 
     out
 }
-```

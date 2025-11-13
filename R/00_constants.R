@@ -1,4 +1,3 @@
-```{r set-color-palette}
 palette <- list(
     # Primary brand colors (from COHHIO style guide)
     navy_blue = "#07274A",
@@ -9,4 +8,3 @@ palette <- list(
     green = "#7DBB77",
     red = "#AE2012"
 )
-```

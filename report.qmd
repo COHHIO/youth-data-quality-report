@@ -24,11 +24,12 @@ period_start_date <- lubridate::ymd(params$period_start_date)
 period_end_date <- lubridate::ymd(params$period_end_date)
 ```
 
-{{< include /qmd/_00_00_constants.qmd >}}
-
-{{< include /qmd/_00_01_utils.qmd >}}
-
-{{< include /qmd/_00_02_process_data.qmd >}}
+```{r load-data-and-utils}
+purrr::walk(
+  .x = list.files("R", full.names = TRUE),
+  .f = source
+)
+```
 
 ## Overview
 
