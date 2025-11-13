@@ -30,9 +30,12 @@ period_end_date <- lubridate::ymd(params$period_end_date)
 
 {{< include /qmd/_00_02_process_data.qmd >}}
 
-## Universal Data Elements
+## Overview
 
-There were `r nrow(entries_in_period)` enrollments between `r period_start_date` and `r period_end_date`.
+During the period from `r format(period_start_date, "%m/%d/%Y")` to `r format(period_end_date, "%m/%d/%Y")` there were:
+
+- **`r nrow(entries_in_period)` enrollments** from **`r dplyr::n_distinct(data_enrollment_client$household_id)` distinct households**
+- **`r nrow(exits_in_period)` exits**
 
 ```{r check-duplicated-enrollment-id}
 #| results: asis
@@ -43,13 +46,36 @@ n_duplicated_enrollment_ids <- entries_in_period |>
 
 n_duplicated_enrollment_ids_string <- ifelse(
     n_duplicated_enrollment_ids == 0,
-    "✅ There are no duplicated enrollment IDs.",
-    paste0("❌ There are ", n_duplicated_enrollment_ids, " duplicated enrollment IDs.")
+    "✅ There were no duplicated enrollment IDs.",
+    paste0("❌ There were ", n_duplicated_enrollment_ids, " duplicated enrollment IDs.")
 )
 
 cat(n_duplicated_enrollment_ids_string)
 ```
 
+```{r check-one-head-of-household-per-household}
+#| results: asis
+distinct_n_hoh_per_h <- data_enrollment_client |>
+    dplyr::summarise(
+        n_hoh = sum(relationship_to_ho_h == "Self (head of household)"),
+        .by = "household_id"
+    ) |>
+    dplyr::count(n_hoh) |>
+    dplyr::pull(n_hoh)
+
+if (length(distinct_n_hoh_per_h) == 1 && distinct_n_hoh_per_h == 1) {
+    cat("✅ All households had exactly one head of household.")
+} else {
+    if (0 %in% distinct_n_hoh_per_h) {
+        cat("❌ Some households didn't have a head of household.")
+    }
+    if (any(distinct_n_hoh_per_h > 1)) {
+        cat("❌ Some households had more than one head of household.")
+    }
+}
+```
+
+## Universal Data Elements
 ### Social Security Number
 
 SSN data is recorded in two fields:
@@ -190,29 +216,6 @@ data_enrollment_client |>
 ```
 
 ### Relationship to Head of Household
-
-The `r nrow(entries_in_period)` enrollments in this period came from `r dplyr::n_distinct(data_enrollment_client$household_id)` distinct households.
-
-```{r check-one-head-of-household-per-household}
-#| results: asis
-distinct_n_hoh_per_h <- data_enrollment_client |>
-    dplyr::summarise(
-        n_hoh = sum(relationship_to_ho_h == "Self (head of household)"),
-        .by = "household_id"
-    ) |>
-    dplyr::count(n_hoh) |>
-    dplyr::pull(n_hoh)
-
-distinct_n_hoh_per_h_filtered <- distinct_n_hoh_per_h[distinct_n_hoh_per_h != 1]
-
-distinct_n_hoh_per_h_string <- ifelse(
-    length(distinct_n_hoh_per_h) == 1 && distinct_n_hoh_per_h == 1,
-    "✅ All households have exactly one head of household.",
-    paste0("❌ Some households have an incorrect number of heads of household. Found households with ", paste0(distinct_n_hoh_per_h_filtered, collapse = ", "), " heads of household.")
-)
-
-cat(distinct_n_hoh_per_h_string)
-```
 
 ```{r check-relationship-to-head-of-household-responses}
 data_enrollment_client |>
