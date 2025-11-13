@@ -33,7 +33,7 @@ purrr::walk(
 
 ## Overview
 
-During the period from `r format(period_start_date, "%m/%d/%Y")` to `r format(period_end_date, "%m/%d/%Y")` there were:
+During the period from `r format(period_start_date, "%m/%d/%Y")` to `r format(period_end_date, "%m/%d/%Y")` there are:
 
 - **`r nrow(entries_in_period)` enrollments** from **`r dplyr::n_distinct(data_enrollment_client$household_id)` distinct households**
 - **`r nrow(exits_in_period)` exits**
@@ -47,8 +47,8 @@ n_duplicated_enrollment_ids <- entries_in_period |>
 
 n_duplicated_enrollment_ids_string <- ifelse(
     n_duplicated_enrollment_ids == 0,
-    "✅ There were no duplicated enrollment IDs.",
-    paste0("❌ There were ", n_duplicated_enrollment_ids, " duplicated enrollment IDs.")
+    "✅ There are no duplicated enrollment IDs.",
+    paste0("❌ There are ", n_duplicated_enrollment_ids, " duplicated enrollment IDs.")
 )
 
 cat(n_duplicated_enrollment_ids_string)
@@ -65,13 +65,13 @@ distinct_n_hoh_per_h <- data_enrollment_client |>
     dplyr::pull(n_hoh)
 
 if (length(distinct_n_hoh_per_h) == 1 && distinct_n_hoh_per_h == 1) {
-    cat("✅ All households had exactly one head of household.")
+    cat("✅ All households have exactly one head of household.")
 } else {
     if (0 %in% distinct_n_hoh_per_h) {
-        cat("❌ Some households didn't have a head of household.")
+        cat("❌ Some households are missing a head of household.")
     }
     if (any(distinct_n_hoh_per_h > 1)) {
-        cat("❌ Some households had more than one head of household.")
+        cat("❌ Some households have more than one head of household.")
     }
 }
 ```
@@ -86,9 +86,9 @@ n_exits_without_an_enrollment_record <- exits_in_period |>
     nrow()
 
 if (n_exits_without_an_enrollment_record == 0) {
-    cat("✅ All exits were associated with an enrollment.")
+    cat("✅ All exits are associated with an enrollment.")
 } else {
-    cat(glue::glue("❌ { n_exits_without_an_enrollment_record } weren't associated with an enrollment."))
+    cat(glue::glue("❌ { n_exits_without_an_enrollment_record } aren't associated with an enrollment."))
 }
 ```
 
@@ -311,13 +311,9 @@ n_disabilities_records_at_entry_without_enrollment_record <- data_health_conditi
     nrow()
 
 if (n_disabilities_records_at_entry_without_enrollment_record == 0) {
-    cat("✅ All records collected at entry matched an enrollment record.")
+    cat("✅ All records collected at entry match an enrollment record.")
 } else {
-    cat(paste0(
-        "❌ ",
-        n_disabilities_records_at_entry_without_enrollment_record,
-        " records collected at entry didn't match an enrollment record."
-    ))
+    cat(paste0("❌ ", n_disabilities_records_at_entry_without_enrollment_record, " records collected at entry don't match an enrollment record."))
 }
 ```
 
@@ -332,13 +328,9 @@ n_enrollments_without_health_conditions_record <- entries_in_period |>
     nrow()
 
 if (n_enrollments_without_health_conditions_record == 0) {
-    cat("✅ All enrollments had a health conditions and disabilities record.")
+    cat("✅ All enrollments have a health conditions and disabilities record.")
 } else {
-    cat(paste0(
-        "❌ ",
-        n_enrollments_without_health_conditions_record,
-        " enrollments were missing a health conditions and disabilities record."
-    ))
+    cat(paste0("❌ ", n_enrollments_without_health_conditions_record, " enrollments are missing a health conditions and disabilities record."))
 }
 ```
 
@@ -352,15 +344,9 @@ n_disabilities_records_at_exit_without_exit_record <- data_health_conditions_and
     nrow()
 
 if (n_disabilities_records_at_exit_without_exit_record == 0) {
-    cat(
-        "✅ All records collected at exit matched an exit record."
-    )
+    cat("✅ All records collected at exit match an exit record.")
 } else {
-    cat(paste0(
-        "❌ ",
-        n_disabilities_records_at_exit_without_exit_record,
-        " records collected at exit didn't match an exit record."
-    ))
+    cat(paste0("❌ ", n_disabilities_records_at_exit_without_exit_record, " records collected at exit don't match an exit record."))
 }
 
 ```
@@ -376,13 +362,9 @@ n_exits_without_health_conditions_record <- exits_in_period |>
     nrow()
 
 if (n_exits_without_health_conditions_record == 0) {
-    cat("✅ All exits had a health conditions and disabilities record.")
+    cat("✅ All exits have a health conditions and disabilities record.")
 } else {
-    cat(paste0(
-        "❌ ",
-        n_exits_without_health_conditions_record,
-        " exits were missing a health conditions and disabilities record."
-    ))
+    cat(paste0("❌ ", n_exits_without_health_conditions_record, " exits are missing a health conditions and disabilities record."))
 }
 ```
 
@@ -533,13 +515,9 @@ n_education_records_at_entry_without_enrollment_record <- data_education_entry |
     nrow()
 
 if (n_education_records_at_entry_without_enrollment_record == 0) {
-    cat("✅ All records collected at entry matched an enrollment record.")
+    cat("✅ All records collected at entry match an enrollment record.")
 } else {
-    cat(paste0(
-        "❌ ",
-        n_education_records_at_entry_without_enrollment_record,
-        " records collected at entry didn't match an enrollment record."
-    ))
+    cat(paste0("❌ ", n_education_records_at_entry_without_enrollment_record, " records collected at entry don't match an enrollment record."))
 }
 ```
 
@@ -554,13 +532,9 @@ n_enrollments_without_education_record <- entries_in_period |>
     nrow()
 
 if (n_enrollments_without_education_record == 0) {
-    cat("✅ All enrollments had an education record.")
+    cat("✅ All enrollments have an education record.")
 } else {
-    cat(paste0(
-        "❌ ",
-        n_enrollments_without_education_record,
-        " enrollments were missing an education record."
-    ))
+    cat(paste0("❌ ", n_enrollments_without_education_record, " enrollments are missing an education record."))
 }
 ```
 
@@ -574,13 +548,9 @@ n_education_records_at_exit_without_exit_record <- data_education_exit |>
     nrow()
 
 if (n_education_records_at_exit_without_exit_record == 0) {
-    cat("✅ All records collected at exit matched an exit record.")
+    cat("✅ All records collected at exit match an exit record.")
 } else {
-    cat(paste0(
-        "❌ ",
-        n_education_records_at_exit_without_exit_record,
-        " records collected at exit didn't match an exit record."
-    ))
+    cat(paste0("❌ ", n_education_records_at_exit_without_exit_record, " records collected at exit don't match an exit record."))
 }
 
 ```
@@ -596,13 +566,9 @@ n_exits_without_education_record <- exits_in_period |>
     nrow()
 
 if (n_exits_without_education_record == 0) {
-    cat("✅ All exits had an education record.")
+    cat("✅ All exits have an education record.")
 } else {
-    cat(paste0(
-        "❌ ",
-        n_exits_without_education_record,
-        " exits were missing an education record."
-    ))
+    cat(paste0("❌ ", n_exits_without_education_record, " exits are missing an education record."))
 }
 ```
 
