@@ -75,7 +75,24 @@ if (length(distinct_n_hoh_per_h) == 1 && distinct_n_hoh_per_h == 1) {
 }
 ```
 
+```{r check-exit-associated-with-enrollment}
+#| results: asis
+n_exits_without_an_enrollment_record <- exits_in_period |>
+    dplyr::anti_join(
+        y = dm$enrollment,
+        by = c("enrollment_id", "personal_id", "organization_id")
+    ) |>
+    nrow()
+
+if (n_exits_without_an_enrollment_record == 0) {
+    cat("✅ All exits were associated with an enrollment.")
+} else {
+    cat(glue::glue("❌ { n_exits_without_an_enrollment_record } weren't associated with an enrollment."))
+}
+```
+
 ## Universal Data Elements
+
 ### Social Security Number
 
 SSN data is recorded in two fields:
