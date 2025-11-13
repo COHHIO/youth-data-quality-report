@@ -504,36 +504,79 @@ data_education_exit |>
 
 ##### Employment Status
 
-```{r check-employed-responses}
+```{r check-employment-record-match}
+#| results: asis
+check_record_match(
+    data_entry = data_employment_entry,
+    entries = entries_in_period,
+    data_exit = data_employment_exit,
+    exits = exits_in_period
+)
+```
+
+```{r check-employed-responses-entry}
 data_employment_entry |>
     create_data_quality_table(
         response_column = "employed",
         combine_responses = FALSE,
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "Employment Status"
+        table_title = "Employment Status (Entry)"
     )
 ```
 
-```{r check-employment-type-responses}
+```{r check-employment-type-responses-entry}
 data_employment_entry |>
     create_data_quality_table(
         response_column = "employment_type",
         no_response_values = "Missing",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "Employment Type"
+        table_title = "Employment Type (Entry)"
     )
 ```
 
-```{r check-not-employed-reason-responses}
+```{r check-not-employed-reason-responses-entry}
 data_employment_entry |>
     create_data_quality_table(
         response_column = "not_employed_reason",
         no_response_values = "Missing",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "Not Employed Reason"
+        table_title = "Not Employed Reason (Entry)"
+    )
+```
+
+```{r check-employed-responses-exit}
+data_employment_exit |>
+    create_data_quality_table(
+        response_column = "employed",
+        combine_responses = FALSE,
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Employment Status (Exit)"
+    )
+```
+
+```{r check-employment-type-responses-exit}
+data_employment_exit |>
+    create_data_quality_table(
+        response_column = "employment_type",
+        no_response_values = "Missing",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Employment Type (Exit)"
+    )
+```
+
+```{r check-not-employed-reason-responses-exit}
+data_employment_exit |>
+    create_data_quality_table(
+        response_column = "not_employed_reason",
+        no_response_values = "Missing",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Not Employed Reason (Exit)"
     )
 ```
 
