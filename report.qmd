@@ -430,6 +430,47 @@ data_health_conditions_and_disabilites_exit |>
     )
 ```
 
+#### Domestic Violence
+
+```{r check-domestic-violence-record-match}
+#| results: asis
+check_record_match(
+    data_entry = data_domestic_violence_entry,
+    entries = entries_in_period
+)
+```
+
+```{r check-domestic-violence-responses-entry}
+data_domestic_violence_entry |>
+    create_data_quality_table(
+        response_column = "domestic_violence_survivor",
+        combine_responses = FALSE,
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Domestic Violence Survivor (Entry)"
+    )
+```
+
+```{r check-when-occurred-responses-entry}
+data_domestic_violence_entry |>
+    create_data_quality_table(
+        response_column = "when_occurred",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "When Occurred (Entry)"
+    )
+```
+
+```{r check-currently-fleeing-responses-entry}
+data_domestic_violence_entry |>
+    create_data_quality_table(
+        response_column = "currently_fleeing",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Currently Fleeing (Entry)"
+    )
+```
+
 ### Federal Partner Program Specific Data Elements
 
 #### RHY

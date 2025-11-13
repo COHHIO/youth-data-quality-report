@@ -198,3 +198,11 @@ data_health_conditions_and_disabilites_exit <- process_program_specific_data_ele
     enrollments = exits_in_period,
     stage = "Project exit"
 )
+
+# Process domestic violence data
+data_domestic_violence_entry <- process_program_specific_data_element(
+    data_element = dm$domestic_violence,
+    enrollments = entries_in_period,
+    stage = "Project start",
+    data_hoh_and_or_adult = data_hoh_and_or_adult
+)
