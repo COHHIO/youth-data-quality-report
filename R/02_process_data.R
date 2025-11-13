@@ -118,7 +118,7 @@ data_employment_entry <- process_program_specific_data_element(
 data_employment_exit <- process_program_specific_data_element(
     data_element = dm$employment,
     enrollments = exits_in_period,
-    stage = "Project start",
+    stage = "Project exit",
     data_hoh_and_or_adult = data_hoh_and_or_adult
 )
 
