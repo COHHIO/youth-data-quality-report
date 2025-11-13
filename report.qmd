@@ -301,71 +301,14 @@ data_enrollment_client |>
 
 #### Health Conditions and Disabilities
 
-```{r check-health-conditions-disabilities-record-match-enrollment}
+```{r check-health-conditions-disabilites-record-match}
 #| results: asis
-n_disabilities_records_at_entry_without_enrollment_record <- data_health_conditions_and_disabilites_entry |>
-    dplyr::anti_join(
-        y = entries_in_period,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
-    nrow()
-
-if (n_disabilities_records_at_entry_without_enrollment_record == 0) {
-    cat("✅ All records collected at entry match an enrollment record.")
-} else {
-    cat(paste0("❌ ", n_disabilities_records_at_entry_without_enrollment_record, " records collected at entry don't match an enrollment record."))
-}
-```
-
-```{r check-enrollment-record-match-health-conditions-disabilities}
-#| results: asis
-n_enrollments_without_health_conditions_record <- entries_in_period |>
-    dplyr::anti_join(
-        y = data_health_conditions_and_disabilites_entry,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
-    dplyr::distinct(enrollment_id, personal_id, organization_id) |>
-    nrow()
-
-if (n_enrollments_without_health_conditions_record == 0) {
-    cat("✅ All enrollments have a health conditions and disabilities record.")
-} else {
-    cat(paste0("❌ ", n_enrollments_without_health_conditions_record, " enrollments are missing a health conditions and disabilities record."))
-}
-```
-
-```{r check-health-conditions-disabilities-record-match-exit}
-#| results: asis
-n_disabilities_records_at_exit_without_exit_record <- data_health_conditions_and_disabilites_exit |>
-    dplyr::anti_join(
-        y = exits_in_period,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
-    nrow()
-
-if (n_disabilities_records_at_exit_without_exit_record == 0) {
-    cat("✅ All records collected at exit match an exit record.")
-} else {
-    cat(paste0("❌ ", n_disabilities_records_at_exit_without_exit_record, " records collected at exit don't match an exit record."))
-}
-
-```
-
-```{r check-exit-record-match-health-conditions-disabilities}
-#| results: asis
-n_exits_without_health_conditions_record <- exits_in_period |>
-    dplyr::anti_join(
-        y = data_health_conditions_and_disabilites_exit,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
-    dplyr::distinct(enrollment_id, personal_id, organization_id) |>
-    nrow()
-
-if (n_exits_without_health_conditions_record == 0) {
-    cat("✅ All exits have a health conditions and disabilities record.")
-} else {
-    cat(paste0("❌ ", n_exits_without_health_conditions_record, " exits are missing a health conditions and disabilities record."))
-}
+check_record_match(
+    data_entry = data_health_conditions_and_disabilites_entry,
+    entries = entries_in_period,
+    data_exit = data_health_conditions_and_disabilites_exit,
+    exits = exits_in_period
+)
 ```
 
 ##### Physical Disability
@@ -505,71 +448,14 @@ data_enrollment_client |>
 
 ##### Education
 
-```{r check-education-record-match-enrollment}
+```{r check-education-record-match}
 #| results: asis
-n_education_records_at_entry_without_enrollment_record <- data_education_entry |>
-    dplyr::anti_join(
-        y = entries_in_period,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
-    nrow()
-
-if (n_education_records_at_entry_without_enrollment_record == 0) {
-    cat("✅ All records collected at entry match an enrollment record.")
-} else {
-    cat(paste0("❌ ", n_education_records_at_entry_without_enrollment_record, " records collected at entry don't match an enrollment record."))
-}
-```
-
-```{r check-enrollment-record-match-education}
-#| results: asis
-n_enrollments_without_education_record <- entries_in_period |>
-    dplyr::anti_join(
-        y = data_education_entry,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
-    dplyr::distinct(enrollment_id, personal_id, organization_id) |>
-    nrow()
-
-if (n_enrollments_without_education_record == 0) {
-    cat("✅ All enrollments have an education record.")
-} else {
-    cat(paste0("❌ ", n_enrollments_without_education_record, " enrollments are missing an education record."))
-}
-```
-
-```{r check-health-conditions-education-record-match-exit}
-#| results: asis
-n_education_records_at_exit_without_exit_record <- data_education_exit |>
-    dplyr::anti_join(
-        y = exits_in_period,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
-    nrow()
-
-if (n_education_records_at_exit_without_exit_record == 0) {
-    cat("✅ All records collected at exit match an exit record.")
-} else {
-    cat(paste0("❌ ", n_education_records_at_exit_without_exit_record, " records collected at exit don't match an exit record."))
-}
-
-```
-
-```{r check-exit-record-match-education}
-#| results: asis
-n_exits_without_education_record <- exits_in_period |>
-    dplyr::anti_join(
-        y = data_education_exit,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
-    dplyr::distinct(enrollment_id, personal_id, organization_id) |>
-    nrow()
-
-if (n_exits_without_education_record == 0) {
-    cat("✅ All exits have an education record.")
-} else {
-    cat(paste0("❌ ", n_exits_without_education_record, " exits are missing an education record."))
-}
+check_record_match(
+    data_entry = data_education_entry,
+    entries = entries_in_period,
+    data_exit = data_education_exit,
+    exits = exits_in_period
+)
 ```
 
 ###### Last Grade Completed

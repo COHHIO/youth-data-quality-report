@@ -117,3 +117,84 @@ process_program_specific_data_element <- function(
 
     out
 }
+
+check_record_match <- function(
+    data_entry,
+    entries,
+    data_exit,
+    exits
+) {
+    n_entry_data_records_without_enrollment_record <- data_entry |>
+        dplyr::anti_join(
+            y = entries,
+            by = c("enrollment_id", "personal_id", "organization_id")
+        ) |>
+        nrow()
+
+    if (n_entry_data_records_without_enrollment_record == 0) {
+        cat(
+            "✅ All records collected at entry match an enrollment record.  \n"
+        )
+    } else {
+        cat(paste0(
+            "❌ ",
+            n_entry_data_records_without_enrollment_record,
+            " records collected at entry don't match an enrollment record.  \n"
+        ))
+    }
+
+    n_enrollments_without_entry_data_record <- entries |>
+        dplyr::anti_join(
+            y = data_entry,
+            by = c("enrollment_id", "personal_id", "organization_id")
+        ) |>
+        dplyr::distinct(enrollment_id, personal_id, organization_id) |>
+        nrow()
+
+    if (n_enrollments_without_entry_data_record == 0) {
+        cat("✅ All enrollments have a data record.  \n")
+    } else {
+        cat(paste0(
+            "❌ ",
+            n_enrollments_without_entry_data_record,
+            " enrollments are missing a data record.  \n"
+        ))
+    }
+
+    n_exit_data_records_without_exit_record <- data_exit |>
+        dplyr::anti_join(
+            y = exits,
+            by = c("enrollment_id", "personal_id", "organization_id")
+        ) |>
+        nrow()
+
+    if (n_exit_data_records_without_exit_record == 0) {
+        cat(paste0(
+            "✅ All records collected at exit match an exit record.  \n"
+        ))
+    } else {
+        cat(paste0(
+            "❌ ",
+            n_exit_data_records_without_exit_record,
+            " records collected at exit don't match an exit record.  \n"
+        ))
+    }
+
+    n_exits_without_exit_data_record <- exits |>
+        dplyr::anti_join(
+            y = data_exit,
+            by = c("enrollment_id", "personal_id", "organization_id")
+        ) |>
+        dplyr::distinct(enrollment_id, personal_id, organization_id) |>
+        nrow()
+
+    if (n_exits_without_exit_data_record == 0) {
+        cat(paste0("✅ All exits have an data record.  \n"))
+    } else {
+        cat(paste0(
+            "❌ ",
+            n_exits_without_exit_data_record,
+            " exits are missing a data record.  \n"
+        ))
+    }
+}
