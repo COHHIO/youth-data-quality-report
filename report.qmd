@@ -158,7 +158,9 @@ data_enrollment_client |>
             3
         )
     ) +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.15))) +
+    ggplot2::scale_y_continuous(
+        expand = ggplot2::expansion(mult = c(0, 0.15))
+    ) +
     ggplot2::labs(
         title = "Clients by Age",
         x = "Age (Years)",
@@ -192,7 +194,9 @@ data_ethnicity <- entries_in_period |>
 data_ethnicity |>
     dplyr::count(n_ethnicities) |>
     gt::gt() |>
-    gt::tab_header(title = "Client Self-Identified Race/Ethnicity Selections") |>
+    gt::tab_header(
+        title = "Client Self-Identified Race/Ethnicity Selections"
+    ) |>
     gt::cols_label(
         n_ethnicities = "Number of Identities Selected",
         n = "Count"
@@ -479,6 +483,7 @@ data_health_conditions_and_disabilites_exit |>
         table_title = "Mental Health Disorder (Exit)"
     )
 ```
+
 ##### Substance Use Disorder
 
 ```{r check-substance-use-disorder-responses-entry}
