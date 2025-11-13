@@ -130,6 +130,13 @@ data_health_entry <- process_program_specific_data_element(
     data_hoh_and_or_adult = data_hoh_and_or_adult
 )
 
+data_health_exit <- process_program_specific_data_element(
+    data_element = dm$health,
+    enrollments = exits_in_period,
+    stage = "Project exit",
+    data_hoh_and_or_adult = data_hoh_and_or_adult
+)
+
 # Process health conditions and disabilities data
 data_health_conditions_and_disabilites <- dm$disabilities |>
     dplyr::distinct() |>

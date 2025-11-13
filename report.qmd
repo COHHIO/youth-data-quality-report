@@ -580,51 +580,103 @@ data_employment_exit |>
     )
 ```
 
-##### General Health Status
+##### Health Status
 
-```{r check-general-health-responses}
+```{r check-health-status-record-match}
+#| results: asis
+check_record_match(
+    data_entry = data_health_entry,
+    entries = entries_in_period,
+    data_exit = data_health_exit,
+    exits = exits_in_period
+)
+```
+
+###### General Health Status
+
+```{r check-general-health-responses-entry}
 data_health_entry |>
     create_data_quality_table(
         response_column = "general_health_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "General Health Status"
+        table_title = "General Health Status (Entry)"
     )
 ```
 
-##### Dental Health Status
+```{r check-general-health-responses-exit}
+data_health_exit |>
+    create_data_quality_table(
+        response_column = "general_health_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "General Health Status (Exit)"
+    )
+```
 
-```{r check-dental-health-responses}
+###### Dental Health Status
+
+```{r check-dental-health-responses-entry}
 data_health_entry |>
     create_data_quality_table(
         response_column = "dental_health_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "Dental Health Status"
+        table_title = "Dental Health Status (Entry)"
     )
 ```
 
-##### Mental Health Status
+```{r check-dental-health-responses-exit}
+data_health_exit |>
+    create_data_quality_table(
+        response_column = "dental_health_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Dental Health Status (Exit)"
+    )
+```
 
-```{r check-mental-health-responses}
+###### Mental Health Status
+
+```{r check-mental-health-responses-entry}
 data_health_entry |>
     create_data_quality_table(
         response_column = "mental_health_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "Mental Health Status"
+        table_title = "Mental Health Status (Entry)"
     )
 ```
 
-##### Pregnancy Status
+```{r check-mental-health-responses-exit}
+data_health_exit |>
+    create_data_quality_table(
+        response_column = "mental_health_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Mental Health Status (Exit)"
+    )
+```
 
-```{r check-pregnancy-responses}
+###### Pregnancy Status
+
+```{r check-pregnancy-responses-entry}
 data_health_entry |>
     create_data_quality_table(
         response_column = "pregnancy_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "Pregnancy Status"
+        table_title = "Pregnancy Status (Entry)"
+    )
+```
+
+```{r check-pregnancy-responses-exit}
+data_health_exit |>
+    create_data_quality_table(
+        response_column = "pregnancy_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Pregnancy Status (Exit)"
     )
 ```
 
