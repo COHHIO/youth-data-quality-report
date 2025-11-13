@@ -12,16 +12,16 @@ params:
 # Set default params for interactive development
 if (!exists("params")) {
     params <- list(
-        period_start_date = "2025-07-01",
-        period_end_date = "2025-09-30"
+        period_start_date = lubridate::ymd("2025-07-01"),
+        period_end_date = lubridate::ymd("2025-09-30")
     )
 }
 ```
 
 ```{r make-params-available-to-included-documents}
 # Make params available to included documents
-period_start_date <- params$period_start_date
-period_end_date <- params$period_end_date
+period_start_date <- lubridate::ymd(params$period_start_date)
+period_end_date <- lubridate::ymd(params$period_end_date)
 ```
 
 {{< include /qmd/_00_00_constants.qmd >}}
