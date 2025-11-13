@@ -300,67 +300,119 @@ TODO:
 
 ##### Physical Disability
 
-```{r check-physical-disability-responses}
+```{r check-physical-disability-responses-entry}
 data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Physical Disability") |>
     create_data_quality_table(
         response_column = "disability_response",
-        table_title = "Physical Disability"
+        table_title = "Physical Disability (Entry)"
+    )
+```
+
+```{r check-physical-disability-responses-exit}
+data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Physical Disability") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Physical Disability (Exit)"
     )
 ```
 
 ##### Developmental Disability
 
-```{r check-developmental-disability-responses}
+```{r check-developmental-disability-responses-entry}
 data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Developmental Disability") |>
     create_data_quality_table(
         response_column = "disability_response",
-        table_title = "Developmental Disability"
+        table_title = "Developmental Disability (Entry)"
+    )
+```
+
+```{r check-developmental-disability-responses-exit}
+data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Developmental Disability") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Developmental Disability (Exit)"
     )
 ```
 
 ##### Chronic Health Condition
 
-```{r check-chronic-health-condition-responses}
+```{r check-chronic-health-condition-responses-entry}
 data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Chronic Health Condition") |>
     create_data_quality_table(
         response_column = "disability_response",
-        table_title = "Chronic Health Condition"
+        table_title = "Chronic Health Condition (Entry)"
+    )
+```
+
+```{r check-chronic-health-condition-responses-exit}
+data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Chronic Health Condition") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Chronic Health Condition (Exit)"
     )
 ```
 
 ##### HIV/AIDS
 
-```{r check-hiv-aids-responses}
+```{r check-hiv-aids-responses-entry}
 data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "HIV/AIDS") |>
     create_data_quality_table(
         response_column = "disability_response",
-        table_title = "HIV/AIDS"
+        table_title = "HIV/AIDS (Entry)"
     )
 ```
 
+```{r check-hiv-aids-responses-exit}
+data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "HIV/AIDS") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "HIV/AIDS (Exit)"
+    )
+```
 ##### Mental Health Disorder
 
-```{r check-mental-health-disorder-responses}
+```{r check-mental-health-disorder-responses-entry}
 data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Mental Health Disorder") |>
     create_data_quality_table(
         response_column = "disability_response",
-        table_title = "Mental Health Disorder"
+        table_title = "Mental Health Disorder (Entry)"
     )
 ```
 
+```{r check-mental-health-disorder-responses-exit}
+data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Mental Health Disorder") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Mental Health Disorder (Exit)"
+    )
+```
 ##### Substance Use Disorder
 
-```{r check-substance-use-disorder-responses}
+```{r check-substance-use-disorder-responses-entry}
 data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Substance Use Disorder") |>
     create_data_quality_table(
         response_column = "disability_response",
-        table_title = "Substance Use Disorder"
+        table_title = "Substance Use Disorder (Entry)"
+    )
+```
+
+```{r check-substance-use-disorder-responses-exit}
+data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Substance Use Disorder") |>
+    create_data_quality_table(
+        response_column = "disability_response",
+        table_title = "Substance Use Disorder (Exit)"
     )
 ```
 

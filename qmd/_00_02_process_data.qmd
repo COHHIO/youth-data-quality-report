@@ -117,12 +117,9 @@ data_health_entry <- process_program_specific_data_element(
 )
 ```
 
-```{r process-health-conditions-and-disabilities-data-at-entry}
-data_health_conditions_and_disabilites_entry <- process_program_specific_data_element(
-    data_element = dm$disabilities |> dplyr::distinct(),
-    enrollments = entries_in_period,
-    stage = "Project start"
-) |>
+```{r process-health-conditions-and-disabilities-data}
+data_health_conditions_and_disabilites <- dm$disabilities |>
+    dplyr::distinct() |>
     # Complete missing responses
     dplyr::mutate(
         disability_response = dplyr::case_when(
@@ -167,4 +164,17 @@ data_health_conditions_and_disabilites_entry <- process_program_specific_data_el
         names_to = "disability_type",
         values_to = "disability_response"
     )
+
+
+data_health_conditions_and_disabilites_entry <- process_program_specific_data_element(
+    data_element = data_health_conditions_and_disabilites,
+    enrollments = entries_in_period,
+    stage = "Project start"
+)
+
+data_health_conditions_and_disabilites_exit <- process_program_specific_data_element(
+    data_element = data_health_conditions_and_disabilites,
+    enrollments = exits_in_period,
+    stage = "Project exit"
+)
 ```
