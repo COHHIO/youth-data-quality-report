@@ -521,27 +521,132 @@ data_enrollment_client |>
     )
 ```
 
-##### Last Grade Completed
+##### Education
 
-```{r check-last-grade-completed-responses}
+```{r check-education-record-match-enrollment}
+#| results: asis
+n_education_records_at_entry_without_enrollment_record <- data_education_entry |>
+    dplyr::anti_join(
+        y = entries_in_period,
+        by = c("enrollment_id", "personal_id", "organization_id")
+    ) |>
+    nrow()
+
+if (n_education_records_at_entry_without_enrollment_record == 0) {
+    cat("✅ All records collected at entry matched an enrollment record.")
+} else {
+    cat(paste0(
+        "❌ ",
+        n_education_records_at_entry_without_enrollment_record,
+        " records collected at entry didn't match an enrollment record."
+    ))
+}
+```
+
+```{r check-enrollment-record-match-education}
+#| results: asis
+n_enrollments_without_education_record <- entries_in_period |>
+    dplyr::anti_join(
+        y = data_education_entry,
+        by = c("enrollment_id", "personal_id", "organization_id")
+    ) |>
+    dplyr::distinct(enrollment_id, personal_id, organization_id) |>
+    nrow()
+
+if (n_enrollments_without_education_record == 0) {
+    cat("✅ All enrollments had an education record.")
+} else {
+    cat(paste0(
+        "❌ ",
+        n_enrollments_without_education_record,
+        " enrollments were missing an education record."
+    ))
+}
+```
+
+```{r check-health-conditions-education-record-match-exit}
+#| results: asis
+n_education_records_at_exit_without_exit_record <- data_education_exit |>
+    dplyr::anti_join(
+        y = exits_in_period,
+        by = c("enrollment_id", "personal_id", "organization_id")
+    ) |>
+    nrow()
+
+if (n_education_records_at_exit_without_exit_record == 0) {
+    cat("✅ All records collected at exit matched an exit record.")
+} else {
+    cat(paste0(
+        "❌ ",
+        n_education_records_at_exit_without_exit_record,
+        " records collected at exit didn't match an exit record."
+    ))
+}
+
+```
+
+```{r check-exit-record-match-education}
+#| results: asis
+n_exits_without_education_record <- exits_in_period |>
+    dplyr::anti_join(
+        y = data_education_exit,
+        by = c("enrollment_id", "personal_id", "organization_id")
+    ) |>
+    dplyr::distinct(enrollment_id, personal_id, organization_id) |>
+    nrow()
+
+if (n_exits_without_education_record == 0) {
+    cat("✅ All exits had an education record.")
+} else {
+    cat(paste0(
+        "❌ ",
+        n_exits_without_education_record,
+        " exits were missing an education record."
+    ))
+}
+```
+
+###### Last Grade Completed
+
+```{r check-last-grade-completed-responses-entry}
 data_education_entry |>
     create_data_quality_table(
         response_column = "last_grade_completed",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "Last Grade Completed"
+        table_title = "Last Grade Completed (Entry)"
     )
 ```
 
-##### School Status
+```{r check-last-grade-completed-responses-exit}
+data_education_exit |>
+    create_data_quality_table(
+        response_column = "last_grade_completed",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Last Grade Completed (Exit)"
+    )
+```
 
-```{r check-school-status-responses}
+###### School Status
+
+```{r check-school-status-responses-entry}
 data_education_entry |>
     create_data_quality_table(
         response_column = "school_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "School Status"
+        table_title = "School Status (Entry)"
+    )
+```
+
+```{r check-school-status-responses-exit}
+data_education_exit |>
+    create_data_quality_table(
+        response_column = "school_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "School Status (Exit)"
     )
 ```
 

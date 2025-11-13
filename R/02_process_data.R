@@ -100,6 +100,13 @@ data_education_entry <- process_program_specific_data_element(
     data_hoh_and_or_adult = data_hoh_and_or_adult
 )
 
+data_education_exit <- process_program_specific_data_element(
+    data_element = dm$education,
+    enrollments = exits_in_period,
+    stage = "Project exit",
+    data_hoh_and_or_adult = data_hoh_and_or_adult
+)
+
 # Process employment data
 data_employment_entry <- process_program_specific_data_element(
     data_element = dm$employment,
