@@ -284,14 +284,22 @@ data_enrollment_client |>
 
 ```
 
-### Prior Living Situation
-```{r check-prior-living-situation-responses}
+### Living Situation
+```{r check-living-situation-responses-entry}
 data_enrollment_client |>
     create_data_quality_table(
         response_column = "living_situation",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
-        table_title = "Prior Living Situation"
+        table_title = "Living Situation (Entry)"
+    )
+```
+
+```{r check-living-situation-responses-exit}
+data_exit |>
+    create_data_quality_table(
+        response_column = "destination",
+        table_title = "Living Situation (Exit)"
     )
 ```
 
@@ -742,5 +750,125 @@ data_enrollment_client |>
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
         table_title = "Formerly a Ward of Juvenile Justice System"
+    )
+```
+
+##### Commercial Sexual Exploitation / Sex Trafficking
+
+```{r check-exchange-for-sex-responses}
+data_exit |>
+    create_data_quality_table(
+        response_column = "exchange_for_sex",
+        combine_responses = FALSE,
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Exchange for Sex (Exit)"
+    )
+```
+
+```{r check-count-exchange-for-sex-responses}
+data_exit |>
+    create_data_quality_table(
+        response_column = "count_of_exchange_for_sex",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Count Exchange for Sex (Exit)"
+    )
+```
+
+```{r check-asked-or-forced-to-exchange-for-sex-responses}
+data_exit |>
+    create_data_quality_table(
+        response_column = "asked_or_forced_to_exchange_for_sex",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Asked or Forced to Exchange for Sex (Exit)"
+    )
+```
+
+##### Labor Exploitation / Trafficking
+
+```{r check-workplace-violence-threats-promise-difference-responses-hoh-adults}
+data_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
+    create_data_quality_table(
+        response_column = "work_place_violence_threats",
+        response_column_label = "Workplace Violence Threats",
+        combine_responses = FALSE,
+        group_column = "workplace_promise_difference",
+        group_column_label = "Workplace Promise Difference",
+        table_title = "Exchange for Sex (Exit)",
+        table_subtitle = "Head of Households and/or Adults"
+    )
+```
+
+```{r check-workplace-violence-threats-promise-difference-responses-not-hoh-adults}
+data_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "No") |>
+    create_data_quality_table(
+        response_column = "work_place_violence_threats",
+        response_column_label = "Workplace Violence Threats",
+        combine_responses = FALSE,
+        group_column = "workplace_promise_difference",
+        group_column_label = "Workplace Promise Difference",
+        table_title = "Exchange for Sex (Exit)",
+        table_subtitle = "Children and Youth (Not Head of Household)"
+    )
+```
+
+```{r check-coerced-to-continue-work-responses}
+data_exit |>
+    create_data_quality_table(
+        response_column = "coerced_to_continue_work",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Coerced to Continue Work (Exit)"
+    )
+```
+
+##### Project Completion Status
+
+```{r check-project-completion-status-responses}
+data_exit |>
+    create_data_quality_table(
+        response_column = "project_completion_status",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Project Completion Status (Exit)"
+    )
+```
+
+##### Counseling
+
+```{r check-counseling-responses}
+data_exit |>
+    create_data_quality_table(
+        response_column = "counseling_received",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Counseling (Exit)"
+    )
+```
+
+##### Safe and Appropriate Exit
+
+```{r check-destination-safe-client-responses}
+data_exit |>
+    create_data_quality_table(
+        response_column = "destination_safe_client",
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Destination Safe Client (Exit)"
+    )
+```
+
+```{r check-destination-safe-worker-responses}
+data_exit |>
+    create_data_quality_table(
+        response_column = "destination_safe_worker",
+        no_response_values = c("Worker does not know", "Missing"),
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Destination Safe Worker (Exit)"
     )
 ```

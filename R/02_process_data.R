@@ -206,3 +206,10 @@ data_domestic_violence_entry <- process_program_specific_data_element(
     stage = "Project start",
     data_hoh_and_or_adult = data_hoh_and_or_adult
 )
+
+# Process exit data
+data_exit <- process_program_specific_data_element(
+    data_element = dm$exit,
+    enrollments = exits_in_period,
+    data_hoh_and_or_adult = data_hoh_and_or_adult
+)

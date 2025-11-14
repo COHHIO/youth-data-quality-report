@@ -1,6 +1,7 @@
 create_data_quality_table <- function(
     data,
     response_column,
+    response_column_label = "Data Quality Status",
     no_response_values = c(
         "Client doesn't know",
         "Client prefers not to answer",
@@ -10,7 +11,8 @@ create_data_quality_table <- function(
     combine_responses = TRUE,
     group_column = NULL,
     group_column_label = NULL,
-    table_title
+    table_title,
+    table_subtitle = NULL
 ) {
     if (combine_responses == TRUE) {
         table_data <- data |>
@@ -57,9 +59,12 @@ create_data_quality_table <- function(
 
     gt <- table_data |>
         gt::gt() |>
-        gt::tab_header(title = table_title) |>
+        gt::tab_header(
+            title = table_title,
+            subtitle = table_subtitle,
+        ) |>
         gt::cols_label(
-            data_quality_status = "Data Quality Status"
+            data_quality_status = response_column_label
         ) |>
         gt::cols_width(
             data_quality_status ~ gt::pct(55),
@@ -97,15 +102,19 @@ create_data_quality_table <- function(
 process_program_specific_data_element <- function(
     data_element,
     enrollments,
-    stage,
+    stage = NULL,
     data_hoh_and_or_adult = NULL
 ) {
     out <- data_element |>
         dplyr::semi_join(
             enrollments,
             by = c("enrollment_id", "personal_id", "organization_id")
-        ) |>
-        dplyr::filter(data_collection_stage == stage)
+        )
+
+    if (!is.null(stage)) {
+        out <- out |>
+            dplyr::filter(data_collection_stage == stage)
+    }
 
     if (!is.null(data_hoh_and_or_adult)) {
         out <- out |>
