@@ -797,8 +797,17 @@ data_exit |>
         combine_responses = FALSE,
         group_column = "workplace_promise_difference",
         group_column_label = "Workplace Promise Difference",
-        table_title = "Exchange for Sex (Exit)",
+        table_title = "Workplace Violence Threats / Promise Difference (Exit)",
         table_subtitle = "Head of Households and/or Adults"
+    ) |>
+    gt::cols_width(
+        data_quality_status ~ gt::pct(28),
+        `Missing` ~ gt::pct(13),
+        `Data not collected` ~ gt::pct(15),
+        `Client prefers not to answer` ~ gt::pct(19),
+        `Client doesn't know` ~ gt::pct(13),
+        `Yes` ~ gt::pct(8),
+        `No` ~ gt::pct(8)
     )
 ```
 
@@ -811,8 +820,17 @@ data_exit |>
         combine_responses = FALSE,
         group_column = "workplace_promise_difference",
         group_column_label = "Workplace Promise Difference",
-        table_title = "Exchange for Sex (Exit)",
+        table_title = "Workplace Violence Threats / Promise Difference (Exit)",
         table_subtitle = "Children and Youth (Not Head of Household)"
+    ) |>
+    gt::cols_width(
+        data_quality_status ~ gt::pct(28),
+        `Missing` ~ gt::pct(13),
+        `Data not collected` ~ gt::pct(15),
+        `Client prefers not to answer` ~ gt::pct(19),
+        `Client doesn't know` ~ gt::pct(13),
+        `Yes` ~ gt::pct(8),
+        `No` ~ gt::pct(8)
     )
 ```
 
