@@ -36,7 +36,10 @@ purrr::walk(
 During the period from `r format(period_start_date, "%m/%d/%Y")` to `r format(period_end_date, "%m/%d/%Y")` there are:
 
 - **`r nrow(entries_in_period)` enrollments** from **`r dplyr::n_distinct(data_enrollment_client$household_id)` distinct households**
+    - **`r n_adults_entry`** are adults enrollments
+    - **`r n_hoh_and_or_adult_entry`** are head of households and/or adults enrollments
 - **`r nrow(exits_in_period)` exits**
+    - **`r n_hoh_and_or_adult_exit`** are head of households and/or adults exits
 
 ```{r check-duplicated-enrollment-id}
 #| results: asis
