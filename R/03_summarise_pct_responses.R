@@ -1,10 +1,18 @@
 summarise_pct_responses <- function(params, column_config) {
     pct_responses <- purrr::map_dfr(params, function(param) {
         get_pct_responses(
-            param$data,
-            param$target_columns,
+            data = param$data,
+            target_columns = param$target_columns,
+            subset_hoh_and_or_adult = param$subset_hoh_and_or_adult %||% TRUE,
+            subset_adult = param$subset_adult %||% FALSE,
             denominator = param$denominator,
-            dplyr::coalesce(param$subset_hoh_and_or_adult, TRUE)
+            no_response_values = param$no_response_values %||%
+                c(
+                    "Client doesn't know",
+                    "Client prefers not to answer",
+                    "Data not collected",
+                    "Missing"
+                )
         ) |>
             dplyr::mutate(stage = param$stage, .before = "column") |>
             dplyr::mutate(denominator = param$denominator, .after = "n")
@@ -61,6 +69,7 @@ get_pct_responses <- function(
     data,
     target_columns,
     subset_hoh_and_or_adult = TRUE,
+    subset_adult = FALSE,
     denominator,
     no_response_values = c(
         "Client doesn't know",
@@ -72,6 +81,11 @@ get_pct_responses <- function(
     if (subset_hoh_and_or_adult == TRUE) {
         data <- data |>
             dplyr::filter(is_hoh_and_or_adult == "Yes")
+    }
+
+    if (subset_adult == TRUE) {
+        data <- data |>
+            dplyr::filter(is_adult == "Yes")
     }
 
     data |>
@@ -101,6 +115,14 @@ get_pct_responses <- function(
 n_clients_entry <- nrow(entries_in_period)
 
 n_clients_exit <- nrow(exits_in_period)
+
+n_adults_entry <- data_hoh_and_or_adult |>
+    dplyr::semi_join(
+        entries_in_period,
+        by = c("enrollment_id", "personal_id", "organization_id")
+    ) |>
+    dplyr::filter(is_adult == "Yes") |>
+    nrow()
 
 n_hoh_and_or_adult_entry <- data_hoh_and_or_adult |>
     dplyr::semi_join(
@@ -164,6 +186,15 @@ summary_params <- list(
         subset_hoh_and_or_adult = FALSE,
         denominator = n_clients_entry,
         no_response_values = "Missing",
+        stage = "entry"
+    ),
+    ## Veteran Status
+    list(
+        data = data_enrollment_client,
+        target_columns = "veteran_status",
+        subset_hoh_and_or_adult = FALSE,
+        subset_adult = TRUE,
+        denominator = n_adults_entry,
         stage = "entry"
     ),
     ## Relationship to Head of Household
@@ -354,6 +385,10 @@ column_config <- list(
     age_grouped = list(
         group = "Entry",
         label = "Age"
+    ),
+    veteran_status = list(
+        group = "Entry",
+        label = "Veteran Status"
     ),
     relationship_to_ho_h = list(
         group = "Entry",
