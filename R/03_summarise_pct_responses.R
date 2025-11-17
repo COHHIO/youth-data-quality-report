@@ -217,6 +217,48 @@ summary_params <- list(
         denominator = n_hoh_and_or_adult_entry,
         stage = "entry"
     ),
+    # Income, Benefits and Insurance
+    ## Income
+    list(
+        data = data_income_entry,
+        target_columns = "income_from_any_source",
+        denominator = n_hoh_and_or_adult_entry,
+        stage = "entry"
+    ),
+    list(
+        data = data_income_exit,
+        target_columns = "income_from_any_source",
+        denominator = n_hoh_and_or_adult_exit,
+        stage = "exit"
+    ),
+    ## Benefits
+    list(
+        data = data_benefits_entry,
+        target_columns = "benefits_from_any_source",
+        denominator = n_hoh_and_or_adult_entry,
+        stage = "entry"
+    ),
+    list(
+        data = data_benefits_exit,
+        target_columns = "benefits_from_any_source",
+        denominator = n_hoh_and_or_adult_exit,
+        stage = "exit"
+    ),
+    ## Insurance
+    list(
+        data = data_health_insurance_entry,
+        target_columns = "insurance_from_any_source",
+        subset_hoh_and_or_adult = FALSE,
+        denominator = n_clients_entry,
+        stage = "entry"
+    ),
+    list(
+        data = data_health_insurance_exit,
+        target_columns = "insurance_from_any_source",
+        subset_hoh_and_or_adult = FALSE,
+        denominator = n_clients_exit,
+        stage = "exit"
+    ),
     # Health Conditions and Disabilities
     ## Physical Disability
     list(
@@ -493,6 +535,18 @@ column_config <- list(
     destination_safe_worker = list(
         group = "Exit",
         label = "Destination Safe Worker"
+    ),
+    income_from_any_source = list(
+        group = "Entry & Exit",
+        label = "Income"
+    ),
+    benefits_from_any_source = list(
+        group = "Entry & Exit",
+        label = "Benefits"
+    ),
+    insurance_from_any_source = list(
+        group = "Entry & Exit",
+        label = "Insurance"
     )
 ) |>
     dplyr::bind_rows(.id = "column")

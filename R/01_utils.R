@@ -209,3 +209,28 @@ check_record_match <- function(
         }
     }
 }
+
+process_income_benefits_insurance_data <- function(
+    data,
+    any_source_column,
+    source_columns
+) {
+    data |>
+        dplyr::mutate(
+            any_source_response_grouped = dplyr::case_when(
+                .data[[any_source_column]] == "Yes" ~ "Yes",
+                TRUE ~ "No or Missing"
+            )
+        ) |>
+        dplyr::rowwise() |>
+        dplyr::mutate(
+            selected_one_or_more_sources = dplyr::case_when(
+                any(
+                    dplyr::c_across(dplyr::all_of(source_columns)) == "Yes",
+                    na.rm = TRUE
+                ) ~ "Yes",
+                TRUE ~ "No"
+            )
+        ) |>
+        dplyr::ungroup()
+}

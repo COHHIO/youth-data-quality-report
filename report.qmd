@@ -411,6 +411,218 @@ data_exit |>
 
 ### Common Program Specific Data Elements
 
+#### Income, Benefits and Insurance
+
+```{r check-income-sources-record-match}
+#| results: asis
+check_record_match(
+    data_entry = data_income_entry,
+    entries = entries_in_period,
+    data_exit = data_income_exit,
+    exits = exits_in_period
+)
+```
+
+##### Income and Sources
+
+```{r check-income-responses-entry}
+data_income_entry |>
+    create_data_quality_table(
+        response_column = "income_from_any_source",
+        combine_responses = FALSE,
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Income from Any Source (Entry)"
+    )
+```
+
+```{r check-income-detail-responses-entry}
+data_detail_income_entry |>
+    dplyr::count(
+        is_hoh_and_or_adult,
+        any_source_response_grouped,
+        has_total_monthly_income,
+        selected_one_or_more_sources
+    ) |>
+    gt::gt() |>
+    gt::tab_header(
+        title = "Detailed Income Analysis (Entry)"
+    ) |>
+    gt::cols_label(
+        is_hoh_and_or_adult = "HoH and / or Adult",
+        any_source_response_grouped = "Income from Any Source",
+        has_total_monthly_income = "Reported Value",
+        selected_one_or_more_sources = "Selected one or more Sources",
+        n = "Count"
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
+```{r check-income-responses-exit}
+data_income_exit |>
+    create_data_quality_table(
+        response_column = "income_from_any_source",
+        combine_responses = FALSE,
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Income from Any Source (Exit)"
+    )
+```
+
+```{r check-income-detail-responses-exit}
+data_detail_income_exit |>
+    dplyr::count(
+        is_hoh_and_or_adult,
+        any_source_response_grouped,
+        has_total_monthly_income,
+        selected_one_or_more_sources
+    ) |>
+    gt::gt() |>
+    gt::tab_header(
+        title = "Detailed Income Analysis (Exit)"
+    ) |>
+    gt::cols_label(
+        is_hoh_and_or_adult = "HoH and / or Adult",
+        any_source_response_grouped = "Income from Any Source",
+        has_total_monthly_income = "Reported Value",
+        selected_one_or_more_sources = "Selected one or more Sources",
+        n = "Count"
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
+##### Non-Cash Benefits
+
+```{r check-benefits-responses-entry}
+data_benefits_entry |>
+    create_data_quality_table(
+        response_column = "benefits_from_any_source",
+        combine_responses = FALSE,
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Benefits from Any Source (Entry)"
+    )
+```
+
+```{r check-benefits-detail-responses-entry}
+data_detail_benefits_entry |>
+    dplyr::count(
+        is_hoh_and_or_adult,
+        any_source_response_grouped,
+        selected_one_or_more_sources
+    ) |>
+    gt::gt() |>
+    gt::tab_header(
+        title = "Detailed Benefits Analysis (Entry)"
+    ) |>
+    gt::cols_label(
+        is_hoh_and_or_adult = "HoH and / or Adult",
+        any_source_response_grouped = "Benefits from Any Source",
+        selected_one_or_more_sources = "Selected one or more Sources",
+        n = "Count"
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
+```{r check-benefits-responses-exit}
+data_benefits_exit |>
+    create_data_quality_table(
+        response_column = "benefits_from_any_source",
+        combine_responses = FALSE,
+        group_column = "is_hoh_and_or_adult",
+        group_column_label = "Head of Household and/or Adult",
+        table_title = "Benefits from Any Source (Exit)"
+    )
+```
+
+```{r check-benefits-detail-responses-exit}
+data_detail_benefits_exit |>
+    dplyr::count(
+        is_hoh_and_or_adult,
+        any_source_response_grouped,
+        selected_one_or_more_sources
+    ) |>
+    gt::gt() |>
+    gt::tab_header(
+        title = "Detailed Benefits Analysis (Exit)"
+    ) |>
+    gt::cols_label(
+        is_hoh_and_or_adult = "HoH and / or Adult",
+        any_source_response_grouped = "Benefits from Any Source",
+        selected_one_or_more_sources = "Selected one or more Sources",
+        n = "Count"
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
+##### Health Insurance
+
+```{r check-health-insurance-responses-entry}
+data_health_insurance_entry |>
+    create_data_quality_table(
+        response_column = "insurance_from_any_source",
+        combine_responses = FALSE,
+        table_title = "Insurance from Any Source (Entry)"
+    )
+```
+
+```{r check-health-insurance-detail-responses-entry}
+data_detail_health_insurance_entry |>
+    dplyr::count(
+        any_source_response_grouped,
+        selected_one_or_more_sources
+    ) |>
+    gt::gt() |>
+    gt::tab_header(
+        title = "Detailed Heath Insurance Analysis (Entry)"
+    ) |>
+    gt::cols_label(
+        any_source_response_grouped = "Insurance from Any Source",
+        selected_one_or_more_sources = "Selected one or more Sources",
+        n = "Count"
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
+```{r check-health-insurance-responses-exit}
+data_health_insurance_exit |>
+    create_data_quality_table(
+        response_column = "insurance_from_any_source",
+        combine_responses = FALSE,
+        table_title = "Insurance from Any Source (Exit)"
+    )
+```
+
+```{r check-health-insurance-detail-responses-exit}
+data_detail_health_insurance_exit |>
+    dplyr::count(
+        any_source_response_grouped,
+        selected_one_or_more_sources
+    ) |>
+    gt::gt() |>
+    gt::tab_header(
+        title = "Detailed Health Insurance Analysis (Exit)"
+    ) |>
+    gt::cols_label(
+        any_source_response_grouped = "Insurance from Any Source",
+        selected_one_or_more_sources = "Selected one or more Sources",
+        n = "Count"
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
 #### Health Conditions and Disabilities
 
 ```{r check-health-conditions-disabilites-record-match}

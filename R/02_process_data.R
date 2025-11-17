@@ -266,3 +266,134 @@ data_exit <- process_program_specific_data_element(
     enrollments = exits_in_period,
     data_hoh_and_or_adult = data_hoh_and_or_adult
 )
+
+# Process income data
+data_income_entry <- process_program_specific_data_element(
+    data_element = dm$income,
+    enrollments = entries_in_period,
+    stage = "Project start",
+    data_hoh_and_or_adult = data_hoh_and_or_adult
+)
+
+data_income_exit <- process_program_specific_data_element(
+    data_element = dm$income,
+    enrollments = exits_in_period,
+    stage = "Project exit",
+    data_hoh_and_or_adult = data_hoh_and_or_adult
+)
+
+income_sources <- c(
+    "earned",
+    "unemployment",
+    "ssi",
+    "ssdi",
+    "va_disability_service",
+    "va_disability_non_service",
+    "private_disability",
+    "workers_comp",
+    "tanf",
+    "ga",
+    "soc_sec_retirement",
+    "pension",
+    "child_support",
+    "alimony",
+    "other_income_source"
+)
+
+data_detail_income_entry <- data_income_entry |>
+    dplyr::mutate(
+        has_total_monthly_income = dplyr::case_when(
+            total_monthly_income != 0 ~ "Yes",
+            TRUE ~ "No"
+        )
+    ) |>
+    process_income_benefits_insurance_data(
+        any_source_column = "income_from_any_source",
+        source_columns = income_sources
+    )
+
+data_detail_income_exit <- data_income_exit |>
+    dplyr::mutate(
+        has_total_monthly_income = dplyr::case_when(
+            total_monthly_income != 0 ~ "Yes",
+            TRUE ~ "No"
+        )
+    ) |>
+    process_income_benefits_insurance_data(
+        any_source_column = "income_from_any_source",
+        source_columns = income_sources
+    )
+
+# Process benefits data
+data_benefits_entry <- process_program_specific_data_element(
+    data_element = dm$benefits,
+    enrollments = entries_in_period,
+    stage = "Project start",
+    data_hoh_and_or_adult = data_hoh_and_or_adult
+)
+
+data_benefits_exit <- process_program_specific_data_element(
+    data_element = dm$benefits,
+    enrollments = exits_in_period,
+    stage = "Project exit",
+    data_hoh_and_or_adult = data_hoh_and_or_adult
+)
+
+benefits_sources <- c(
+    "snap",
+    "wic",
+    "tanf_child_care",
+    "tanf_transportation",
+    "other_tanf",
+    "other_benefits_source"
+)
+
+data_detail_benefits_entry <- data_benefits_entry |>
+    process_income_benefits_insurance_data(
+        any_source_column = "benefits_from_any_source",
+        source_columns = benefits_sources
+    )
+
+data_detail_benefits_exit <- data_benefits_exit |>
+    process_income_benefits_insurance_data(
+        any_source_column = "benefits_from_any_source",
+        source_columns = benefits_sources
+    )
+
+# Process health insurance
+data_health_insurance_entry <- process_program_specific_data_element(
+    data_element = dm$benefits,
+    enrollments = entries_in_period,
+    stage = "Project start"
+)
+
+data_health_insurance_exit <- process_program_specific_data_element(
+    data_element = dm$benefits,
+    enrollments = exits_in_period,
+    stage = "Project exit"
+)
+
+health_insurance_sources <- c(
+    "medicaid",
+    "medicare",
+    "schip",
+    "vha_services",
+    "employer_provided",
+    "cobra",
+    "private_pay",
+    "state_health_ins",
+    "indian_health_services",
+    "other_insurance"
+)
+
+data_detail_health_insurance_entry <- data_health_insurance_entry |>
+    process_income_benefits_insurance_data(
+        any_source_column = "insurance_from_any_source",
+        source_columns = health_insurance_sources
+    )
+
+data_detail_health_insurance_exit <- data_health_insurance_exit |>
+    process_income_benefits_insurance_data(
+        any_source_column = "insurance_from_any_source",
+        source_columns = health_insurance_sources
+    )
