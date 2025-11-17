@@ -186,7 +186,6 @@ data_health_conditions_and_disabilites <- dm$disabilities |>
         values_to = "disability_response"
     )
 
-
 data_health_conditions_and_disabilites_entry <- process_program_specific_data_element(
     data_element = data_health_conditions_and_disabilites,
     enrollments = entries_in_period,
@@ -198,6 +197,60 @@ data_health_conditions_and_disabilites_exit <- process_program_specific_data_ele
     enrollments = exits_in_period,
     stage = "Project exit"
 )
+
+## Physical Disability
+data_physical_disability_entry <- data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Physical Disability") |>
+    dplyr::rename(physical_disability = disability_response)
+
+data_physical_disability_exit <- data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Physical Disability") |>
+    dplyr::rename(physical_disability = disability_response)
+
+## Developmental Disability
+data_developmental_disability_entry <- data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Developmental Disability") |>
+    dplyr::rename(developmental_disability = disability_response)
+
+data_developmental_disability_exit <- data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Developmental Disability") |>
+    dplyr::rename(developmental_disability = disability_response)
+
+## Chronic Health Condition
+data_chronic_health_condition_entry <- data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Chronic Health Condition") |>
+    dplyr::rename(chronic_health_condition = disability_response)
+
+data_chronic_health_condition_exit <- data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Chronic Health Condition") |>
+    dplyr::rename(chronic_health_condition = disability_response)
+
+## HIV/AIDS
+data_hiv_aids_entry <- data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "HIV/AIDS") |>
+    dplyr::rename(hiv_aids = disability_response)
+
+data_hiv_aids_exit <- data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "HIV/AIDS") |>
+    dplyr::rename(hiv_aids = disability_response)
+
+## Mental Health Disorder
+data_mental_health_disorder_entry <- data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Mental Health Disorder") |>
+    dplyr::rename(mental_health_disorder = disability_response)
+
+data_mental_health_disorder_exit <- data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Mental Health Disorder") |>
+    dplyr::rename(mental_health_disorder = disability_response)
+
+## Substance Use Disorder
+data_substance_use_disorder_entry <- data_health_conditions_and_disabilites_entry |>
+    dplyr::filter(disability_type == "Substance Use Disorder") |>
+    dplyr::rename(substance_use_disorder = disability_response)
+
+data_substance_use_disorder_exit <- data_health_conditions_and_disabilites_exit |>
+    dplyr::filter(disability_type == "Substance Use Disorder") |>
+    dplyr::rename(substance_use_disorder = disability_response)
 
 # Process domestic violence data
 data_domestic_violence_entry <- process_program_specific_data_element(

@@ -92,6 +92,110 @@ if (n_exits_without_an_enrollment_record == 0) {
 }
 ```
 
+### Responses Summary
+
+```{r summarise-pct-responses-by-collection-point}
+summary_by_collection_point <- summarise_pct_responses(summary_params, column_config)
+```
+
+#### Collection Point: Project Start
+
+```{r summary-entry}
+summary_by_collection_point$entry |>
+    dplyr::mutate(responses = paste0(n, "/", denominator)) |>
+    dplyr::arrange(dplyr::desc(pct)) |>
+    dplyr::select(label, responses, pct) |>
+    gt::gt() |>
+    gt::cols_label(
+        label = "Data Element",
+        responses = "Responses",
+        pct = "% Responses"
+    ) |>
+    gt::fmt_percent(
+        columns = pct,
+        decimals = 1
+    ) |>
+    gt::cols_width(
+        label ~ gt::pct(50),
+        gt::everything() ~ gt::pct(20)
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
+#### Collection Point: Project Exit
+
+```{r summary-exit}
+summary_by_collection_point$exit |>
+    dplyr::mutate(responses = paste0(n, "/", denominator)) |>
+    dplyr::arrange(dplyr::desc(pct)) |>
+    dplyr::select(label, responses, pct) |>
+    gt::gt() |>
+    gt::cols_label(
+        label = "Data Element",
+        responses = "Responses",
+        pct = "% Responses"
+    ) |>
+    gt::fmt_percent(
+        columns = pct,
+        decimals = 1
+    ) |>
+    gt::cols_width(
+        label ~ gt::pct(50),
+        gt::everything() ~ gt::pct(20)
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+
+```
+
+#### Collection Point: Project Start and Project Exit
+
+```{r summary-entry-exit}
+summary_by_collection_point$entry_exit |>
+    dplyr::mutate(
+        responses_entry = paste0(n_entry, "/", denominator_entry),
+        responses_exit = paste0(n_exit, "/", denominator_exit)
+    ) |>
+    dplyr::arrange(dplyr::desc(pct_entry)) |>
+    dplyr::select(label, responses_entry, pct_entry, responses_exit, pct_exit) |>
+    gt::gt() |>
+    gt::tab_spanner(
+        label = "Entry Responses",
+        columns = tidyselect::contains("entry")
+    ) |>
+    gt::tab_spanner(
+        label = "Exit Responses",
+        columns = tidyselect::contains("exit")
+    ) |>
+    gt::cols_label(
+        label = "Data Element",
+        responses_entry = "Count",
+        responses_exit = "Count",
+        pct_entry = "Percent",
+        pct_exit = "Percent"
+    ) |>
+    gt::fmt_percent(
+        columns = tidyselect::starts_with("pct"),
+        decimals = 1
+    ) |>
+    gt::tab_style(
+        style = gt::cell_text(v_align = "middle"),
+        locations = gt::cells_column_labels(
+            columns = label
+        )
+    ) |>
+    gt::cols_width(
+        label ~ gt::pct(44),
+        gt::everything() ~ gt::pct(14)
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
 ## Universal Data Elements
 
 ### Social Security Number
