@@ -37,67 +37,7 @@ purrr::walk(
 
 ## Overview
 
-During the period from `r format(period_start_date, "%m/%d/%Y")` to `r format(period_end_date, "%m/%d/%Y")` there are:
-
-- **`r nrow(entries_in_period)` enrollments** from **`r dplyr::n_distinct(data_enrollment_client$household_id)` distinct households**
-    - **`r n_adults_entry`** are adults enrollments
-    - **`r n_hoh_and_or_adult_entry`** are head of households and/or adults enrollments
-- **`r nrow(exits_in_period)` exits**
-    - **`r n_hoh_and_or_adult_exit`** are head of households and/or adults exits
-
-```{r check-duplicated-enrollment-id}
-#| results: asis
-n_duplicated_enrollment_ids <- entries_in_period |>
-    dplyr::count(enrollment_id) |>
-    dplyr::filter(n > 1) |>
-    nrow()
-
-n_duplicated_enrollment_ids_string <- ifelse(
-    n_duplicated_enrollment_ids == 0,
-    "✅ There are no duplicated enrollment IDs.",
-    paste0("❌ There are ", n_duplicated_enrollment_ids, " duplicated enrollment IDs.")
-)
-
-cat(n_duplicated_enrollment_ids_string)
-```
-
-```{r check-one-head-of-household-per-household}
-#| results: asis
-distinct_n_hoh_per_h <- data_enrollment_client |>
-    dplyr::summarise(
-        n_hoh = sum(relationship_to_ho_h == "Self (head of household)"),
-        .by = "household_id"
-    ) |>
-    dplyr::count(n_hoh) |>
-    dplyr::pull(n_hoh)
-
-if (length(distinct_n_hoh_per_h) == 1 && distinct_n_hoh_per_h == 1) {
-    cat("✅ All households have exactly one head of household.")
-} else {
-    if (0 %in% distinct_n_hoh_per_h) {
-        cat("❌ Some households are missing a head of household.")
-    }
-    if (any(distinct_n_hoh_per_h > 1)) {
-        cat("❌ Some households have more than one head of household.")
-    }
-}
-```
-
-```{r check-exit-associated-with-enrollment}
-#| results: asis
-n_exits_without_an_enrollment_record <- exits_in_period |>
-    dplyr::anti_join(
-        y = dm$enrollment,
-        by = c("enrollment_id", "personal_id", "organization_id")
-    ) |>
-    nrow()
-
-if (n_exits_without_an_enrollment_record == 0) {
-    cat("✅ All exits are associated with an enrollment.")
-} else {
-    cat(glue::glue("❌ { n_exits_without_an_enrollment_record } aren't associated with an enrollment."))
-}
-```
+{{< include qmd/_01_overview.qmd >}}
 
 ### Responses Summary
 
