@@ -157,6 +157,7 @@
   set page(
     numbering: "1",
     number-align: center,
+    margin: (top: 1in, bottom: 1in, left: 0.75in, right: 0.75in),
   )
 
   // Set the header for the report body
