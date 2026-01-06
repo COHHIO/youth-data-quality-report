@@ -37,7 +37,6 @@ purrr::walk(
 
 ## Overview
 
-{{< include qmd/_01_overview.qmd >}}
 
 ### Responses Summary
 
@@ -95,8 +94,10 @@ summary_by_collection_point$exit |>
     gt::tab_options(
         table.font.names = "Roboto"
     )
+### Introduction
 
 ```
+{{< include qmd/_01_01_introduction.qmd >}}
 
 #### Collection Point: Project Start and Project Exit
 
