@@ -1,0 +1,71 @@
+organizations:
+  - name: All Grantees
+  - name: Clintonville-Beechwold Community Resource Center
+    programs:
+      - CBCRC - ODH HY (Homeless Youth)
+  - name: Community Action Council of Columbiana
+    programs:
+      - Columbiana - Community Action Agency of Columbiana - ODH Youth HP
+      - Columbiana - Community Action Agency of Columbiana - ODH Youth RRH
+      - Columbiana - Community Action Agency of Columbiana - ODH Youth SSO
+  - name: Community Action Commission of Lancaster-Fairfield County
+    programs:
+      - Fairfield - Lancaster Fairfield CAA - ODH - ES Overflow
+      - zzFairfield - Lancaster Fairfield CAA - ODH Youth RRH
+      - Fairfield - Lancaster Fairfield CAA - HASFY - ODH - SSO
+      - Fairfield - Lancaster Fairfield CAA - ODH - SO
+      - Fairfield - Lancaster Fairfield CAA - HASFY - ODH - HP
+  - name: Family & Community Services, Inc.
+    programs:
+      - Geauga - Family & Community Services Inc - Next Step - ODH SSO
+      - Geauga - Family & Community Services Inc - Next Step - ODH TH
+  - name: Home for Families
+    programs:
+      - Fayette - CAC of Fayette County - ODH TAY - RRH
+      - HFF - ODH TAY HP
+      - HFF - ODH Employment Services
+  - name: Hospital Council of Northwest Ohio
+    programs:
+      - SSO HCNWO Homeless Youth Project
+  - name: Huck House
+    programs:
+      - ODH Whitehall
+  - name: Lighthouse Youth Services
+    programs:
+      - LYS Mecum House Youth Crisis Shelter
+      - LYS Sheakley Center for Youth
+      - Lighthouse Street Outreach OH253
+      - LYS HHS Street Outreach
+      - LYS Youth Outreach Non-Homeless
+  - name: Marion Goodwill Industries, Inc.
+    programs:
+      - Targeted Services for Homeless Youths and Homeless
+  - name: Sojouners Care Network
+    programs:
+      - Vinton - Sojourners Care Network - ODH TLP - TH
+  - name: Summit County Health District
+    programs:
+      - Family Promise ODH RRH
+      - Harmony ODH Emergency Shelter (Harmony House)
+      - Infant Vitality Project ODH TH (GJCF)
+      - Street Outreach Services ODH (Shelter Care)
+      - Lavender Landing LGBTQ Youth ODH HP (CANAPI)
+      - Central Intake ODH HP (UWSM)
+  - name: The Center for Healthy Families
+    programs:
+      - Healthy Families Housing
+  - name: The Trumbull County Health Department
+    programs:
+      - Greater Youngstown-Warren Urban League
+  - name: A Place for Me (YWCA of Greater Cleveland)
+    programs:
+      - Bellefaire JCB - ODH
+      - EDEN - ODH - APFM
+      - FL - ODH
+      - NEOCH - ODH
+      - A Place 4 Me - ODH
+      - Community of Hope - ODH
+  - name: Zepf Center
+    programs:
+      - ES Zepf Safety Net - Shelter
+      - SO Zepf Safety Net - Street Outreach RHY

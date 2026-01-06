@@ -2,6 +2,7 @@
 #let template(
   title: "",
   subtitle: none,
+  subsubtitle: none,
   author: "",
   author-email: "",
   author-phone: "",
@@ -87,6 +88,10 @@
   v(2em, weak: true)
   if subtitle != none {
   align(center + horizon, text(font: title-font, 1.5em, weight: 700, subtitle))
+  v(2em, weak: true)
+  }
+  if subsubtitle != none {
+  align(center + horizon, text(font: title-font, 1.2em, weight: 600, subsubtitle))
   v(2em, weak: true)
   }
   align(center, text(1.1em, date))

@@ -3,7 +3,13 @@ dm <- readRDS("data/dm_20251013.rds")
 
 # Get entries and exits in period
 entries_in_period <- dm$enrollment |>
-    dplyr::select(enrollment_id, personal_id, organization_id, entry_date) |>
+    dplyr::select(
+        enrollment_id,
+        personal_id,
+        organization_id,
+        project_id,
+        entry_date
+    ) |>
     dplyr::filter(
         entry_date >= period_start_date & entry_date <= period_end_date
     )
@@ -13,6 +19,22 @@ exits_in_period <- dm$exit |>
     dplyr::filter(
         exit_date >= period_start_date & exit_date <= period_end_date
     )
+
+if (grantee != "All Grantees") {
+    selected_projects <- dm$project |>
+        dplyr::filter(project_name %in% programs) |>
+        dplyr::pull(project_id)
+
+    entries_in_period <- entries_in_period |>
+        dplyr::filter(project_id %in% selected_projects)
+
+    exits_in_period <- exits_in_period |>
+        dplyr::left_join(
+            y = dm$enrollment |> dplyr::select(enrollment_id, project_id),
+            by = "enrollment_id"
+        ) |>
+        dplyr::filter(project_id %in% selected_projects)
+}
 
 # Process all enrollment client data
 processed_enrollment_client <- dm$enrollment |>

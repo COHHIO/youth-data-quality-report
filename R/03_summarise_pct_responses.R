@@ -108,7 +108,16 @@ get_pct_responses <- function(
         dplyr::count(column, response_status) |>
         dplyr::mutate(pct = n / denominator, .by = "column") |>
         dplyr::filter(response_status == "Client provided a response") |>
-        dplyr::select(-response_status)
+        dplyr::select(-response_status) |>
+        dplyr::right_join(
+            y = tibble::tibble(
+                column = target_columns
+            ),
+            by = "column"
+        ) |>
+        tidyr::replace_na(
+            replace = list(n = 0, pct = 0)
+        )
 }
 
 # Get denominators

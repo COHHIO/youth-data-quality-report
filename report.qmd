@@ -1,11 +1,13 @@
 ---
 title: Data Quality Report
-subtitle: TODO
+subtitle: "`r paste('Period:', params$period_start_date, 'to', params$period_end_date)`"
+subsubtitle: "`r params$grantee$name`"
 execute:
   echo: false
 params:
   period_start_date: "2025-07-01"
   period_end_date: "2025-09-30"
+  grantee: NULL
 ---
 
 ```{r set-default-params-for-interactive-development}
@@ -22,6 +24,8 @@ if (!exists("params")) {
 # Make params available to included documents
 period_start_date <- lubridate::ymd(params$period_start_date)
 period_end_date <- lubridate::ymd(params$period_end_date)
+grantee <- params$grantee$name
+programs <- params$grantee$programs
 ```
 
 ```{r load-data-and-utils}
@@ -249,32 +253,34 @@ cat(n_missing_age_string)
 ```
 
 ```{r check-age-distribution}
-data_enrollment_client |>
-    ggplot2::ggplot() +
-    ggplot2::geom_histogram(
-        mapping = ggplot2::aes(x = age),
-        binwidth = 3,
-        boundary = 0,
-        closed = "left",
-        fill = palette$light_blue,
-        color = palette$navy_blue
-    ) +
-    ggplot2::scale_x_continuous(
-        breaks = seq(
-            floor(min(min_age, 0) / 3) * 3,
-            ceiling(max_age / 3) * 3,
-            3
-        )
-    ) +
-    ggplot2::scale_y_continuous(
-        expand = ggplot2::expansion(mult = c(0, 0.15))
-    ) +
-    ggplot2::labs(
-        title = "Clients by Age",
-        x = "Age (Years)",
-        y = "Count"
-    ) +
-    ggplot2::theme_bw()
+if (nrow(data_enrollment_client) > 0) {
+    data_enrollment_client |>
+        ggplot2::ggplot() +
+        ggplot2::geom_histogram(
+            mapping = ggplot2::aes(x = age),
+            binwidth = 3,
+            boundary = 0,
+            closed = "left",
+            fill = palette$light_blue,
+            color = palette$navy_blue
+        ) +
+        ggplot2::scale_x_continuous(
+            breaks = seq(
+                floor(min(min_age, 0) / 3) * 3,
+                ceiling(max_age / 3) * 3,
+                3
+            )
+        ) +
+        ggplot2::scale_y_continuous(
+            expand = ggplot2::expansion(mult = c(0, 0.15))
+        ) +
+        ggplot2::labs(
+            title = "Clients by Age",
+            x = "Age (Years)",
+            y = "Count"
+        ) +
+        ggplot2::theme_bw()
+}
 ```
 
 ### Race and Ethnicity

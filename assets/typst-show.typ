@@ -5,6 +5,9 @@ $endif$
 $if(subtitle)$
   subtitle: "$subtitle$",
 $endif$
+$if(subsubtitle)$
+  subsubtitle: "$subsubtitle$",
+$endif$
 $if(author)$
   author: "$author$",
 $endif$
