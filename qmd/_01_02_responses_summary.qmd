@@ -1,0 +1,106 @@
+
+This section presents response rates for selected data elements, grouped by collection point and sorted by response rate (highest to lowest).
+
+Response rates are displayed as counts ($X/N$ format) and percentages, where $X$ represents the number of valid responses received (i.e., excluding missing data and non-response values such as *Client doesn't know* and *Client prefers not to answer*) and $N$ represents the eligible universe of clients for that specific data element. The denominator ($N$) varies across data elements because different elements are collected about different client universes (e.g., all clients, heads of household and/or adults only, or adults only). The percentages indicate the proportion of required responses that were successfully collected for each data element's relevant universe.
+
+```{r summarise-pct-responses-by-collection-point}
+summary_by_collection_point <- summarise_pct_responses(summary_params, column_config)
+```
+
+#### Collection Point: Project Start Only
+
+```{r summary-entry}
+summary_by_collection_point$entry |>
+    dplyr::mutate(responses = paste0(n, "/", denominator)) |>
+    dplyr::arrange(dplyr::desc(pct)) |>
+    dplyr::select(label, responses, pct) |>
+    gt::gt() |>
+    gt::cols_label(
+        label = "Data Element",
+        responses = "Responses",
+        pct = "% Responses"
+    ) |>
+    gt::fmt_percent(
+        columns = pct,
+        decimals = 1
+    ) |>
+    gt::cols_width(
+        label ~ gt::pct(50),
+        gt::everything() ~ gt::pct(25)
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
+
+#### Collection Point: Project Exit Only
+
+```{r summary-exit}
+summary_by_collection_point$exit |>
+    dplyr::mutate(responses = paste0(n, "/", denominator)) |>
+    dplyr::arrange(dplyr::desc(pct)) |>
+    dplyr::select(label, responses, pct) |>
+    gt::gt() |>
+    gt::cols_label(
+        label = "Data Element",
+        responses = "Responses",
+        pct = "% Responses"
+    ) |>
+    gt::fmt_percent(
+        columns = pct,
+        decimals = 1
+    ) |>
+    gt::cols_width(
+        label ~ gt::pct(50),
+        gt::everything() ~ gt::pct(25)
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+
+```
+
+#### Collection Point: Project Start and Project Exit
+
+```{r summary-entry-exit}
+summary_by_collection_point$entry_exit |>
+    dplyr::mutate(
+        responses_entry = paste0(n_entry, "/", denominator_entry),
+        responses_exit = paste0(n_exit, "/", denominator_exit)
+    ) |>
+    dplyr::arrange(dplyr::desc(pct_entry)) |>
+    dplyr::select(label, responses_entry, pct_entry, responses_exit, pct_exit) |>
+    gt::gt() |>
+    gt::tab_spanner(
+        label = "Entry Responses",
+        columns = tidyselect::contains("entry")
+    ) |>
+    gt::tab_spanner(
+        label = "Exit Responses",
+        columns = tidyselect::contains("exit")
+    ) |>
+    gt::cols_label(
+        label = "Data Element",
+        responses_entry = "Count",
+        responses_exit = "Count",
+        pct_entry = "Percent",
+        pct_exit = "Percent"
+    ) |>
+    gt::fmt_percent(
+        columns = tidyselect::starts_with("pct"),
+        decimals = 1
+    ) |>
+    gt::tab_style(
+        style = gt::cell_text(v_align = "middle"),
+        locations = gt::cells_column_labels(
+            columns = label
+        )
+    ) |>
+    gt::cols_width(
+        label ~ gt::pct(44),
+        gt::everything() ~ gt::pct(14)
+    ) |>
+    gt::tab_options(
+        table.font.names = "Roboto"
+    )
+```
