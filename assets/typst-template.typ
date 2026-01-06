@@ -57,6 +57,9 @@
   // Set blocks to not allow breaking
   set block(breakable: false)
 
+  // Allow lists to break across pages
+  show list: set block(breakable: true)
+
   // Set link style
   show link: it => underline(text(fill: primary-color, it))
 
