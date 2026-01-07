@@ -69,7 +69,7 @@
   // Set unordered list indent and color
   set list(indent: 1em, marker: n => [#text(fill: primary-color, "•")])
 
-  // Set table of contents, list of figures, and list of tables display
+  // Set table of contents
   show outline.entry: it => text(size: 12pt, weight: "regular",it)
 
   // Set code block background fill
@@ -117,34 +117,17 @@
 
 
 
-  // --- Create Table of Contents, List of Figures, and List of Tables --- //
+  // --- Create Table of Contents --- //
+
+ // Set the page numbers at 1 to begin the report
+  set page(
+    margin: (top: 1in, bottom: 1in, left: 0.75in, right: 0.75in),
+  )
 
   // Create the Table of Contents
   // Only shown if set to TRUE in the `_quarto.yml` file
   if toc {
     outline()
-  }
-
-  // Create List of Figures
-  // This uses an alternative approach to the outline function.
-  // This searches for figures that are kind `quarto-float-fig`
-  // See https://github.com/quarto-dev/quarto-cli/discussions/10223 for details
-  if lof {
-    outline(
-    title: [List of Figures],
-    target: figure.where(kind: "quarto-float-fig"),
-    )
-  }
-
-  // Create List of Tables
-  // This uses an alternative approach to the outline function.
-  // This searches for figures that are kind `quarto-float-tbl`
-  // See https://github.com/quarto-dev/quarto-cli/discussions/10223 for details
-  if lot {
-    outline(
-    title: [List of Tables],
-    target: figure.where(kind: "quarto-float-tbl"),
-    )
   }
 
   pagebreak()
