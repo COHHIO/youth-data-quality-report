@@ -1,0 +1,5 @@
+This section presents a data quality analysis for each data element.
+
+The analysis follows the organizational structure of the HMIS Data Standards Manual.
+
+In general, for each data element, valid responses are grouped into a single *Client provided a response* category, as the focus of this report is on response completeness rather than the specific values provided. Missing and non-response values categories are kept separate.

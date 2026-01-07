@@ -45,9 +45,15 @@ purrr::walk(
 
 {{< include qmd/_01_02_responses_summary.qmd >}}
 
-## Universal Data Elements
+## Data Elements Analysis
 
-### Social Security Number
+### Introduction
+
+{{< include qmd/_02_01_introduction.qmd >}}
+
+### Universal Data Elements
+
+#### Social Security Number
 
 SSN data is recorded in two fields:
 
@@ -69,7 +75,7 @@ data_enrollment_client |>
     )
 ```
 
-### Date of Birth
+#### Date of Birth
 
 ```{r check-age-range}
 #| results: asis
@@ -125,7 +131,7 @@ if (nrow(data_enrollment_client) > 0) {
 }
 ```
 
-### Race and Ethnicity
+#### Race and Ethnicity
 
 ```{r process-ethnicity-data}
 ethnicity_summary <- dm$ethnicity |>
@@ -180,7 +186,7 @@ if (n_problematic == 0) {
 }
 ```
 
-### Veteran Status
+#### Veteran Status
 
 ```{r check-veteran-status-responses}
 data_enrollment_client |>
@@ -192,7 +198,7 @@ data_enrollment_client |>
     )
 ```
 
-### Relationship to Head of Household
+#### Relationship to Head of Household
 
 ```{r check-relationship-to-head-of-household-responses}
 data_enrollment_client |>
@@ -239,7 +245,7 @@ data_enrollment_client |>
 
 ```
 
-### Living Situation
+#### Living Situation
 ```{r check-living-situation-responses-entry}
 data_enrollment_client |>
     create_data_quality_table(
@@ -258,11 +264,11 @@ data_exit |>
     )
 ```
 
-## Program Specific Data Elements
+### Program Specific Data Elements
 
-### Common Program Specific Data Elements
+#### Common Program Specific Data Elements
 
-#### Income, Benefits and Insurance
+##### Income, Benefits and Insurance
 
 ```{r check-income-sources-record-match}
 #| results: asis
@@ -274,7 +280,7 @@ check_record_match(
 )
 ```
 
-##### Income and Sources
+###### Income and Sources
 
 ```{r check-income-responses-entry}
 data_income_entry |>
@@ -346,7 +352,7 @@ data_detail_income_exit |>
     )
 ```
 
-##### Non-Cash Benefits
+###### Non-Cash Benefits
 
 ```{r check-benefits-responses-entry}
 data_benefits_entry |>
@@ -414,7 +420,7 @@ data_detail_benefits_exit |>
     )
 ```
 
-##### Health Insurance
+###### Health Insurance
 
 ```{r check-health-insurance-responses-entry}
 data_health_insurance_entry |>
@@ -474,7 +480,7 @@ data_detail_health_insurance_exit |>
     )
 ```
 
-#### Health Conditions and Disabilities
+##### Health Conditions and Disabilities
 
 ```{r check-health-conditions-disabilites-record-match}
 #| results: asis
@@ -486,7 +492,7 @@ check_record_match(
 )
 ```
 
-##### Physical Disability
+###### Physical Disability
 
 ```{r check-physical-disability-responses-entry}
 data_health_conditions_and_disabilites_entry |>
@@ -506,7 +512,7 @@ data_health_conditions_and_disabilites_exit |>
     )
 ```
 
-##### Developmental Disability
+###### Developmental Disability
 
 ```{r check-developmental-disability-responses-entry}
 data_health_conditions_and_disabilites_entry |>
@@ -526,7 +532,7 @@ data_health_conditions_and_disabilites_exit |>
     )
 ```
 
-##### Chronic Health Condition
+###### Chronic Health Condition
 
 ```{r check-chronic-health-condition-responses-entry}
 data_health_conditions_and_disabilites_entry |>
@@ -546,7 +552,7 @@ data_health_conditions_and_disabilites_exit |>
     )
 ```
 
-##### HIV/AIDS
+###### HIV/AIDS
 
 ```{r check-hiv-aids-responses-entry}
 data_health_conditions_and_disabilites_entry |>
@@ -565,7 +571,7 @@ data_health_conditions_and_disabilites_exit |>
         table_title = "HIV/AIDS (Exit)"
     )
 ```
-##### Mental Health Disorder
+###### Mental Health Disorder
 
 ```{r check-mental-health-disorder-responses-entry}
 data_health_conditions_and_disabilites_entry |>
@@ -585,7 +591,7 @@ data_health_conditions_and_disabilites_exit |>
     )
 ```
 
-##### Substance Use Disorder
+###### Substance Use Disorder
 
 ```{r check-substance-use-disorder-responses-entry}
 data_health_conditions_and_disabilites_entry |>
@@ -605,7 +611,7 @@ data_health_conditions_and_disabilites_exit |>
     )
 ```
 
-#### Domestic Violence
+##### Domestic Violence
 
 ```{r check-domestic-violence-record-match}
 #| results: asis
@@ -646,11 +652,11 @@ data_domestic_violence_entry |>
     )
 ```
 
-### Federal Partner Program Specific Data Elements
+#### Federal Partner Program Specific Data Elements
 
-#### RHY
+##### RHY
 
-##### Referral Source
+###### Referral Source
 
 ```{r check-referral-source-responses}
 data_enrollment_client |>
@@ -662,7 +668,7 @@ data_enrollment_client |>
     )
 ```
 
-##### Education
+###### Education
 
 ```{r check-education-record-match}
 #| results: asis
@@ -674,7 +680,7 @@ check_record_match(
 )
 ```
 
-###### Last Grade Completed
+####### Last Grade Completed
 
 ```{r check-last-grade-completed-responses-entry}
 data_education_entry |>
@@ -696,7 +702,7 @@ data_education_exit |>
     )
 ```
 
-###### School Status
+####### School Status
 
 ```{r check-school-status-responses-entry}
 data_education_entry |>
@@ -718,7 +724,7 @@ data_education_exit |>
     )
 ```
 
-##### Employment Status
+###### Employment Status
 
 ```{r check-employment-record-match}
 #| results: asis
@@ -796,7 +802,7 @@ data_employment_exit |>
     )
 ```
 
-##### Health Status
+###### Health Status
 
 ```{r check-health-status-record-match}
 #| results: asis
@@ -808,7 +814,7 @@ check_record_match(
 )
 ```
 
-###### General Health Status
+####### General Health Status
 
 ```{r check-general-health-responses-entry}
 data_health_entry |>
@@ -830,7 +836,7 @@ data_health_exit |>
     )
 ```
 
-###### Dental Health Status
+####### Dental Health Status
 
 ```{r check-dental-health-responses-entry}
 data_health_entry |>
@@ -852,7 +858,7 @@ data_health_exit |>
     )
 ```
 
-###### Mental Health Status
+####### Mental Health Status
 
 ```{r check-mental-health-responses-entry}
 data_health_entry |>
@@ -874,7 +880,7 @@ data_health_exit |>
     )
 ```
 
-###### Pregnancy Status
+####### Pregnancy Status
 
 ```{r check-pregnancy-responses-entry}
 data_health_entry |>
@@ -896,7 +902,7 @@ data_health_exit |>
     )
 ```
 
-##### Formerly a Ward of Child Welfare/Foster Care Agency
+###### Formerly a Ward of Child Welfare/Foster Care Agency
 
 ```{r check-formerly-ward-of-child-welfare-foster-care-agency}
 data_enrollment_client |>
@@ -908,7 +914,7 @@ data_enrollment_client |>
     )
 ```
 
-##### Formerly a Ward of Juvenile Justice System
+###### Formerly a Ward of Juvenile Justice System
 
 ```{r check-formerly-ward-of-juvenile-justice-system}
 data_enrollment_client |>
@@ -920,7 +926,7 @@ data_enrollment_client |>
     )
 ```
 
-##### Commercial Sexual Exploitation / Sex Trafficking
+###### Commercial Sexual Exploitation / Sex Trafficking
 
 ```{r check-exchange-for-sex-responses}
 data_exit |>
@@ -953,7 +959,7 @@ data_exit |>
     )
 ```
 
-##### Labor Exploitation / Trafficking
+###### Labor Exploitation / Trafficking
 
 ```{r check-workplace-violence-threats-promise-difference-responses-hoh-adults}
 data_exit |>
@@ -1011,7 +1017,7 @@ data_exit |>
     )
 ```
 
-##### Project Completion Status
+###### Project Completion Status
 
 ```{r check-project-completion-status-responses}
 data_exit |>
@@ -1023,7 +1029,7 @@ data_exit |>
     )
 ```
 
-##### Counseling
+###### Counseling
 
 ```{r check-counseling-responses}
 data_exit |>
@@ -1035,7 +1041,7 @@ data_exit |>
     )
 ```
 
-##### Safe and Appropriate Exit
+###### Safe and Appropriate Exit
 
 ```{r check-destination-safe-client-responses}
 data_exit |>
