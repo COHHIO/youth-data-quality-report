@@ -362,27 +362,70 @@ data_income_entry |>
 The following additional checks were performed:
 
 ```{r check-income-detail-responses-entry}
-data_detail_income_entry |>
-    dplyr::count(
-        is_hoh_and_or_adult,
-        any_source_response_grouped,
-        has_total_monthly_income,
-        selected_one_or_more_sources
+#| results: asis
+n_with_income_from_any_source_entry <- data_income_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "Yes"
     ) |>
-    gt::gt() |>
-    gt::tab_header(
-        title = "Detailed Income Analysis (Entry)"
+    nrow()
+
+n_with_total_monthly_income_entry <- data_detail_income_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "Yes",
+        has_total_monthly_income == "Yes"
     ) |>
-    gt::cols_label(
-        is_hoh_and_or_adult = "HoH and / or Adult",
-        any_source_response_grouped = "Income from Any Source",
-        has_total_monthly_income = "Reported Value",
-        selected_one_or_more_sources = "Selected one or more Sources",
-        n = "Count"
+    nrow()
+
+if (n_with_income_from_any_source_entry == n_with_total_monthly_income_entry) {
+    cat("✅ All clients with income from any source reported a total monthly income.  \n")
+} else {
+    cat(paste0("❌ ", n_with_income_from_any_source_entry - n_with_total_monthly_income_entry, " client(s) with income from any source didn't report a total monthly income.  \n"))
+}
+
+n_with_one_or_more_sources_selected_entry <- data_detail_income_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "Yes",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::tab_options(
-        table.font.names = "Roboto"
-    )
+    nrow()
+
+if (n_with_income_from_any_source_entry == n_with_one_or_more_sources_selected_entry) {
+    cat("✅ All clients with income from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_with_income_from_any_source_entry - n_with_one_or_more_sources_selected_entry, " client(s) with income from any source didn't select one or more sources.  \n"))
+}
+
+n_without_income_from_any_source_with_total_monthly_income_entry <- data_detail_income_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "No",
+        has_total_monthly_income == "Yes"
+    ) |>
+    nrow()
+
+if (n_without_income_from_any_source_with_total_monthly_income_entry == 0) {
+    cat("✅ No clients without income from any source reported a total monthly income.  \n")
+} else {
+    cat(paste0("❌ ",n_without_income_from_any_source_with_total_monthly_income_entry, " client(s) without income from any source reported a total monthly income.  \n"))
+}
+
+n_without_income_from_any_source_with_one_or_more_sources_selected_entry <- data_detail_income_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "No",
+        selected_one_or_more_sources == "Yes"
+    ) |>
+    nrow()
+
+if (n_without_income_from_any_source_with_one_or_more_sources_selected_entry == 0) {
+    cat("✅ No clients without income from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_without_income_from_any_source_with_one_or_more_sources_selected_entry, " client(s) with income from any source selected one or more sources.  \n"))
+}
+
 ```
 
 ####### Exit
@@ -402,27 +445,69 @@ data_income_exit |>
 The following additional checks were performed:
 
 ```{r check-income-detail-responses-exit}
-data_detail_income_exit |>
-    dplyr::count(
-        is_hoh_and_or_adult,
-        any_source_response_grouped,
-        has_total_monthly_income,
-        selected_one_or_more_sources
+#| results: asis
+n_with_income_from_any_source_exit <- data_detail_income_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "Yes"
     ) |>
-    gt::gt() |>
-    gt::tab_header(
-        title = "Detailed Income Analysis (Exit)"
+    nrow()
+
+n_with_total_monthly_income_exit <- data_detail_income_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "Yes",
+        has_total_monthly_income == "Yes"
     ) |>
-    gt::cols_label(
-        is_hoh_and_or_adult = "HoH and / or Adult",
-        any_source_response_grouped = "Income from Any Source",
-        has_total_monthly_income = "Reported Value",
-        selected_one_or_more_sources = "Selected one or more Sources",
-        n = "Count"
+    nrow()
+
+if (n_with_income_from_any_source_exit == n_with_total_monthly_income_exit) {
+    cat("✅ All clients with income from any source reported a total monthly income.  \n")
+} else {
+    cat(paste0("❌ ", n_with_income_from_any_source_exit - n_with_total_monthly_income_exit, " client(s) with income from any source didn't report a total monthly income.  \n"))
+}
+
+n_with_one_or_more_sources_selected_exit <- data_detail_income_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "Yes",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::tab_options(
-        table.font.names = "Roboto"
-    )
+    nrow()
+
+if (n_with_income_from_any_source_exit == n_with_one_or_more_sources_selected_exit) {
+    cat("✅ All clients with income from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_with_income_from_any_source_exit - n_with_one_or_more_sources_selected_exit, " client(s) with income from any source didn't select one or more sources.  \n"))
+}
+
+n_without_income_from_any_source_with_total_monthly_income_exit <- data_detail_income_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "No",
+        has_total_monthly_income == "Yes"
+    ) |>
+    nrow()
+
+if (n_without_income_from_any_source_with_total_monthly_income_exit == 0) {
+    cat("✅ No clients without income from any source reported a total monthly income.  \n")
+} else {
+    cat(paste0("❌ ",n_without_income_from_any_source_with_total_monthly_income_exit, " client(s) without income from any source reported a total monthly income.  \n"))
+}
+
+n_without_income_from_any_source_with_one_or_more_sources_selected_exit <- data_detail_income_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        income_from_any_source == "No",
+        selected_one_or_more_sources == "Yes"
+    ) |>
+    nrow()
+
+if (n_without_income_from_any_source_with_one_or_more_sources_selected_exit == 0) {
+    cat("✅ No clients without income from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_without_income_from_any_source_with_one_or_more_sources_selected_exit, " client(s) without income from any source selected one or more sources.  \n"))
+}
 ```
 
 ###### Non-Cash Benefits
@@ -446,31 +531,48 @@ data_benefits_entry |>
 The following additional checks were performed:
 
 ```{r check-benefits-detail-responses-entry}
-data_detail_benefits_entry |>
-    dplyr::count(
-        is_hoh_and_or_adult,
-        any_source_response_grouped,
-        selected_one_or_more_sources
+#| results: asis
+n_with_benefits_from_any_source_entry <- data_detail_benefits_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        benefits_from_any_source == "Yes"
     ) |>
-    gt::gt() |>
-    gt::tab_header(
-        title = "Detailed Benefits Analysis (Entry)"
+    nrow()
+
+n_with_one_or_more_sources_selected_entry <- data_detail_benefits_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        benefits_from_any_source == "Yes",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::cols_label(
-        is_hoh_and_or_adult = "HoH and / or Adult",
-        any_source_response_grouped = "Benefits from Any Source",
-        selected_one_or_more_sources = "Selected one or more Sources",
-        n = "Count"
+    nrow()
+
+if (n_with_benefits_from_any_source_entry == n_with_one_or_more_sources_selected_entry) {
+    cat("✅ All clients with benefits from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_with_benefits_from_any_source_entry - n_with_one_or_more_sources_selected_entry, " client(s) with benefits from any source didn't select one or more sources.  \n"))
+}
+
+n_without_benefits_from_any_source_with_one_or_more_sources_selected_entry <- data_detail_benefits_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        benefits_from_any_source == "No",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::tab_options(
-        table.font.names = "Roboto"
-    )
+    nrow()
+
+if (n_without_benefits_from_any_source_with_one_or_more_sources_selected_entry == 0) {
+    cat("✅ No clients without benefits from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_without_benefits_from_any_source_with_one_or_more_sources_selected_entry, " client(s) without benefits from any source selected one or more sources.  \n"))
+}
 ```
 
 ####### Exit
 
 ```{r check-benefits-responses-exit}
 data_benefits_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "benefits_from_any_source",
         combine_responses = FALSE,
@@ -483,25 +585,41 @@ data_benefits_exit |>
 The following additional checks were performed:
 
 ```{r check-benefits-detail-responses-exit}
-data_detail_benefits_exit |>
-    dplyr::count(
-        is_hoh_and_or_adult,
-        any_source_response_grouped,
-        selected_one_or_more_sources
+#| results: asis
+n_with_benefits_from_any_source_exit <- data_detail_benefits_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        benefits_from_any_source == "Yes"
     ) |>
-    gt::gt() |>
-    gt::tab_header(
-        title = "Detailed Benefits Analysis (Exit)"
+    nrow()
+
+n_with_one_or_more_sources_selected_exit <- data_detail_benefits_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        benefits_from_any_source == "Yes",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::cols_label(
-        is_hoh_and_or_adult = "HoH and / or Adult",
-        any_source_response_grouped = "Benefits from Any Source",
-        selected_one_or_more_sources = "Selected one or more Sources",
-        n = "Count"
+    nrow()
+
+if (n_with_benefits_from_any_source_exit == n_with_one_or_more_sources_selected_exit) {
+    cat("✅ All clients with benefits from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_with_benefits_from_any_source_exit - n_with_one_or_more_sources_selected_exit, " client(s) with benefits from any source didn't select one or more sources.  \n"))
+}
+
+n_without_benefits_from_any_source_with_one_or_more_sources_selected_exit <- data_detail_benefits_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        benefits_from_any_source == "No",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::tab_options(
-        table.font.names = "Roboto"
-    )
+    nrow()
+
+if (n_without_benefits_from_any_source_with_one_or_more_sources_selected_exit == 0) {
+    cat("✅ No clients without benefits from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_without_benefits_from_any_source_with_one_or_more_sources_selected_exit, " client(s) without benefits from any source selected one or more sources.  \n"))
+}
 ```
 
 ###### Health Insurance
@@ -524,23 +642,38 @@ data_health_insurance_entry |>
 The following additional checks were performed:
 
 ```{r check-health-insurance-detail-responses-entry}
-data_detail_health_insurance_entry |>
-    dplyr::count(
-        any_source_response_grouped,
-        selected_one_or_more_sources
+#| results: asis
+n_with_insurance_from_any_source_entry <- data_detail_health_insurance_entry |>
+    dplyr::filter(
+        insurance_from_any_source == "Yes"
     ) |>
-    gt::gt() |>
-    gt::tab_header(
-        title = "Detailed Heath Insurance Analysis (Entry)"
+    nrow()
+
+n_with_one_or_more_sources_selected_entry <- data_detail_health_insurance_entry |>
+    dplyr::filter(
+        insurance_from_any_source == "Yes",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::cols_label(
-        any_source_response_grouped = "Insurance from Any Source",
-        selected_one_or_more_sources = "Selected one or more Sources",
-        n = "Count"
+    nrow()
+
+if (n_with_insurance_from_any_source_entry == n_with_one_or_more_sources_selected_entry) {
+    cat("✅ All clients with insurance from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_with_insurance_from_any_source_entry - n_with_one_or_more_sources_selected_entry, " client(s) with insurance from any source didn't select one or more sources.  \n"))
+}
+
+n_without_insurance_from_any_source_with_one_or_more_sources_selected_entry <- data_detail_health_insurance_entry |>
+    dplyr::filter(
+        insurance_from_any_source == "No",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::tab_options(
-        table.font.names = "Roboto"
-    )
+    nrow()
+
+if (n_without_insurance_from_any_source_with_one_or_more_sources_selected_entry == 0) {
+    cat("✅ No clients without insurance from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_without_insurance_from_any_source_with_one_or_more_sources_selected_entry, " client(s) without insurance from any source selected one or more sources.  \n"))
+}
 ```
 
 ####### Exit
@@ -559,23 +692,38 @@ data_health_insurance_exit |>
 The following additional checks were performed:
 
 ```{r check-health-insurance-detail-responses-exit}
-data_detail_health_insurance_exit |>
-    dplyr::count(
-        any_source_response_grouped,
-        selected_one_or_more_sources
+#| results: asis
+n_with_insurance_from_any_source_exit <- data_detail_health_insurance_exit |>
+    dplyr::filter(
+        insurance_from_any_source == "Yes"
     ) |>
-    gt::gt() |>
-    gt::tab_header(
-        title = "Detailed Health Insurance Analysis (Exit)"
+    nrow()
+
+n_with_one_or_more_sources_selected_exit <- data_detail_health_insurance_exit |>
+    dplyr::filter(
+        insurance_from_any_source == "Yes",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::cols_label(
-        any_source_response_grouped = "Insurance from Any Source",
-        selected_one_or_more_sources = "Selected one or more Sources",
-        n = "Count"
+    nrow()
+
+if (n_with_insurance_from_any_source_exit == n_with_one_or_more_sources_selected_exit) {
+    cat("✅ All clients with insurance from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_with_insurance_from_any_source_exit - n_with_one_or_more_sources_selected_exit, " client(s) with insurance from any source didn't select one or more sources.  \n"))
+}
+
+n_without_insurance_from_any_source_with_one_or_more_sources_selected_exit <- data_detail_health_insurance_exit |>
+    dplyr::filter(
+        insurance_from_any_source == "No",
+        selected_one_or_more_sources == "Yes"
     ) |>
-    gt::tab_options(
-        table.font.names = "Roboto"
-    )
+    nrow()
+
+if (n_without_insurance_from_any_source_with_one_or_more_sources_selected_exit == 0) {
+    cat("✅ No clients without insurance from any source selected one or more sources.  \n")
+} else {
+    cat(paste0("❌ ", n_without_insurance_from_any_source_with_one_or_more_sources_selected_exit, " client(s) without insurance from any source selected one or more sources.  \n"))
+}
 ```
 
 ##### Health Conditions and Disabilities
