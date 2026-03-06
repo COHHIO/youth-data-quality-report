@@ -2,6 +2,7 @@ create_data_quality_table <- function(
     data,
     response_column,
     response_column_label = "Data Quality Status",
+    response_values = NULL,
     no_response_values = c(
         "Client doesn't know",
         "Client prefers not to answer",
@@ -33,7 +34,13 @@ create_data_quality_table <- function(
     } else {
         table_data <- data |>
             dplyr::mutate(
-                data_quality_status = .data[[response_column]]
+                data_quality_status = .data[[response_column]] |>
+                    factor(
+                        levels = c(
+                            response_values,
+                            no_response_values
+                        )
+                    )
             )
     }
 
