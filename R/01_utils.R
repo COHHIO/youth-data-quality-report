@@ -75,8 +75,8 @@ create_data_quality_table <- function(
             data_quality_status = response_column_label
         ) |>
         gt::cols_width(
-            data_quality_status ~ gt::pct(55),
-            gt::everything() ~ gt::pct(15)
+            data_quality_status ~ gt::pct(70),
+            gt::everything() ~ gt::pct(25)
         ) |>
         gt::cols_align(
             align = "left",
@@ -99,11 +99,18 @@ create_data_quality_table <- function(
                     columns = data_quality_status
                 )
             )
+    } else {
+        gt <- gt |>
+            gt::tab_style(
+                style = gt::cell_text(weight = "bold"),
+                locations = gt::cells_body(rows = nrow(table_data))
+            )
     }
 
     gt |>
         gt::tab_options(
-            table.font.names = "Roboto"
+            table.font.names = "Roboto",
+            column_labels.font.weight = "bold"
         )
 }
 
