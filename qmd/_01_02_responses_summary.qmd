@@ -1,7 +1,7 @@
 
-This section presents response rates for selected data elements, grouped by collection point and sorted by response rate (highest to lowest).
+This section presents response rates for selected data elements, grouped by collection point (project start only, project exit only or both project start and project exit) and sorted by response rate (highest to lowest).
 
-Response rates are displayed as counts ($X/N$ format) and percentages, where $X$ represents the number of valid responses received (i.e., excluding missing data and non-response values such as *Client doesn't know* and *Client prefers not to answer*) and $N$ represents the eligible universe of clients for that specific data element. The denominator ($N$) varies across data elements because different elements are collected about different client universes (e.g., all clients, heads of household and/or adults only, or adults only). The percentages indicate the proportion of required responses that were successfully collected for each data element's relevant universe.
+Response rates are displayed as counts ($X/N$ format) and percentages, where $X$ represents the number of responses received (excluding *Client doesn't know*, *Client prefers not to answer* and *Data not collected* responses) and $N$ represents the eligible universe of clients for that specific data element. The denominator ($N$) varies across data elements because different elements are collected about different client universes (e.g., all clients, heads of household and/or adults only, or adults only). The percentages indicate the proportion of required responses that were successfully collected for each data element's relevant universe.
 
 ```{r summarise-pct-responses-by-collection-point}
 summary_by_collection_point <- summarise_pct_responses(summary_params, column_config)
