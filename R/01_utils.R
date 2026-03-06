@@ -157,13 +157,13 @@ check_record_match <- function(
 
     if (n_entry_data_records_without_enrollment_record == 0) {
         cat(
-            "✅ All records collected at entry match an enrollment record.  \n"
+            "✅ All data records collected at entry match an enrollment record.  \n"
         )
     } else {
         cat(paste0(
             "❌ ",
             n_entry_data_records_without_enrollment_record,
-            " records collected at entry don't match an enrollment record.  \n"
+            " data records collected at entry don't match an enrollment record.  \n"
         ))
     }
 
@@ -195,13 +195,13 @@ check_record_match <- function(
 
         if (n_exit_data_records_without_exit_record == 0) {
             cat(paste0(
-                "✅ All records collected at exit match an exit record.  \n"
+                "✅ All data records collected at exit match an exit record.  \n"
             ))
         } else {
             cat(paste0(
                 "❌ ",
                 n_exit_data_records_without_exit_record,
-                " records collected at exit don't match an exit record.  \n"
+                " data records collected at exit don't match an exit record.  \n"
             ))
         }
 
