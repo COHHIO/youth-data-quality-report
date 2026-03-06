@@ -1136,44 +1136,36 @@ This data element is collected at project exit and is required for heads of hous
 ```{r check-workplace-violence-threats-promise-difference-responses-hoh-adults}
 data_exit |>
     dplyr::filter(is_hoh_and_or_adult == "Yes") |>
+    dplyr::mutate(
+        workplace_promise_difference = factor(
+            workplace_promise_difference,
+            levels = c(
+                "Yes",
+                "No",
+                "Client doesn't know",
+                "Client prefers not to answer",
+                "Data not collected"
+            )
+        )
+    ) |>
     create_data_quality_table(
         response_column = "work_place_violence_threats",
         response_column_label = "Workplace Violence Threats",
         combine_responses = FALSE,
+        response_values = c("Yes", "No"),
         group_column = "workplace_promise_difference",
         group_column_label = "Workplace Promise Difference",
-        table_title = "Workplace Violence Threats / Promise Difference (Exit)",
-        table_subtitle = "Head of Households and/or Adults"
+        table_title = "Workplace Violence Threats / Promise Difference (Exit)"
+    ) |>
+    gt::tab_style(
+        style = gt::cell_text(weight = "bold"),
+        locations = gt::cells_body(columns = 1)
     ) |>
     gt::cols_width(
-        data_quality_status ~ gt::pct(28),
-        `Missing` ~ gt::pct(13),
-        `Data not collected` ~ gt::pct(15),
-        `Client prefers not to answer` ~ gt::pct(19),
-        `Client doesn't know` ~ gt::pct(13),
-        `Yes` ~ gt::pct(8),
-        `No` ~ gt::pct(8)
-    )
-```
-
-```{r check-workplace-violence-threats-promise-difference-responses-not-hoh-adults}
-data_exit |>
-    dplyr::filter(is_hoh_and_or_adult == "No") |>
-    create_data_quality_table(
-        response_column = "work_place_violence_threats",
-        response_column_label = "Workplace Violence Threats",
-        combine_responses = FALSE,
-        group_column = "workplace_promise_difference",
-        group_column_label = "Workplace Promise Difference",
-        table_title = "Workplace Violence Threats / Promise Difference (Exit)",
-        table_subtitle = "Children and Youth (Not Head of Household)"
-    ) |>
-    gt::cols_width(
-        data_quality_status ~ gt::pct(28),
-        `Missing` ~ gt::pct(13),
-        `Data not collected` ~ gt::pct(15),
-        `Client prefers not to answer` ~ gt::pct(19),
-        `Client doesn't know` ~ gt::pct(13),
+        data_quality_status ~ gt::pct(35),
+        `Data not collected` ~ gt::pct(12),
+        `Client prefers not to answer` ~ gt::pct(17),
+        `Client doesn't know` ~ gt::pct(17),
         `Yes` ~ gt::pct(8),
         `No` ~ gt::pct(8)
     )
