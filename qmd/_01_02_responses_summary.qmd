@@ -29,7 +29,8 @@ summary_by_collection_point$entry |>
         gt::everything() ~ gt::pct(25)
     ) |>
     gt::tab_options(
-        table.font.names = "Roboto"
+        table.font.names = "Roboto",
+        column_labels.font.weight = "bold"
     )
 ```
 
@@ -55,7 +56,8 @@ summary_by_collection_point$exit |>
         gt::everything() ~ gt::pct(25)
     ) |>
     gt::tab_options(
-        table.font.names = "Roboto"
+        table.font.names = "Roboto",
+        column_labels.font.weight = "bold"
     )
 
 ```
@@ -101,6 +103,7 @@ summary_by_collection_point$entry_exit |>
         gt::everything() ~ gt::pct(14)
     ) |>
     gt::tab_options(
-        table.font.names = "Roboto"
+        table.font.names = "Roboto",
+        column_labels.font.weight = "bold"
     )
 ```
