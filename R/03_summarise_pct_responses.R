@@ -10,8 +10,7 @@ summarise_pct_responses <- function(params, column_config) {
                 c(
                     "Client doesn't know",
                     "Client prefers not to answer",
-                    "Data not collected",
-                    "Missing"
+                    "Data not collected"
                 )
         ) |>
             dplyr::mutate(stage = param$stage, .before = "column") |>
@@ -74,8 +73,7 @@ get_pct_responses <- function(
     no_response_values = c(
         "Client doesn't know",
         "Client prefers not to answer",
-        "Data not collected",
-        "Missing"
+        "Data not collected"
     )
 ) {
     if (subset_hoh_and_or_adult == TRUE) {
@@ -183,8 +181,7 @@ summary_params <- list(
             "Approximate or partial SSN reported",
             "Client doesn't know",
             "Client prefers not to answer",
-            "Data not collected",
-            "Missing"
+            "Data not collected"
         ),
         stage = "entry"
     ),
@@ -194,7 +191,7 @@ summary_params <- list(
         target_columns = "age_grouped",
         subset_hoh_and_or_adult = FALSE,
         denominator = n_clients_entry,
-        no_response_values = "Missing",
+        no_response_values = "Data not collected",
         stage = "entry"
     ),
     ## Veteran Status
@@ -415,7 +412,7 @@ summary_params <- list(
     list(
         data = data_exit,
         target_columns = "destination_safe_worker",
-        no_response_values = c("Worker does not know", "Missing"),
+        no_response_values = c("Worker does not know", "Data not collected"),
         denominator = n_hoh_and_or_adult_exit,
         stage = "exit"
     ),

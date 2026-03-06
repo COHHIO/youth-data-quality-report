@@ -54,7 +54,7 @@ processed_enrollment_client <- dm$enrollment |>
             age >= 14 & age <= 17 ~ "14-17",
             age >= 6 & age <= 13 ~ "6-13",
             age >= 0 & age <= 5 ~ "0-5",
-            TRUE ~ "Missing"
+            TRUE ~ "Data not collected"
         ) |>
             factor(
                 levels = c("Missing", "0-5", "6-13", "14-17", "18-24", "25+")
@@ -68,7 +68,7 @@ processed_enrollment_client <- dm$enrollment |>
         is_hoh = dplyr::case_when(
             relationship_to_ho_h == "Self (head of household)" ~ "Yes",
             relationship_to_ho_h %in%
-                c("Data not collected", "Missing") ~ "Unknown",
+                "Data not collected" ~ "Unknown",
             TRUE ~ "No"
         ) |>
             factor(levels = c("Yes", "No", "Unknown")),
@@ -89,7 +89,7 @@ processed_enrollment_client <- dm$enrollment |>
             )
         ),
         ssn_length = dplyr::case_when(
-            ssn == "Missing" ~ "No Digits",
+            ssn == "Data not collected" ~ "No Digits",
             (stringr::str_length(ssn) / 4) == 9 ~ "9 Digits",
             TRUE ~ "1 to 8 Digits"
         ) |>
@@ -180,8 +180,7 @@ data_health_conditions_and_disabilites <- dm$disabilities |>
                     "Client provided a response",
                     "Client doesn't know",
                     "Client prefers not to answer",
-                    "Data not collected",
-                    "Missing"
+                    "Data not collected"
                 )
             )
     ) |>
@@ -192,7 +191,7 @@ data_health_conditions_and_disabilites <- dm$disabilities |>
     dplyr::mutate(
         dplyr::across(
             dplyr::where(is.factor),
-            ~ tidyr::replace_na(.x, "Missing")
+            ~ tidyr::replace_na(.x, "Data not collected")
         )
     ) |>
     tidyr::pivot_longer(

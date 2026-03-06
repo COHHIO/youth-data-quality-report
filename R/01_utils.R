@@ -5,8 +5,7 @@ create_data_quality_table <- function(
     no_response_values = c(
         "Client doesn't know",
         "Client prefers not to answer",
-        "Data not collected",
-        "Missing"
+        "Data not collected"
     ),
     combine_responses = TRUE,
     group_column = NULL,
