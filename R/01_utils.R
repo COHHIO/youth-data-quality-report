@@ -10,6 +10,7 @@ create_data_quality_table <- function(
     combine_responses = TRUE,
     group_column = NULL,
     group_column_label = NULL,
+    total_label = NULL,
     table_title,
     table_subtitle = NULL
 ) {
@@ -38,7 +39,8 @@ create_data_quality_table <- function(
 
     if (is.null(group_column)) {
         table_data <- table_data |>
-            dplyr::count(data_quality_status, name = "Count", .drop = FALSE)
+            dplyr::count(data_quality_status, name = "Count", .drop = FALSE) |>
+            janitor::adorn_totals(where = "row", name = total_label)
     } else {
         table_data <- table_data |>
             dplyr::count(

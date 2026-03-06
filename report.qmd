@@ -206,6 +206,7 @@ data_enrollment_client |>
         response_column = "veteran_status",
         group_column = "is_adult",
         group_column_label = "Adult",
+        total_label = "Total Adult Enrollments",
         table_title = "Veteran Status"
     )
 ```
@@ -217,6 +218,7 @@ This data element is collected at project start and is required for all clients.
 data_enrollment_client |>
     create_data_quality_table(
         response_column = "relationship_to_ho_h",
+        total_label = "Total Enrollments",
         no_response_values = "Data not collected",
         table_title = "Relationship to Head of Household"
     )
@@ -267,6 +269,7 @@ data_enrollment_client |>
         response_column = "living_situation",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Living Situation (Entry)"
     )
 ```
@@ -275,6 +278,7 @@ data_enrollment_client |>
 data_exit |>
     create_data_quality_table(
         response_column = "destination",
+        total_label = "Total Exits",
         table_title = "Living Situation (Exit)"
     )
 ```
@@ -339,6 +343,7 @@ data_income_entry |>
         combine_responses = FALSE,
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Income from Any Source (Entry)"
     )
 ```
@@ -378,6 +383,7 @@ data_income_exit |>
         combine_responses = FALSE,
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Income from Any Source (Exit)"
     )
 ```
@@ -421,6 +427,7 @@ data_benefits_entry |>
         combine_responses = FALSE,
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Benefits from Any Source (Entry)"
     )
 ```
@@ -458,6 +465,7 @@ data_benefits_exit |>
         combine_responses = FALSE,
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Benefits from Any Source (Exit)"
     )
 ```
@@ -497,6 +505,7 @@ data_health_insurance_entry |>
     create_data_quality_table(
         response_column = "insurance_from_any_source",
         combine_responses = FALSE,
+        total_label = "Total Enrollments",
         table_title = "Insurance from Any Source (Entry)"
     )
 ```
@@ -530,6 +539,7 @@ data_health_insurance_exit |>
     create_data_quality_table(
         response_column = "insurance_from_any_source",
         combine_responses = FALSE,
+        total_label = "Total Exits",
         table_title = "Insurance from Any Source (Exit)"
     )
 ```
@@ -579,6 +589,7 @@ data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Physical Disability") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Enrollments",
         table_title = "Physical Disability (Entry)"
     )
 ```
@@ -588,6 +599,7 @@ data_health_conditions_and_disabilites_exit |>
     dplyr::filter(disability_type == "Physical Disability") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Exits",
         table_title = "Physical Disability (Exit)"
     )
 ```
@@ -599,6 +611,7 @@ data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Developmental Disability") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Enrollments",
         table_title = "Developmental Disability (Entry)"
     )
 ```
@@ -608,6 +621,7 @@ data_health_conditions_and_disabilites_exit |>
     dplyr::filter(disability_type == "Developmental Disability") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Exits",
         table_title = "Developmental Disability (Exit)"
     )
 ```
@@ -619,6 +633,7 @@ data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Chronic Health Condition") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Enrollments",
         table_title = "Chronic Health Condition (Entry)"
     )
 ```
@@ -628,6 +643,7 @@ data_health_conditions_and_disabilites_exit |>
     dplyr::filter(disability_type == "Chronic Health Condition") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Exits",
         table_title = "Chronic Health Condition (Exit)"
     )
 ```
@@ -639,6 +655,7 @@ data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "HIV/AIDS") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Enrollments",
         table_title = "HIV/AIDS (Entry)"
     )
 ```
@@ -648,6 +665,7 @@ data_health_conditions_and_disabilites_exit |>
     dplyr::filter(disability_type == "HIV/AIDS") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Exits",
         table_title = "HIV/AIDS (Exit)"
     )
 ```
@@ -658,6 +676,7 @@ data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Mental Health Disorder") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Enrollments",
         table_title = "Mental Health Disorder (Entry)"
     )
 ```
@@ -667,6 +686,7 @@ data_health_conditions_and_disabilites_exit |>
     dplyr::filter(disability_type == "Mental Health Disorder") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Exits",
         table_title = "Mental Health Disorder (Exit)"
     )
 ```
@@ -678,6 +698,7 @@ data_health_conditions_and_disabilites_entry |>
     dplyr::filter(disability_type == "Substance Use Disorder") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Enrollments",
         table_title = "Substance Use Disorder (Entry)"
     )
 ```
@@ -687,6 +708,7 @@ data_health_conditions_and_disabilites_exit |>
     dplyr::filter(disability_type == "Substance Use Disorder") |>
     create_data_quality_table(
         response_column = "disability_response",
+        total_label = "Total Exits",
         table_title = "Substance Use Disorder (Exit)"
     )
 ```
@@ -712,6 +734,7 @@ data_domestic_violence_entry |>
         combine_responses = FALSE,
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Domestic Violence Survivor (Entry)"
     )
 ```
@@ -724,6 +747,7 @@ data_domestic_violence_entry |>
         response_column = "when_occurred",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Domestic Violence Survivors",
         table_title = "When Occurred (Entry)"
     )
 ```
@@ -734,6 +758,7 @@ data_domestic_violence_entry |>
         response_column = "currently_fleeing",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Domestic Violence Survivors",
         table_title = "Currently Fleeing (Entry)"
     )
 ```
@@ -752,6 +777,7 @@ data_enrollment_client |>
         response_column = "referral_source",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Referral Source"
     )
 ```
@@ -780,6 +806,7 @@ data_education_entry |>
         response_column = "last_grade_completed",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Last Grade Completed (Entry)"
     )
 ```
@@ -790,6 +817,7 @@ data_education_exit |>
         response_column = "last_grade_completed",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Last Grade Completed (Exit)"
     )
 ```
@@ -802,6 +830,7 @@ data_education_entry |>
         response_column = "school_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "School Status (Entry)"
     )
 ```
@@ -812,6 +841,7 @@ data_education_exit |>
         response_column = "school_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "School Status (Exit)"
     )
 ```
@@ -841,6 +871,7 @@ data_employment_entry |>
         combine_responses = FALSE,
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Employment Status (Entry)"
     )
 ```
@@ -854,6 +885,7 @@ data_employment_entry |>
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
         no_response_values = "Data not collected",
+        total_label = "Total Employed Heads of Household and/or Adults",
         table_title = "Employment Type (Entry)"
     )
 ```
@@ -880,6 +912,7 @@ data_employment_exit |>
         combine_responses = FALSE,
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Employment Status (Exit)"
     )
 ```
@@ -893,6 +926,7 @@ data_employment_exit |>
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
         no_response_values = "Data not collected",
+        total_label = "Total Employed Heads of Household and/or Adults",
         table_title = "Employment Type (Exit)"
     )
 ```
@@ -906,6 +940,7 @@ data_employment_exit |>
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
         no_response_values = "Data not collected",
+        total_label = "Total Unemployed Heads of Household and/or Adults",
         table_title = "Not Employed Reason (Exit)"
     )
 ```
@@ -934,6 +969,7 @@ data_health_entry |>
         response_column = "general_health_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "General Health Status (Entry)"
     )
 ```
@@ -944,6 +980,7 @@ data_health_exit |>
         response_column = "general_health_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "General Health Status (Exit)"
     )
 ```
@@ -956,6 +993,7 @@ data_health_entry |>
         response_column = "dental_health_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Dental Health Status (Entry)"
     )
 ```
@@ -966,6 +1004,7 @@ data_health_exit |>
         response_column = "dental_health_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Dental Health Status (Exit)"
     )
 ```
@@ -978,6 +1017,7 @@ data_health_entry |>
         response_column = "mental_health_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Mental Health Status (Entry)"
     )
 ```
@@ -988,6 +1028,7 @@ data_health_exit |>
         response_column = "mental_health_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Mental Health Status (Exit)"
     )
 ```
@@ -1000,6 +1041,7 @@ data_health_entry |>
         response_column = "pregnancy_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Pregnancy Status (Entry)"
     )
 ```
@@ -1010,6 +1052,7 @@ data_health_exit |>
         response_column = "pregnancy_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Pregnancy Status (Exit)"
     )
 ```
@@ -1024,6 +1067,7 @@ data_enrollment_client |>
         response_column = "former_ward_child_welfare",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Formerly a Ward of Child Welfare/Foster Care Agency"
     )
 ```
@@ -1038,6 +1082,7 @@ data_enrollment_client |>
         response_column = "former_ward_juvenile_justice",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Enrollments",
         table_title = "Formerly a Ward of Juvenile Justice System"
     )
 ```
@@ -1053,6 +1098,7 @@ data_exit |>
         combine_responses = FALSE,
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Exchange for Sex (Exit)"
     )
 ```
@@ -1065,6 +1111,7 @@ data_exit |>
         response_column = "count_of_exchange_for_sex",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults that Exchanged for Sex",
         table_title = "Count Exchange for Sex (Exit)"
     )
 ```
@@ -1075,6 +1122,7 @@ data_exit |>
         response_column = "asked_or_forced_to_exchange_for_sex",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults that Exchanged for Sex",
         table_title = "Asked or Forced to Exchange for Sex (Exit)"
     )
 ```
@@ -1137,6 +1185,7 @@ data_exit |>
         response_column = "coerced_to_continue_work",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults that Experienced Workplace Violence and/or Promise Difference",
         table_title = "Coerced to Continue Work (Exit)"
     )
 ```
@@ -1151,6 +1200,7 @@ data_exit |>
         response_column = "project_completion_status",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Project Completion Status (Exit)"
     )
 ```
@@ -1165,6 +1215,7 @@ data_exit |>
         response_column = "counseling_received",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Counseling (Exit)"
     )
 ```
@@ -1179,6 +1230,7 @@ data_exit |>
         response_column = "destination_safe_client",
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Destination Safe Client (Exit)"
     )
 ```
@@ -1190,6 +1242,7 @@ data_exit |>
         no_response_values = c("Worker does not know", "Missing"),
         group_column = "is_hoh_and_or_adult",
         group_column_label = "Head of Household and/or Adult",
+        total_label = "Total Heads of Household and/or Adults Exits",
         table_title = "Destination Safe Worker (Exit)"
     )
 ```
