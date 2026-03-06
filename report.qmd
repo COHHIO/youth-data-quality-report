@@ -72,6 +72,10 @@ data_enrollment_client |>
         group_column_label = "SSN Length",
         table_title = "SSN Data Quality and SSN Length"
     ) |>
+    gt::tab_style(
+        style = gt::cell_text(weight = "bold"),
+        locations = gt::cells_body(columns = 1)
+    ) |>
     gt::cols_width(
         data_quality_status ~ gt::pct(49),
         gt::everything() ~ gt::pct(17)
