@@ -234,7 +234,7 @@ process_income_benefits_insurance_data <- function(
         dplyr::mutate(
             any_source_response_grouped = dplyr::case_when(
                 .data[[any_source_column]] == "Yes" ~ "Yes",
-                TRUE ~ "No or Missing"
+                TRUE ~ "No or Data not collected"
             )
         ) |>
         dplyr::rowwise() |>

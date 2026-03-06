@@ -57,7 +57,14 @@ processed_enrollment_client <- dm$enrollment |>
             TRUE ~ "Data not collected"
         ) |>
             factor(
-                levels = c("Missing", "0-5", "6-13", "14-17", "18-24", "25+")
+                levels = c(
+                    "Data not collected",
+                    "0-5",
+                    "6-13",
+                    "14-17",
+                    "18-24",
+                    "25+"
+                )
             ),
         is_adult = dplyr::case_when(
             age >= 18 ~ "Yes",
