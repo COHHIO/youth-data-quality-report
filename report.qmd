@@ -203,6 +203,7 @@ This data element is collected at record creation and is required for all adults
 
 ```{r check-veteran-status-responses}
 data_enrollment_client |>
+    dplyr::filter(is_adult == "Yes") |>
     create_data_quality_table(
         response_column = "veteran_status",
         total_label = "Total Adult Enrollments",
@@ -264,6 +265,7 @@ This data element is collected at project start for heads of household and/or ad
 
 ```{r check-living-situation-responses-entry}
 data_enrollment_client |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "living_situation",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -335,6 +337,7 @@ This data element is collected at project start and project exit and is required
 
 ```{r check-income-responses-entry}
 data_income_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "income_from_any_source",
         combine_responses = FALSE,
@@ -374,6 +377,7 @@ data_detail_income_entry |>
 
 ```{r check-income-responses-exit}
 data_income_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "income_from_any_source",
         combine_responses = FALSE,
@@ -417,6 +421,7 @@ This data element is collected at project start and project exit and is required
 
 ```{r check-benefits-responses-entry}
 data_benefits_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "benefits_from_any_source",
         combine_responses = FALSE,
@@ -724,6 +729,7 @@ check_record_match(
 
 ```{r check-domestic-violence-responses-entry}
 data_domestic_violence_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "domestic_violence_survivor",
         combine_responses = FALSE,
@@ -737,6 +743,10 @@ The following tables focus on responses from domestic violence survivors:
 
 ```{r check-when-occurred-responses-entry}
 data_domestic_violence_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        domestic_violence_survivor == "Yes"
+    ) |>
     create_data_quality_table(
         response_column = "when_occurred",
         total_label = "Total Domestic Violence Survivors",
@@ -746,6 +756,10 @@ data_domestic_violence_entry |>
 
 ```{r check-currently-fleeing-responses-entry}
 data_domestic_violence_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        domestic_violence_survivor == "Yes"
+    ) |>
     create_data_quality_table(
         response_column = "currently_fleeing",
         total_label = "Total Domestic Violence Survivors",
@@ -763,6 +777,7 @@ This data element is collected at project start and is required for heads of hou
 
 ```{r check-referral-source-responses}
 data_enrollment_client |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "referral_source",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -790,6 +805,7 @@ check_record_match(
 
 ```{r check-last-grade-completed-responses-entry}
 data_education_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "last_grade_completed",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -799,6 +815,7 @@ data_education_entry |>
 
 ```{r check-last-grade-completed-responses-exit}
 data_education_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "last_grade_completed",
         total_label = "Total Heads of Household and/or Adults Exits",
@@ -810,6 +827,7 @@ data_education_exit |>
 
 ```{r check-school-status-responses-entry}
 data_education_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "school_status",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -819,6 +837,7 @@ data_education_entry |>
 
 ```{r check-school-status-responses-exit}
 data_education_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "school_status",
         total_label = "Total Heads of Household and/or Adults Exits",
@@ -846,6 +865,7 @@ check_record_match(
 
 ```{r check-employed-responses-entry}
 data_employment_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "employed",
         combine_responses = FALSE,
@@ -859,6 +879,10 @@ The following table focus on responses from employed heads of household and/or a
 
 ```{r check-employment-type-responses-entry}
 data_employment_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        employed == "Yes"
+    ) |>
     create_data_quality_table(
         response_column = "employment_type",
         no_response_values = "Data not collected",
@@ -871,6 +895,10 @@ The following table focus on responses from unemployed heads of household and/or
 
 ```{r check-not-employed-reason-responses-entry}
 data_employment_entry |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        employed == "No"
+    ) |>
     create_data_quality_table(
         response_column = "not_employed_reason",
         no_response_values = "Data not collected",
@@ -883,6 +911,7 @@ data_employment_entry |>
 
 ```{r check-employed-responses-exit}
 data_employment_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "employed",
         combine_responses = FALSE,
@@ -896,10 +925,12 @@ The following table focus on responses from employed heads of household and/or a
 
 ```{r check-employment-type-responses-exit}
 data_employment_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        employed == "Yes"
+    ) |>
     create_data_quality_table(
         response_column = "employment_type",
-        group_column = "is_hoh_and_or_adult",
-        group_column_label = "Head of Household and/or Adult",
         no_response_values = "Data not collected",
         total_label = "Total Employed Heads of Household and/or Adults",
         table_title = "Employment Type (Exit)"
@@ -910,6 +941,10 @@ The following table focus on responses from unemployed heads of household and/or
 
 ```{r check-not-employed-reason-responses-exit}
 data_employment_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        employed == "No"
+    ) |>
     create_data_quality_table(
         response_column = "not_employed_reason",
         no_response_values = "Data not collected",
@@ -938,6 +973,7 @@ check_record_match(
 
 ```{r check-general-health-responses-entry}
 data_health_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "general_health_status",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -947,6 +983,7 @@ data_health_entry |>
 
 ```{r check-general-health-responses-exit}
 data_health_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "general_health_status",
         total_label = "Total Heads of Household and/or Adults Exits",
@@ -958,6 +995,7 @@ data_health_exit |>
 
 ```{r check-dental-health-responses-entry}
 data_health_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "dental_health_status",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -967,6 +1005,7 @@ data_health_entry |>
 
 ```{r check-dental-health-responses-exit}
 data_health_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "dental_health_status",
         total_label = "Total Heads of Household and/or Adults Exits",
@@ -978,6 +1017,7 @@ data_health_exit |>
 
 ```{r check-mental-health-responses-entry}
 data_health_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "mental_health_status",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -987,6 +1027,7 @@ data_health_entry |>
 
 ```{r check-mental-health-responses-exit}
 data_health_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "mental_health_status",
         total_label = "Total Heads of Household and/or Adults Exits",
@@ -998,6 +1039,7 @@ data_health_exit |>
 
 ```{r check-pregnancy-responses-entry}
 data_health_entry |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "pregnancy_status",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -1007,6 +1049,7 @@ data_health_entry |>
 
 ```{r check-pregnancy-responses-exit}
 data_health_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "pregnancy_status",
         total_label = "Total Heads of Household and/or Adults Exits",
@@ -1020,6 +1063,7 @@ This data element is collected at project start and is required for heads of hou
 
 ```{r check-formerly-ward-of-child-welfare-foster-care-agency}
 data_enrollment_client |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "former_ward_child_welfare",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -1033,6 +1077,7 @@ This data element is collected at project start and is required for heads of hou
 
 ```{r check-formerly-ward-of-juvenile-justice-system}
 data_enrollment_client |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "former_ward_juvenile_justice",
         total_label = "Total Heads of Household and/or Adults Enrollments",
@@ -1046,6 +1091,7 @@ This data element is collected at project exit and is required for heads of hous
 
 ```{r check-exchange-for-sex-responses}
 data_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "exchange_for_sex",
         combine_responses = FALSE,
@@ -1059,6 +1105,10 @@ The following tables focus on heads of household and/or adults that received any
 
 ```{r check-count-exchange-for-sex-responses}
 data_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        exchange_for_sex == "Yes"
+    ) |>
     create_data_quality_table(
         response_column = "count_of_exchange_for_sex",
         total_label = "Total Heads of Household and/or Adults that Exchanged for Sex",
@@ -1068,6 +1118,10 @@ data_exit |>
 
 ```{r check-asked-or-forced-to-exchange-for-sex-responses}
 data_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        exchange_for_sex == "Yes"
+    ) |>
     create_data_quality_table(
         response_column = "asked_or_forced_to_exchange_for_sex",
         total_label = "Total Heads of Household and/or Adults that Exchanged for Sex",
@@ -1129,6 +1183,10 @@ The following table focus on heads of household and/or adults that experienced w
 
 ```{r check-coerced-to-continue-work-responses}
 data_exit |>
+    dplyr::filter(
+        is_hoh_and_or_adult == "Yes",
+        work_place_violence_threats == "Yes" | workplace_promise_difference == "Yes"
+    ) |>
     create_data_quality_table(
         response_column = "coerced_to_continue_work",
         total_label = "Total Heads of Household and/or Adults that Experienced Workplace Violence and/or Promise Difference",
@@ -1142,6 +1200,7 @@ This data element is collected at project exit and is required for heads of hous
 
 ```{r check-project-completion-status-responses}
 data_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "project_completion_status",
         total_label = "Total Heads of Household and/or Adults Exits",
@@ -1155,6 +1214,7 @@ This data element is collected at project exit and is required for heads of hous
 
 ```{r check-counseling-responses}
 data_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "counseling_received",
         total_label = "Total Heads of Household and/or Adults Exits",
@@ -1168,6 +1228,7 @@ This data element is collected at project exit and is required for heads of hous
 
 ```{r check-destination-safe-client-responses}
 data_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "destination_safe_client",
         total_label = "Total Heads of Household and/or Adults Exits",
@@ -1177,6 +1238,7 @@ data_exit |>
 
 ```{r check-destination-safe-worker-responses}
 data_exit |>
+    dplyr::filter(is_hoh_and_or_adult == "Yes") |>
     create_data_quality_table(
         response_column = "destination_safe_worker",
         no_response_values = c("Worker does not know", "Data not collected"),
