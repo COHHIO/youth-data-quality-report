@@ -164,8 +164,11 @@ data_ethnicity <- entries_in_period |>
 ```
 
 ```{r check-etchnicity-count}
-data_ethnicity |>
+data_ethnicity_summary <- data_ethnicity |>
     dplyr::count(n_ethnicities) |>
+    janitor::adorn_totals(where = "row", name = "Total Enrollments")
+
+data_ethnicity_summary |>
     gt::gt() |>
     gt::tab_header(
         title = "Client Self-Identified Race/Ethnicity Selections"
@@ -178,8 +181,17 @@ data_ethnicity |>
         align = "left",
         columns = n_ethnicities
     ) |>
+    gt::cols_width(
+        n_ethnicities ~ gt::pct(70),
+        gt::everything() ~ gt::pct(25)
+    ) |>
     gt::tab_options(
-        table.font.names = "Roboto"
+        table.font.names = "Roboto",
+        column_labels.font.weight = "bold"
+    ) |>
+    gt::tab_style(
+        style = gt::cell_text(weight = "bold"),
+        locations = gt::cells_body(rows = nrow(data_ethnicity_summary))
     )
 ```
 
