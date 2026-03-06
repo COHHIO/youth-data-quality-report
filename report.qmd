@@ -60,6 +60,8 @@ SSN data is recorded in two fields:
 - Social Security Number
 - SSN Data Quality
 
+The following table cross-references the values reported in the SSN Data Quality field with the actual number of digits recorded in the SSN field:
+
 ```{r check-ssn-responses}
 data_enrollment_client |>
     create_data_quality_table(
@@ -76,6 +78,8 @@ data_enrollment_client |>
 ```
 
 #### Date of Birth
+
+This section analyzes client age, which is calculated at project start based on date of birth.
 
 ```{r check-age-range}
 #| results: asis
@@ -99,6 +103,8 @@ n_missing_age_string <- ifelse(
 
 cat(n_missing_age_string)
 ```
+
+The following chart shows the distribution of clients by age:
 
 ```{r check-age-distribution}
 if (nrow(data_enrollment_client) > 0) {
@@ -132,6 +138,10 @@ if (nrow(data_enrollment_client) > 0) {
 ```
 
 #### Race and Ethnicity
+
+Clients can self-identificate with one or more different racial and/or ethnic categories. This data element is collected at record creation and is required for all clients.
+
+The following table shows the distribution of clients based on how many race/ethnicity identities they selected:
 
 ```{r process-ethnicity-data}
 ethnicity_summary <- dm$ethnicity |>
@@ -188,6 +198,8 @@ if (n_problematic == 0) {
 
 #### Veteran Status
 
+This data element is collected at record creation and is required for all adults.
+
 ```{r check-veteran-status-responses}
 data_enrollment_client |>
     create_data_quality_table(
@@ -200,6 +212,7 @@ data_enrollment_client |>
 
 #### Relationship to Head of Household
 
+This data element is collected at project start and is required for all clients.
 ```{r check-relationship-to-head-of-household-responses}
 data_enrollment_client |>
     create_data_quality_table(
@@ -211,6 +224,8 @@ data_enrollment_client |>
         table_title = "Relationship to Head of Household"
     )
 ```
+
+The following chart shows the distribution of heads of household by age group:
 
 ```{r check-heads-of-household-age}
 data_enrollment_client |>
@@ -246,6 +261,9 @@ data_enrollment_client |>
 ```
 
 #### Living Situation
+
+This data element is collected at project start for heads of household and/or adults and at project exit for all clients.
+
 ```{r check-living-situation-responses-entry}
 data_enrollment_client |>
     create_data_quality_table(
@@ -266,9 +284,40 @@ data_exit |>
 
 ### Program Specific Data Elements
 
+This section analyses data stored in the following files:
+
+- `Enrollment.csv`
+- `Exit.csv`
+- `Disabilities.csv`
+- `EmploymentEducation.csv`
+- `HealthAndDV.csv`
+- `IncomeBenefits.csv`
+
+Throughout the section, `Disabilities.csv`, `EmploymentEducation.csv`, `HealthAndDV.csv` and `IncomeBenefits.csv` are collectively referred to as *program-specific data files*.
+
+Data records in program-specific data files that are generated at project start must match an Enrollment ID in `Enrollment.csv`. In addition, all Enrollments ID in `Enrollment.csv` must have a match in each program-specific data file.
+
+Similarly, data records in program-specific data files that are generated at project exit must match an Enrollment ID in `Exit.csv` and all Enrollments ID in `Exit.csv` must have a match in each program-specific data file.
+
+Sometimes, data records are missing from program-specific data files (i.e. an Enrollment ID that exists in `Enrollment.csv` or `Exit.csv` doesn't exist in a program-specific data file). For that reason, each subsection below that analyses a data element stored in a program-specific data file starts with a data record match check.
+
+The following definitions clarify the terminology used in data record match checks:
+
+- **A data record collected at entry that matches an enrollment record** is a data record in a program-specific data file with an Enrollment ID that exists in `Enrollment.csv`. **All data records collected at entry match an enrollment record** when each Enrollment ID in the program-specific data file exists in `Enrollment.csv`. **A data record collected at entry doesn't match an enrollment record** when the data record has an Enrollment ID that doesn't exist in `Enrollment.csv`.
+
+- **An enrollment that has a data record** is an enrollment record in `Enrollment.csv` with an Enrollment ID that exists in the program-specific data file. **All enrollments have a data record** when each Enrollment ID in `Enrollment.csv` exists in the program-specific data file. **An enrollment is missing a data record** when the Enrollment ID in `Enrollment.csv` doesn't exist in the program-specific data file.
+
+- **A data record collected at exit that matches an exit record** is a data record in a program-specific data file with an Enrollment ID that exists in `Exit.csv`. **All data records collected at exit match an exit record** when each Enrollment ID in the program-specific data file exists in `Exit.csv`. **A data record collected at exit doesn't match an exit record** when the data record has an Enrollment ID that doesn't exist in `Exit.csv`.
+
+- **An exit that has a data record** is an exit record in `Exit.csv` with an Enrollment ID that exists in the program-specific data file. **All exits have a data record** when each Enrollment ID in `Exit.csv` exists in the program-specific data file. **An exit is missing a data record** when the Enrollment ID in `Exit.csv` doesn't exist in the program-specific data file.
+
+Finally, it is important to note that missing records affect the enrollment and exit totals shown in the tables below, which may differ from the overall totals reported in the overview section.
+
 #### Common Program Specific Data Elements
 
 ##### Income, Benefits and Insurance
+
+Data record match check results for income, benefits and insurance data records in `IncomeBenefits.csv` are shown below:
 
 ```{r check-income-sources-record-match}
 #| results: asis
@@ -282,6 +331,10 @@ check_record_match(
 
 ###### Income and Sources
 
+This data element is collected at project start and project exit and is required for heads of household and/or adults only.
+
+####### Entry
+
 ```{r check-income-responses-entry}
 data_income_entry |>
     create_data_quality_table(
@@ -292,6 +345,8 @@ data_income_entry |>
         table_title = "Income from Any Source (Entry)"
     )
 ```
+
+The following additional checks were performed:
 
 ```{r check-income-detail-responses-entry}
 data_detail_income_entry |>
@@ -317,6 +372,8 @@ data_detail_income_entry |>
     )
 ```
 
+####### Exit
+
 ```{r check-income-responses-exit}
 data_income_exit |>
     create_data_quality_table(
@@ -327,6 +384,8 @@ data_income_exit |>
         table_title = "Income from Any Source (Exit)"
     )
 ```
+
+The following additional checks were performed:
 
 ```{r check-income-detail-responses-exit}
 data_detail_income_exit |>
@@ -354,6 +413,10 @@ data_detail_income_exit |>
 
 ###### Non-Cash Benefits
 
+This data element is collected at project start and project exit and is required for heads of household and/or adults only.
+
+####### Entry
+
 ```{r check-benefits-responses-entry}
 data_benefits_entry |>
     create_data_quality_table(
@@ -364,6 +427,8 @@ data_benefits_entry |>
         table_title = "Benefits from Any Source (Entry)"
     )
 ```
+
+The following additional checks were performed:
 
 ```{r check-benefits-detail-responses-entry}
 data_detail_benefits_entry |>
@@ -387,6 +452,8 @@ data_detail_benefits_entry |>
     )
 ```
 
+####### Exit
+
 ```{r check-benefits-responses-exit}
 data_benefits_exit |>
     create_data_quality_table(
@@ -397,6 +464,8 @@ data_benefits_exit |>
         table_title = "Benefits from Any Source (Exit)"
     )
 ```
+
+The following additional checks were performed:
 
 ```{r check-benefits-detail-responses-exit}
 data_detail_benefits_exit |>
@@ -422,6 +491,10 @@ data_detail_benefits_exit |>
 
 ###### Health Insurance
 
+This data element is collected at project start and project exit and is required for all clients.
+
+####### Entry
+
 ```{r check-health-insurance-responses-entry}
 data_health_insurance_entry |>
     create_data_quality_table(
@@ -430,6 +503,8 @@ data_health_insurance_entry |>
         table_title = "Insurance from Any Source (Entry)"
     )
 ```
+
+The following additional checks were performed:
 
 ```{r check-health-insurance-detail-responses-entry}
 data_detail_health_insurance_entry |>
@@ -451,6 +526,8 @@ data_detail_health_insurance_entry |>
     )
 ```
 
+####### Exit
+
 ```{r check-health-insurance-responses-exit}
 data_health_insurance_exit |>
     create_data_quality_table(
@@ -459,6 +536,8 @@ data_health_insurance_exit |>
         table_title = "Insurance from Any Source (Exit)"
     )
 ```
+
+The following additional checks were performed:
 
 ```{r check-health-insurance-detail-responses-exit}
 data_detail_health_insurance_exit |>
@@ -481,6 +560,10 @@ data_detail_health_insurance_exit |>
 ```
 
 ##### Health Conditions and Disabilities
+
+Data elements in this section are collected at project start and project exit and are required for all clients.
+
+Data record match check results for health conditions and disabilities data records in `Disabilities.csv` are shown below:
 
 ```{r check-health-conditions-disabilites-record-match}
 #| results: asis
@@ -613,6 +696,10 @@ data_health_conditions_and_disabilites_exit |>
 
 ##### Domestic Violence
 
+This data element is collected at project start and is required for heads of household and/or adults only.
+
+Data record match check results for domestic violence data records in `HealthAndDV.csv` are shown below:
+
 ```{r check-domestic-violence-record-match}
 #| results: asis
 check_record_match(
@@ -631,6 +718,8 @@ data_domestic_violence_entry |>
         table_title = "Domestic Violence Survivor (Entry)"
     )
 ```
+
+The following tables focus on responses from domestic violence survivors:
 
 ```{r check-when-occurred-responses-entry}
 data_domestic_violence_entry |>
@@ -658,6 +747,8 @@ data_domestic_violence_entry |>
 
 ###### Referral Source
 
+This data element is collected at project start and is required for heads of household and/or adults only.
+
 ```{r check-referral-source-responses}
 data_enrollment_client |>
     create_data_quality_table(
@@ -669,6 +760,10 @@ data_enrollment_client |>
 ```
 
 ###### Education
+
+This data element is collected at project start and project exit and is required for heads of household and/or adults only.
+
+Data record match check results for education data records in `EmploymentEducation.csv` are shown below:
 
 ```{r check-education-record-match}
 #| results: asis
@@ -726,6 +821,10 @@ data_education_exit |>
 
 ###### Employment Status
 
+This data element is collected at project start and project exit and is required for heads of household and/or adults only.
+
+Data record match check results for employment data records in `EmploymentEducation.csv` are shown below:
+
 ```{r check-employment-record-match}
 #| results: asis
 check_record_match(
@@ -735,6 +834,8 @@ check_record_match(
     exits = exits_in_period
 )
 ```
+
+####### Entry
 
 ```{r check-employed-responses-entry}
 data_employment_entry |>
@@ -747,6 +848,8 @@ data_employment_entry |>
     )
 ```
 
+The following table focus on responses from employed heads of household and/or adults:
+
 ```{r check-employment-type-responses-entry}
 data_employment_entry |>
     create_data_quality_table(
@@ -757,6 +860,8 @@ data_employment_entry |>
         table_title = "Employment Type (Entry)"
     )
 ```
+
+The following table focus on responses from unemployed heads of household and/or adults:
 
 ```{r check-not-employed-reason-responses-entry}
 data_employment_entry |>
@@ -769,6 +874,8 @@ data_employment_entry |>
     )
 ```
 
+####### Exit
+
 ```{r check-employed-responses-exit}
 data_employment_exit |>
     create_data_quality_table(
@@ -780,6 +887,8 @@ data_employment_exit |>
     )
 ```
 
+The following table focus on responses from employed heads of household and/or adults:
+
 ```{r check-employment-type-responses-exit}
 data_employment_exit |>
     create_data_quality_table(
@@ -790,6 +899,8 @@ data_employment_exit |>
         table_title = "Employment Type (Exit)"
     )
 ```
+
+The following table focus on responses from unemployed heads of household and/or adults:
 
 ```{r check-not-employed-reason-responses-exit}
 data_employment_exit |>
@@ -803,6 +914,10 @@ data_employment_exit |>
 ```
 
 ###### Health Status
+
+Data elements in this section are collected at project start and project exit and are required for heads of household and/or adults only.
+
+Data record match check results for health status data records in `HealthAndDV.csv` are shown below:
 
 ```{r check-health-status-record-match}
 #| results: asis
@@ -904,6 +1019,8 @@ data_health_exit |>
 
 ###### Formerly a Ward of Child Welfare/Foster Care Agency
 
+This data element is collected at project start and is required for heads of household and/or adults only.
+
 ```{r check-formerly-ward-of-child-welfare-foster-care-agency}
 data_enrollment_client |>
     create_data_quality_table(
@@ -915,6 +1032,8 @@ data_enrollment_client |>
 ```
 
 ###### Formerly a Ward of Juvenile Justice System
+
+This data element is collected at project start and is required for heads of household and/or adults only.
 
 ```{r check-formerly-ward-of-juvenile-justice-system}
 data_enrollment_client |>
@@ -928,6 +1047,8 @@ data_enrollment_client |>
 
 ###### Commercial Sexual Exploitation / Sex Trafficking
 
+This data element is collected at project exit and is required for heads of household and/or adults only.
+
 ```{r check-exchange-for-sex-responses}
 data_exit |>
     create_data_quality_table(
@@ -938,6 +1059,8 @@ data_exit |>
         table_title = "Exchange for Sex (Exit)"
     )
 ```
+
+The following tables focus on heads of household and/or adults that received anything in exchange for sex:
 
 ```{r check-count-exchange-for-sex-responses}
 data_exit |>
@@ -960,6 +1083,8 @@ data_exit |>
 ```
 
 ###### Labor Exploitation / Trafficking
+
+This data element is collected at project exit and is required for heads of household and/or adults only.
 
 ```{r check-workplace-violence-threats-promise-difference-responses-hoh-adults}
 data_exit |>
@@ -1007,6 +1132,8 @@ data_exit |>
     )
 ```
 
+The following table focus on heads of household and/or adults that experienced workplace violence and/or promise difference:
+
 ```{r check-coerced-to-continue-work-responses}
 data_exit |>
     create_data_quality_table(
@@ -1018,6 +1145,8 @@ data_exit |>
 ```
 
 ###### Project Completion Status
+
+This data element is collected at project exit and is required for heads of household and/or adults only.
 
 ```{r check-project-completion-status-responses}
 data_exit |>
@@ -1031,6 +1160,8 @@ data_exit |>
 
 ###### Counseling
 
+This data element is collected at project exit and is required for heads of household and/or adults only.
+
 ```{r check-counseling-responses}
 data_exit |>
     create_data_quality_table(
@@ -1042,6 +1173,8 @@ data_exit |>
 ```
 
 ###### Safe and Appropriate Exit
+
+This data element is collected at project exit and is required for heads of household and/or adults only.
 
 ```{r check-destination-safe-client-responses}
 data_exit |>
