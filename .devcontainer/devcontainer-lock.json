@@ -1,0 +1,24 @@
+{
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "1.1.5",
+      "resolved": "ghcr.io/rocker-org/devcontainer-features/quarto-cli@sha256:7d1ba1c977b72d616e76089f016c87c1a581a05386aee635bae08e5a1375507d",
+      "integrity": "sha256:7d1ba1c977b72d616e76089f016c87c1a581a05386aee635bae08e5a1375507d"
+    },
+    "ghcr.io/rocker-org/devcontainer-features/r-apt:latest": {
+      "version": "0.5.0",
+      "resolved": "ghcr.io/rocker-org/devcontainer-features/r-apt@sha256:77b2f97468c79afa09afd7141fac0bda0f395e265f606e13365e6767949dcc55",
+      "integrity": "sha256:77b2f97468c79afa09afd7141fac0bda0f395e265f606e13365e6767949dcc55"
+    },
+    "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
+      "version": "1.1.0",
+      "resolved": "ghcr.io/rocker-org/devcontainer-features/r-packages@sha256:1a4ec64c4d2060e78e9c812bd3b3622c7e008465d566a2781c0e2b17a82592e5",
+      "integrity": "sha256:1a4ec64c4d2060e78e9c812bd3b3622c7e008465d566a2781c0e2b17a82592e5"
+    },
+    "ghcr.io/roul/devcontainer-features/bitwarden-secrets-manager:1": {
+      "version": "1.0.3",
+      "resolved": "ghcr.io/roul/devcontainer-features/bitwarden-secrets-manager@sha256:a6e33b6bb799d9c6839e870545e3fbdf3d2064ccf0943bfa809abf80ffd74e03",
+      "integrity": "sha256:a6e33b6bb799d9c6839e870545e3fbdf3d2064ccf0943bfa809abf80ffd74e03"
+    }
+  }
+}

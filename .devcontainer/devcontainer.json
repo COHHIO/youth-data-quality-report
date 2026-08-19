@@ -22,11 +22,30 @@
 		// Note: httpgd has been archived on CRAN as of 2025-04-23, see
 		// https://cran.r-project.org/web/packages/httpgd/index.html
 		"ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
-			"packages": "dplyr, tidyr, ggplot2, github::nx10/httpgd, languageserver, rmarkdown, gt, lubridate",
+			"packages": "dplyr, tidyr, ggplot2, lubridate, rmarkdown, quarto, gt, github::COHHIO/ryha, github::nx10/httpgd, languageserver",
 			"installSystemRequirements": true
-		}
+		},
+
+		// Install BitWarden Secrets Manager CLI
+		"ghcr.io/roul/devcontainer-features/bitwarden-secrets-manager:1": {}
 
 	},
+
+	// Pass Claude Code credentials to the container
+	"mounts": [
+	  "source=${localEnv:USERPROFILE}/.claude,target=/root/.claude,type=bind,consistency=cached"
+    ],
+
+	// Load Bitwarden Secrets Manager access token & project ID
+	// An example file is located at `.devcontainer/.env.example`
+	// Note: --env-file reads from the HOST filesystem before the container starts,
+	// so it must point to the source file path, not a container path.
+	"runArgs": [
+		"--env-file", "${localEnv:USERPROFILE}/.bws/bws.env",
+        "--env-file", "${localWorkspaceFolder}/.devcontainer/.env"
+	],
+
+	"postCreateCommand": "chmod +x .devcontainer/r-with-secrets.sh",
 
 	// Wait to install R packages until R is installed. More info: https://github.com/rocker-org/devcontainer-features/tree/main/src/apt-packages#installation-order
 	"overrideFeatureInstallOrder": [
@@ -38,22 +57,25 @@
 		// Settings for VS Code.
 		"vscode": {
 			"settings": {
+				// Launch the R terminal through a wrapper that injects
+				// Bitwarden secrets via `bws run` (values stay in RAM only).
+				"r.rterm.linux": "${containerWorkspaceFolder}/.devcontainer/r-with-secrets.sh",
 				"r.bracketedPaste": true,
 				"r.lsp.args": ["--vanilla"], // To avoid "00LOCK-renv" error
 				"r.lsp.diagnostics": false,
 				"r.lsp.promptToInstall": false,
 				"r.plot.useHttpgd": true,
 				"r.session.viewers.viewColumn": {"browser": "Disable"},
-				"[r][quarto]": {
+				"[r]": {
 					"editor.formatOnSave": true,
-					"editor.formatOnPaste": true,
-					"editor.formatOnType": true,
-					"editor.formatOnSaveMode": "file",
-					"editor.detectIndentation": false,
-					"editor.insertSpaces": true,
-					"editor.tabSize": 4,
-					"editor.folding": false,
-					"editor.wordWrap": "on",
+					// "editor.formatOnPaste": true,
+					// "editor.formatOnType": true,
+					// "editor.formatOnSaveMode": "file",
+					// "editor.detectIndentation": false,
+					// "editor.insertSpaces": true,
+					// "editor.tabSize": 4,
+					// "editor.folding": false,
+					// "editor.wordWrap": "on",
 					"editor.rulers": [{"column": 80}, {"column": 120}]
 				},
 				"files.trimTrailingWhitespace": true,
@@ -65,9 +87,11 @@
 			// We also recommend installing the `tomoki1207.pdf` extension,
 			// but it needs to be installed locally (not in Dev Container)
 			"extensions": [
-				"quarto.quarto",
+				"Anthropic.claude-code",
+				"quarto.quarto@1.125.0",
 				"RDebugger.r-debugger",
-				"REditorSupport.r"
+				"REditorSupport.r",
+				"posit.air-vscode"
 			]
 		}
 	},
