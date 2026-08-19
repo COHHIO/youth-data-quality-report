@@ -1,5 +1,7 @@
 # Read data
-dm <- readRDS("data/dm_20251013.rds")
+# dm <- readRDS("data/dm_20260511.rds")
+library(ryha)
+dm <- create_dm("prod")
 
 # Get entries and exits in period
 entries_in_period <- dm$enrollment |>
